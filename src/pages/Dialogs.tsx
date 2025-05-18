@@ -6,7 +6,9 @@ import { format } from "date-fns";
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle } from "@/components/ui/drawer";
 import ChatInterface from "@/components/ChatInterface";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
+import { MessageCircle } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/lib/supabase";
 
@@ -138,7 +140,15 @@ const Dialogs = () => {
               })}
             </div>
           ) : (
-            <p className="text-center py-8 text-muted-foreground">No conversations found</p>
+            <div className="py-12 flex flex-col items-center justify-center text-center">
+              <div className="bg-muted/30 p-4 rounded-full mb-4">
+                <MessageCircle className="h-8 w-8 text-muted-foreground" />
+              </div>
+              <h3 className="text-lg font-medium">No chats yet</h3>
+              <p className="text-muted-foreground mt-1">
+                Talk to the bot to start a conversation
+              </p>
+            </div>
           )}
         </CardContent>
       </Card>
@@ -148,8 +158,15 @@ const Dialogs = () => {
           <DrawerHeader className="border-b">
             <DrawerTitle>{selectedDialogData?.name || "Chat"}</DrawerTitle>
           </DrawerHeader>
-          <div className="p-0 h-[calc(100%-60px)]">
-            <ChatInterface profileId={selectedDialog || undefined} />
+          <div className="p-0 h-[calc(100%-60px)] flex flex-col">
+            <div className="flex-1">
+              <ChatInterface profileId={selectedDialog || undefined} />
+            </div>
+            <div className="p-4 border-t">
+              <Button className="w-full opacity-60" disabled>
+                Write manual reply
+              </Button>
+            </div>
           </div>
         </DrawerContent>
       </Drawer>

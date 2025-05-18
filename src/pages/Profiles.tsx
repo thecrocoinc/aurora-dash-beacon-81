@@ -18,7 +18,7 @@ const Profiles = () => {
     queryFn: async () => {
       const { data: profilesData, error } = await supabase
         .from('profiles')
-        .select('id,name,avatar_url');
+        .select('id,name,avatar_url,watch_connected');
       
       if (error) throw error;
       
@@ -39,7 +39,10 @@ const Profiles = () => {
             ...profile,
             kcalRatio: summary.kcal / dailyGoal, // Calculate the ratio
             currentKcal: summary.kcal,
-            dailyGoal
+            dailyGoal,
+            prot: summary.prot,
+            fat: summary.fat,
+            carb: summary.carb
           };
         })
       );
@@ -83,7 +86,11 @@ const Profiles = () => {
                       avatar: profile.avatar_url,
                       kcalRatio: profile.kcalRatio,
                       currentKcal: profile.currentKcal,
-                      dailyGoal: profile.dailyGoal
+                      dailyGoal: profile.dailyGoal,
+                      watch_connected: profile.watch_connected,
+                      prot: profile.prot,
+                      fat: profile.fat,
+                      carb: profile.carb
                     }} 
                   />
                 </Link>

@@ -1,6 +1,23 @@
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { MessageCircle } from "lucide-react";
+import { Card, CardContent } from "@/components/ui/card";
+
+type FeatureCardProps = {
+  icon: string;
+  title: string;
+  description: string;
+};
+
+const FeatureCard = ({ icon, title, description }: FeatureCardProps) => {
+  return (
+    <Card className="rounded-2xl shadow hover:scale-105 transition duration-300">
+      <CardContent className="p-6">
+        <div className="text-3xl mb-4">{icon}</div>
+        <h3 className="text-xl font-medium mb-2">{title}</h3>
+        <p className="text-muted-foreground">{description}</p>
+      </CardContent>
+    </Card>
+  );
+};
 
 const BizAgent = () => {
   return (
@@ -9,18 +26,24 @@ const BizAgent = () => {
       <p className="text-muted-foreground">
         AI agent for business operations.
       </p>
-      <Card className="flex flex-col items-center justify-center min-h-[400px]">
-        <CardContent className="pt-6 text-center">
-          <div className="rounded-full bg-primary/10 p-4 inline-block mb-4">
-            <MessageCircle className="h-10 w-10 text-primary" />
-          </div>
-          <h3 className="text-xl font-medium mb-2">Start a Conversation</h3>
-          <p className="text-muted-foreground max-w-md">
-            Connect with our AI-powered business assistant to get nutrition insights, 
-            meal planning advice, and personalized health recommendations.
-          </p>
-        </CardContent>
-      </Card>
+      
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <FeatureCard 
+          icon="⚡" 
+          title="Code" 
+          description="Generate and patch code snippets for your nutrition app and integrations." 
+        />
+        <FeatureCard 
+          icon="📈" 
+          title="Promote" 
+          description="Draft social posts and ads to engage more users with your nutrition content." 
+        />
+        <FeatureCard 
+          icon="🔄" 
+          title="Automate" 
+          description="Connect new integrations on voice command to extend your nutrition platform." 
+        />
+      </div>
     </div>
   );
 };

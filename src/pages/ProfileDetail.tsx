@@ -14,6 +14,8 @@ import MealTile from "@/components/MealTile";
 import ChatInterface from "@/components/ChatInterface";
 import MasonryGrid from "@/components/MasonryGrid";
 import MealGridSkeleton from "@/components/MealGridSkeleton";
+import MacroChips from "@/components/MacroChips";
+import MealTilePlaceholder from "@/components/MealTilePlaceholder";
 
 const ProfileDetail = () => {
   const { id } = useParams<{ id: string }>();
@@ -109,6 +111,11 @@ const ProfileDetail = () => {
     ?.split(" ")
     .map((n) => n[0])
     .join("") || "";
+    
+  // Create placeholder meals for empty state
+  const placeholderMeals = Array.from({ length: 6 }).map((_, i) => (
+    <MealTilePlaceholder key={`placeholder-${i}`} />
+  ));
 
   return (
     <div className="space-y-6">
@@ -147,8 +154,14 @@ const ProfileDetail = () => {
                 <CardTitle>Daily Nutrition</CardTitle>
                 <CardDescription>Calorie intake progress</CardDescription>
               </CardHeader>
-              <CardContent className="flex justify-center">
+              <CardContent className="flex flex-col items-center">
                 <KcalRing value={summary?.kcal || 0} target={dailyGoal} />
+                <MacroChips 
+                  protein={summary?.prot} 
+                  fat={summary?.fat} 
+                  carbs={summary?.carb}
+                  className="mt-4" 
+                />
               </CardContent>
             </Card>
             
@@ -163,7 +176,9 @@ const ProfileDetail = () => {
                 ) : meals && meals.length > 0 ? (
                   <MasonryGrid meals={meals} />
                 ) : (
-                  <p className="text-center text-muted-foreground py-8">No meals recorded</p>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {placeholderMeals}
+                  </div>
                 )}
               </CardContent>
             </Card>
