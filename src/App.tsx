@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -17,9 +16,11 @@ const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
+    {/* Tooltip provider must wrap its children to satisfy TypeScript */}
     <TooltipPrimitive.Provider delayDuration={0}>
       <Toaster />
       <Sonner />
+
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<DashboardLayout />}>
@@ -30,6 +31,7 @@ const App = () => (
             <Route path="settings" element={<Settings />} />
             <Route path="biz-agent" element={<BizAgent />} />
           </Route>
+
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
