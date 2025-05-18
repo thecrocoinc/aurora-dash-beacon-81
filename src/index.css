@@ -46,19 +46,19 @@
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
+    --background: 220 40% 10%;
     --foreground: 210 40% 98%;
 
-    --card: 240 10% 12%;
+    --card: 224 40% 12%;
     --card-foreground: 210 40% 98%;
 
-    --popover: 222.2 84% 4.9%;
+    --popover: 222.2 84% 5%;
     --popover-foreground: 210 40% 98%;
 
-    --primary: 210 40% 98%;
+    --primary: 217.2 91.2% 59.8%;
     --primary-foreground: 222.2 47.4% 11.2%;
 
-    --secondary: 217.2 32.6% 17.5%;
+    --secondary: 217.2 32.6% 20%;
     --secondary-foreground: 210 40% 98%;
 
     --muted: 217.2 32.6% 17.5%;
@@ -72,15 +72,15 @@
 
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
+    --ring: 224.3 76.3% 48%;
     
-    --sidebar-background: 240 10% 8%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 214 100% 70%;
+    --sidebar-background: 224 40% 10%;
+    --sidebar-foreground: 210 40% 98%;
+    --sidebar-primary: 217.2 91.2% 59.8%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 10% 12%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 10% 14%;
+    --sidebar-accent: 224 40% 14%;
+    --sidebar-accent-foreground: 210 40% 98%;
+    --sidebar-border: 224 40% 16%;
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
 }
@@ -96,9 +96,50 @@
 }
 
 .glass-morphism {
-  @apply backdrop-blur-lg bg-black/30 border border-white/10 shadow-lg;
+  @apply backdrop-blur-lg bg-black/40 border border-white/10 shadow-lg;
 }
 
 .card-gradient {
   @apply bg-gradient-to-br from-card via-card to-secondary/80 backdrop-blur-sm;
+}
+
+/* Apple-inspired animations */
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 0 rgba(59, 130, 246, 0.2); }
+  50% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.4); }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 3s ease-in-out infinite;
+}
+
+/* Modern hover effects */
+.hover-lift {
+  @apply transition-all duration-300;
+}
+
+.hover-lift:hover {
+  @apply -translate-y-1 shadow-lg;
+}
+
+/* Image overlays */
+.image-overlay {
+  @apply absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent;
+}
+
+/* Health metric colors */
+.health-excellent {
+  @apply text-emerald-400;
+}
+
+.health-good {
+  @apply text-blue-400;
+}
+
+.health-average {
+  @apply text-yellow-400;
+}
+
+.health-poor {
+  @apply text-red-400;
 }

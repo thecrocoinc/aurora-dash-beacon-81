@@ -2,7 +2,7 @@
 import * as React from "react"
 import { useLocation } from "react-router-dom"
 import { useIsMobile } from "@/hooks/use-mobile"
-import { Avatar, AvatarFallback } from "@/components/ui/avatar"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
@@ -11,6 +11,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { Bell, MessageSquare, Search } from "lucide-react"
 
 export function Header() {
   const location = useLocation()
@@ -30,34 +31,51 @@ export function Header() {
   const pageTitle = pathNames[currentPath as keyof typeof pathNames] || "AI-Nutrition"
 
   return (
-    <header className="sticky top-0 z-10 border-b bg-background/80 backdrop-blur">
+    <header className="sticky top-0 z-10 border-b border-white/10 bg-background/80 backdrop-blur">
       <div className="container flex h-16 items-center justify-between py-4">
         <div className="flex flex-1 items-center">
-          <h1 className="ml-2 text-sm font-bold md:text-base bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent">
+          <h1 className="ml-2 text-sm font-bold md:text-base bg-gradient-to-r from-blue-400 to-indigo-500 bg-clip-text text-transparent">
             {pageTitle}
           </h1>
         </div>
         <div className="flex items-center gap-4">
+          {/* App actions */}
+          <div className="hidden md:flex items-center gap-2">
+            <Button variant="ghost" size="icon" className="relative text-muted-foreground hover:text-foreground">
+              <Search className="h-5 w-5" />
+            </Button>
+            <Button variant="ghost" size="icon" className="relative text-muted-foreground hover:text-foreground">
+              <Bell className="h-5 w-5" />
+              <span className="absolute top-0.5 right-0.5 h-2 w-2 rounded-full bg-primary" />
+            </Button>
+            <Button variant="ghost" size="icon" className="relative text-muted-foreground hover:text-foreground">
+              <MessageSquare className="h-5 w-5" />
+              <span className="absolute top-0.5 right-0.5 h-2 w-2 rounded-full bg-primary" />
+            </Button>
+          </div>
+
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="relative h-8 w-8 rounded-full overflow-hidden glass-morphism">
-                <Avatar className="h-8 w-8 border-none">
-                  <AvatarFallback className="bg-transparent text-white">NU</AvatarFallback>
+              <Button variant="ghost" className="relative h-9 w-9 rounded-full overflow-hidden glass-morphism">
+                <Avatar className="h-9 w-9 border-none">
+                  <AvatarImage src="https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=100&h=100&auto=format&fit=crop" alt="User" />
+                  <AvatarFallback className="bg-transparent text-white">ИM</AvatarFallback>
                 </Avatar>
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-56" align="end" forceMount>
+            <DropdownMenuContent className="w-56 bg-card/90 backdrop-blur-lg" align="end" forceMount>
               <DropdownMenuItem className="flex flex-col gap-1.5">
-                <span className="text-sm font-medium leading-none">Guest User</span>
+                <span className="text-sm font-medium leading-none">Ирина Михайлова</span>
                 <span className="text-muted-foreground text-xs">
-                  guest@example.com
+                  irina@example.com
                 </span>
               </DropdownMenuItem>
               <DropdownMenuSeparator />
+              <DropdownMenuItem>Профиль</DropdownMenuItem>
               <DropdownMenuItem>Настройки</DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem>
-                Войти
+                Выйти
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>

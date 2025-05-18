@@ -3,10 +3,14 @@ import { Link, useLocation } from "react-router-dom";
 import { 
   Home, 
   Users, 
-  MessageCircle, 
+  MessageSquare, 
   Settings, 
   Bot, 
-  BarChart2 
+  BarChart2, 
+  Apple,
+  Utensils,
+  Camera,
+  Heart
 } from "lucide-react";
 import {
   Sidebar,
@@ -38,7 +42,7 @@ export function CustomSidebar() {
     },
     {
       name: "Диалоги",
-      icon: MessageCircle,
+      icon: MessageSquare,
       path: "/dialogs",
       description: "Просмотр и ответы на сообщения",
     },
@@ -47,6 +51,33 @@ export function CustomSidebar() {
       icon: BarChart2,
       path: "/biz-agent",
       description: "Метрики конверсии и доходности",
+    },
+  ];
+  
+  const featureItems = [
+    {
+      name: "Здоровье",
+      icon: Heart,
+      path: "/health",
+      description: "Статистика здоровья",
+    },
+    {
+      name: "Интеграции",
+      icon: Apple,
+      path: "/integrations",
+      description: "Подключение устройств",
+    },
+    {
+      name: "Питание",
+      icon: Utensils,
+      path: "/nutrition",
+      description: "Анализ питания",
+    },
+    {
+      name: "AI Сканер",
+      icon: Camera,
+      path: "/scanner",
+      description: "Распознавание еды",
     },
   ];
   
@@ -70,10 +101,10 @@ export function CustomSidebar() {
   };
   
   return (
-    <Sidebar className="w-56 border-r bg-sidebar backdrop-blur">
+    <Sidebar className="w-56 border-r border-white/10 bg-sidebar backdrop-blur">
       <SidebarHeader className="py-6">
         <div className="px-4">
-          <h2 className="text-lg font-semibold text-center bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent">
+          <h2 className="text-lg font-semibold text-center bg-gradient-to-r from-blue-400 to-indigo-500 bg-clip-text text-transparent">
             AI-Nutrition
           </h2>
         </div>
@@ -91,6 +122,27 @@ export function CustomSidebar() {
                 <Link to={item.path} className="flex items-center gap-2">
                   <item.icon className="h-4 w-4" />
                   <span>{item.name}</span>
+                </Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+          ))}
+        </SidebarMenu>
+
+        <SidebarSeparator />
+        
+        <SidebarGroupLabel>Функции</SidebarGroupLabel>
+        <SidebarMenu>
+          {featureItems.map((item) => (
+            <SidebarMenuItem key={item.name}>
+              <SidebarMenuButton 
+                asChild 
+                isActive={isCurrentPath(item.path)}
+                tooltip={item.description}
+              >
+                <Link to={item.path || "#"} className="flex items-center gap-2">
+                  <item.icon className="h-4 w-4" />
+                  <span>{item.name}</span>
+                  {!item.path && <span className="ml-auto text-[10px] bg-primary/20 text-primary px-1.5 py-0.5 rounded-full">Скоро</span>}
                 </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
@@ -116,6 +168,13 @@ export function CustomSidebar() {
             </SidebarMenuItem>
           ))}
         </SidebarMenu>
+        
+        <div className="p-4 mt-4">
+          <div className="rounded-lg p-3 bg-primary/10 text-primary text-xs text-center">
+            <p className="font-medium">Версия 0.9.2</p>
+            <p className="text-primary/70 mt-1">Бета-тестирование</p>
+          </div>
+        </div>
       </SidebarFooter>
     </Sidebar>
   );
