@@ -18,7 +18,7 @@ import { useToast } from "@/components/ui/use-toast"
 import { supabase } from "@/lib/supabase"
 import CustomSidebar from "./CustomSidebar";
 
-export function DashboardLayout({ children }: { children: React.ReactNode }) {
+export function DashboardLayout({ children }: { children?: React.ReactNode }) {
   const { toast } = useToast()
   const [loading, setLoading] = React.useState(false)
   const [name, setName] = React.useState("")
