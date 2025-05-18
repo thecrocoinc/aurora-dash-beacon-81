@@ -1,9 +1,7 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-// import { TooltipProvider } from "@/components/ui/tooltip";
 import { DashboardLayout } from "./components/layout/DashboardLayout";
 import Home from "./pages/Home";
 import Profiles from "./pages/Profiles";
@@ -17,26 +15,22 @@ const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    {/* TooltipProvider temporarily commented out to fix build error */}
-    {/* <TooltipProvider> */}
-      <Toaster />
-      <Sonner />
+    <Toaster />
+    <Sonner />
 
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<DashboardLayout />}>
-            <Route index element={<Home />} />
-            <Route path="profiles" element={<Profiles />} />
-            <Route path="profiles/:id" element={<ProfileDetail />} />
-            <Route path="dialogs" element={<Dialogs />} />
-            <Route path="settings" element={<Settings />} />
-            <Route path="biz-agent" element={<BizAgent />} />
-          </Route>
-
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
-    {/* </TooltipProvider> */}
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<DashboardLayout />}>
+          <Route index element={<Home />} />
+          <Route path="profiles" element={<Profiles />} />
+          <Route path="profiles/:id" element={<ProfileDetail />} />
+          <Route path="dialogs" element={<Dialogs />} />
+          <Route path="settings" element={<Settings />} />
+          <Route path="biz-agent" element={<BizAgent />} />
+        </Route>
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </BrowserRouter>
   </QueryClientProvider>
 );
 
