@@ -1,0 +1,56 @@
+
+import { useState } from "react";
+import { fakeMessages } from "@/utils/dummy";
+import ChatBubble from "./ChatBubble";
+import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
+import { Skeleton } from "@/components/ui/skeleton";
+
+type ChatInterfaceProps = {
+  loading?: boolean;
+};
+
+const ChatInterface = ({ loading = false }: ChatInterfaceProps) => {
+  const [message, setMessage] = useState("");
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (message.trim()) {
+      console.log("Send message:", message);
+      setMessage("");
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="flex flex-col space-y-4">
+        {[1, 2, 3].map((i) => (
+          <div key={i} className={`flex w-full mb-4 ${i % 2 === 0 ? "justify-end" : "justify-start"}`}>
+            <Skeleton className={`h-20 ${i % 2 === 0 ? "w-3/4 ml-auto" : "w-2/3"}`} />
+          </div>
+        ))}
+      </div>
+    );
+  }
+
+  return (
+    <div className="flex flex-col h-full">
+      <div className="flex-1 overflow-y-auto p-4 space-y-4">
+        {fakeMessages.map((msg) => (
+          <ChatBubble key={msg.id} message={msg} />
+        ))}
+      </div>
+      <form onSubmit={handleSubmit} className="p-4 border-t flex gap-2">
+        <Textarea
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
+          placeholder="Type your message..."
+          className="resize-none"
+        />
+        <Button type="submit">Send</Button>
+      </form>
+    </div>
+  );
+};
+
+export default ChatInterface;
