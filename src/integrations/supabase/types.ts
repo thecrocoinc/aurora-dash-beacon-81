@@ -9,13 +9,153 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      [_ in never]: never
+      finances: {
+        Row: {
+          date: string | null
+          id: number
+          owner_id: string | null
+          revenue: number | null
+        }
+        Insert: {
+          date?: string | null
+          id?: number
+          owner_id?: string | null
+          revenue?: number | null
+        }
+        Update: {
+          date?: string | null
+          id?: number
+          owner_id?: string | null
+          revenue?: number | null
+        }
+        Relationships: []
+      }
+      meals: {
+        Row: {
+          carb: number | null
+          deleted: boolean | null
+          dish: string | null
+          eaten_at: string | null
+          fat: number | null
+          grams: number | null
+          id: string
+          kcal: number | null
+          photo_id: string | null
+          profile_id: string | null
+          prot: number | null
+        }
+        Insert: {
+          carb?: number | null
+          deleted?: boolean | null
+          dish?: string | null
+          eaten_at?: string | null
+          fat?: number | null
+          grams?: number | null
+          id?: string
+          kcal?: number | null
+          photo_id?: string | null
+          profile_id?: string | null
+          prot?: number | null
+        }
+        Update: {
+          carb?: number | null
+          deleted?: boolean | null
+          dish?: string | null
+          eaten_at?: string | null
+          fat?: number | null
+          grams?: number | null
+          id?: string
+          kcal?: number | null
+          photo_id?: string | null
+          profile_id?: string | null
+          prot?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "meals_profile_id_fkey"
+            columns: ["profile_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      messages: {
+        Row: {
+          content: string | null
+          created_at: string | null
+          id: number
+          profile_id: string | null
+          role: string | null
+        }
+        Insert: {
+          content?: string | null
+          created_at?: string | null
+          id?: number
+          profile_id?: string | null
+          role?: string | null
+        }
+        Update: {
+          content?: string | null
+          created_at?: string | null
+          id?: number
+          profile_id?: string | null
+          role?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "messages_profile_id_fkey"
+            columns: ["profile_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          created_at: string | null
+          goal_type: string | null
+          id: string
+          name: string | null
+          telegram_id: number | null
+          username: string | null
+        }
+        Insert: {
+          avatar_url?: string | null
+          created_at?: string | null
+          goal_type?: string | null
+          id?: string
+          name?: string | null
+          telegram_id?: number | null
+          username?: string | null
+        }
+        Update: {
+          avatar_url?: string | null
+          created_at?: string | null
+          goal_type?: string | null
+          id?: string
+          name?: string | null
+          telegram_id?: number | null
+          username?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      day_summary: {
+        Args: { _pid: string; _d: string }
+        Returns: {
+          kcal: number
+          prot: number
+          fat: number
+          carb: number
+        }[]
+      }
     }
     Enums: {
       [_ in never]: never

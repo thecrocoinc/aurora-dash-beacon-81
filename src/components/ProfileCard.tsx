@@ -2,10 +2,18 @@
 import React from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card, CardContent } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 import { Profile } from "@/utils/dummy";
 
 type ProfileCardProps = {
-  profile: Profile;
+  profile: {
+    id: string;
+    name: string;
+    avatar?: string | null;
+    kcalRatio: number;
+    currentKcal?: number;
+    dailyGoal?: number;
+  };
 };
 
 const ProfileCard = ({ profile }: ProfileCardProps) => {
@@ -14,12 +22,17 @@ const ProfileCard = ({ profile }: ProfileCardProps) => {
     .map((n) => n[0])
     .join("");
 
+  const kcalPercentage = Math.round((profile.kcalRatio || 0) * 100);
+
   return (
     <Card className="mb-4">
       <CardContent className="p-4">
         <div className="flex items-center gap-4">
           <Avatar>
-            <AvatarImage src={`${profile.avatar}?w=80&h=80&fit=crop&crop=faces`} alt={profile.name} />
+            <AvatarImage 
+              src={profile.avatar ? `${profile.avatar}?w=80&h=80&fit=crop&crop=faces` : undefined} 
+              alt={profile.name} 
+            />
             <AvatarFallback>{initials}</AvatarFallback>
           </Avatar>
           <div className="flex-1">
@@ -29,11 +42,11 @@ const ProfileCard = ({ profile }: ProfileCardProps) => {
               <div className="h-2 bg-zinc-200 rounded-full overflow-hidden">
                 <div
                   className="h-full bg-green-500 rounded-full"
-                  style={{ width: `${profile.kcalRatio * 100}%` }}
+                  style={{ width: `${kcalPercentage}%` }}
                 />
               </div>
               <div className="text-xs text-muted-foreground mt-1">
-                {Math.round(profile.kcalRatio * 100)}% of daily goal
+                {kcalPercentage}% of daily goal
               </div>
             </div>
           </div>

@@ -2,12 +2,51 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import ProfileCard from "@/components/ProfileCard";
-import { fakeProfiles } from "@/utils/dummy";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useQuery } from "@tanstack/react-query";
+import { supabase } from "@/lib/supabase";
+import { format } from "date-fns";
 
 const Profiles = () => {
-  const [loading, setLoading] = useState(false);
+  // Get today's date in YYYY-MM-DD format for the day_summary RPC call
+  const today = format(new Date(), "yyyy-MM-dd");
+  
+  // Fetch profiles from Supabase
+  const { data: profiles, isLoading } = useQuery({
+    queryKey: ['profiles'],
+    queryFn: async () => {
+      const { data: profilesData, error } = await supabase
+        .from('profiles')
+        .select('id,name,avatar_url');
+      
+      if (error) throw error;
+      
+      // For each profile, fetch their daily summary to calculate kcal ratio
+      const profilesWithKcal = await Promise.all(
+        profilesData.map(async (profile) => {
+          const { data: summaryData } = await supabase
+            .rpc('day_summary', { 
+              _pid: profile.id, 
+              _d: today 
+            });
+          
+          // Get the summary data or default values
+          const summary = summaryData?.[0] || { kcal: 0, prot: 0, fat: 0, carb: 0 };
+          const dailyGoal = 2000; // Default goal
+          
+          return {
+            ...profile,
+            kcalRatio: summary.kcal / dailyGoal, // Calculate the ratio
+            currentKcal: summary.kcal,
+            dailyGoal
+          };
+        })
+      );
+      
+      return profilesWithKcal;
+    }
+  });
 
   return (
     <div className="space-y-6">
@@ -21,7 +60,7 @@ const Profiles = () => {
           <CardDescription>A list of all user profiles in your organization.</CardDescription>
         </CardHeader>
         <CardContent>
-          {loading ? (
+          {isLoading ? (
             <div className="space-y-4">
               {[1, 2, 3].map((i) => (
                 <div key={i} className="flex items-center space-x-4">
@@ -35,11 +74,25 @@ const Profiles = () => {
             </div>
           ) : (
             <div className="space-y-4">
-              {fakeProfiles.map((profile) => (
+              {profiles?.map((profile) => (
                 <Link key={profile.id} to={`/profiles/${profile.id}`}>
-                  <ProfileCard profile={profile} />
+                  <ProfileCard 
+                    profile={{
+                      id: profile.id,
+                      name: profile.name || 'Unnamed User',
+                      avatar: profile.avatar_url,
+                      kcalRatio: profile.kcalRatio,
+                      currentKcal: profile.currentKcal,
+                      dailyGoal: profile.dailyGoal
+                    }} 
+                  />
                 </Link>
               ))}
+              {profiles?.length === 0 && (
+                <p className="text-muted-foreground py-4 text-center">
+                  No profiles found. Add profiles in your Supabase database.
+                </p>
+              )}
             </div>
           )}
         </CardContent>
