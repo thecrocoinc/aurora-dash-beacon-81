@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
@@ -107,15 +106,20 @@ const ProfileDetail = () => {
       <div className="flex items-start justify-between">
         <div className="flex items-center gap-4">
           <Avatar className="h-20 w-20">
-            <AvatarImage src={profile.avatar_url ? `${profile.avatar_url}?w=160&h=160&fit=crop&crop=faces` : undefined} alt={profile.name} />
-            <AvatarFallback className="text-2xl">{initials}</AvatarFallback>
+            <AvatarImage src={profile?.avatar_url ? `${profile.avatar_url}?w=160&h=160&fit=crop&crop=faces` : undefined} alt={profile?.name} />
+            <AvatarFallback className="text-2xl">{profile?.name
+              ? profile.name
+                  .split(" ")
+                  .map((n) => n[0])
+                  .join("")
+              : "?"}</AvatarFallback>
           </Avatar>
           <div>
-            <h1 className="text-3xl font-bold tracking-tight">{profile.name}</h1>
-            <p className="text-muted-foreground">ID: {profile.id}</p>
+            <h1 className="text-3xl font-bold tracking-tight">{profile?.name}</h1>
+            <p className="text-muted-foreground">ID: {profile?.id}</p>
           </div>
         </div>
-        <Select defaultValue={profile.goal_type || "Maintain"}>
+        <Select defaultValue={profile?.goal_type || "Maintain"}>
           <SelectTrigger className="w-[180px]">
             <SelectValue placeholder="Goal type" />
           </SelectTrigger>
@@ -140,7 +144,7 @@ const ProfileDetail = () => {
                 <CardDescription>Calorie intake progress</CardDescription>
               </CardHeader>
               <CardContent className="flex justify-center">
-                <KcalRing value={summary.kcal} target={dailyGoal} />
+                <KcalRing value={summary?.kcal || 0} target={dailyGoal} />
               </CardContent>
             </Card>
             
@@ -156,7 +160,7 @@ const ProfileDetail = () => {
                       <Skeleton key={i} className="h-40 w-full rounded-md" />
                     ))}
                   </div>
-                ) : meals?.length > 0 ? (
+                ) : meals && meals.length > 0 ? (
                   <div className="grid grid-cols-2 gap-4">
                     {meals.map(meal => (
                       <MealTile key={meal.id} meal={meal} />
@@ -176,7 +180,7 @@ const ProfileDetail = () => {
               <CardDescription>Chat with your nutrition coach</CardDescription>
             </CardHeader>
             <CardContent className="h-[calc(100%-96px)]">
-              <ChatInterface />
+              <ChatInterface profileId={id} />
             </CardContent>
           </Card>
         </TabsContent>
