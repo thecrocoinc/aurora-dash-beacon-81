@@ -8,6 +8,14 @@ import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/lib/supabase";
 import { format } from "date-fns";
 
+// Define a proper type for profile data
+interface ProfileData {
+  id: string;
+  name: string | null;
+  avatar_url: string | null;
+  watch_connected: boolean | null;
+}
+
 const Profiles = () => {
   // Get today's date in YYYY-MM-DD format for the day_summary RPC call
   const today = format(new Date(), "yyyy-MM-dd");
@@ -24,7 +32,7 @@ const Profiles = () => {
       
       // For each profile, fetch their daily summary to calculate kcal ratio
       const profilesWithKcal = await Promise.all(
-        (profilesData || []).map(async (profile) => {
+        (profilesData || []).map(async (profile: ProfileData) => {
           const { data: summaryData } = await supabase
             .rpc('day_summary', { 
               _pid: profile.id, 
@@ -36,7 +44,10 @@ const Profiles = () => {
           const dailyGoal = 2000; // Default goal
           
           return {
-            ...profile,
+            id: profile.id,
+            name: profile.name || 'Unnamed User',
+            avatar: profile.avatar_url,
+            watch_connected: profile.watch_connected,
             kcalRatio: summary.kcal / dailyGoal, // Calculate the ratio
             currentKcal: summary.kcal,
             dailyGoal,
@@ -82,8 +93,8 @@ const Profiles = () => {
                   <ProfileCard 
                     profile={{
                       id: profile.id,
-                      name: profile.name || 'Unnamed User',
-                      avatar: profile.avatar_url,
+                      name: profile.name,
+                      avatar: profile.avatar,
                       kcalRatio: profile.kcalRatio,
                       currentKcal: profile.currentKcal,
                       dailyGoal: profile.dailyGoal,
