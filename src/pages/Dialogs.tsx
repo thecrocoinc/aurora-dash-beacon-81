@@ -19,10 +19,13 @@ type Dialog = {
   unread: number;
 };
 
+// Updated type to match what get_latest_messages_by_profile actually returns
 type DatabaseDialog = {
   profile_id: string;
+  avatar_url: string;
+  name: string;
+  last_message: string;
   ts: string;
-  last: string;
 };
 
 const Dialogs = () => {
@@ -44,26 +47,14 @@ const Dialogs = () => {
         return [];
       }
 
-      // Get profile info for each dialog
-      const profileIds = dialogsData.map((d: { profile_id: string }) => d.profile_id);
-      const { data: profilesData, error: profilesError } = await supabase
-        .from('profiles')
-        .select('id, name, avatar_url')
-        .in('id', profileIds);
-
-      if (profilesError) {
-        throw profilesError;
-      }
-
       // Combine the dialog and profile data
       return dialogsData.map((dialog: DatabaseDialog) => {
-        const profile = profilesData.find((p: { id: string }) => p.id === dialog.profile_id);
         return {
           id: dialog.profile_id,
-          name: profile?.name || "Unknown",
-          avatar: profile?.avatar_url || "",
+          name: dialog.name || "Unknown",
+          avatar: dialog.avatar_url || "",
           timestamp: new Date(dialog.ts),
-          lastMessage: dialog.last,
+          lastMessage: dialog.last_message,
           unread: 0 // For now, we're not tracking unread messages
         };
       });
