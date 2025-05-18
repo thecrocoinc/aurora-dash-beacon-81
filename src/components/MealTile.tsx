@@ -8,12 +8,12 @@ type MealProps = {
   id: string;
   dish: string | null;
   grams: number | null;
-  kcal: number | null;
-  prot: number | null;
-  fat: number | null;
-  carb: number | null;
   eaten_at: string | null;
   photo_id: string | null;
+  kcal?: number | null;
+  prot?: number | null;
+  fat?: number | null;
+  carb?: number | null;
 };
 
 type MealTileProps = {
