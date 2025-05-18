@@ -1,21 +1,72 @@
 
 import { useState } from "react";
 import { useParams } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import { format } from "date-fns";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { fakeProfiles, fakeMeals } from "@/utils/dummy";
+import { Skeleton } from "@/components/ui/skeleton";
+import { supabase } from "@/lib/supabase";
 import KcalRing from "@/components/KcalRing";
 import MealTile from "@/components/MealTile";
 import ChatInterface from "@/components/ChatInterface";
-import { Skeleton } from "@/components/ui/skeleton";
 
 const ProfileDetail = () => {
   const { id } = useParams<{ id: string }>();
-  const [loading, setLoading] = useState(false);
+  const today = format(new Date(), "yyyy-MM-dd");
   
-  const profile = fakeProfiles.find(p => p.id === id);
+  // Fetch profile data
+  const { data: profile, isLoading: profileLoading } = useQuery({
+    queryKey: ['profile', id],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('profiles')
+        .select('id, name, avatar_url, goal_type')
+        .eq('id', id)
+        .single();
+      
+      if (error) throw error;
+      return data;
+    },
+    enabled: !!id
+  });
+
+  // Fetch day summary for calories
+  const { data: summary, isLoading: summaryLoading } = useQuery({
+    queryKey: ['day-summary', id, today],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .rpc('day_summary', { 
+          _pid: id, 
+          _d: today 
+        });
+      
+      if (error) throw error;
+      return data?.[0] || { kcal: 0, prot: 0, fat: 0, carb: 0 };
+    },
+    enabled: !!id
+  });
+
+  // Fetch meals for this profile
+  const { data: meals, isLoading: mealsLoading } = useQuery({
+    queryKey: ['profile-meals', id],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('meals')
+        .select('dish,grams,photo_id,kcal,prot,fat,carb,eaten_at,id')
+        .eq('profile_id', id)
+        .order('eaten_at', { ascending: false })
+        .limit(20);
+      
+      if (error) throw error;
+      return data || [];
+    },
+    enabled: !!id
+  });
+
+  const loading = profileLoading || summaryLoading || mealsLoading;
 
   if (loading) {
     return (
@@ -44,16 +95,19 @@ const ProfileDetail = () => {
   }
 
   const initials = profile.name
-    .split(" ")
+    ?.split(" ")
     .map((n) => n[0])
-    .join("");
+    .join("") || "";
+
+  // Default daily goal
+  const dailyGoal = 2000;
 
   return (
     <div className="space-y-6">
       <div className="flex items-start justify-between">
         <div className="flex items-center gap-4">
           <Avatar className="h-20 w-20">
-            <AvatarImage src={`${profile.avatar}?w=160&h=160&fit=crop&crop=faces`} alt={profile.name} />
+            <AvatarImage src={profile.avatar_url ? `${profile.avatar_url}?w=160&h=160&fit=crop&crop=faces` : undefined} alt={profile.name} />
             <AvatarFallback className="text-2xl">{initials}</AvatarFallback>
           </Avatar>
           <div>
@@ -61,7 +115,7 @@ const ProfileDetail = () => {
             <p className="text-muted-foreground">ID: {profile.id}</p>
           </div>
         </div>
-        <Select defaultValue={profile.goalType}>
+        <Select defaultValue={profile.goal_type || "Maintain"}>
           <SelectTrigger className="w-[180px]">
             <SelectValue placeholder="Goal type" />
           </SelectTrigger>
@@ -86,7 +140,7 @@ const ProfileDetail = () => {
                 <CardDescription>Calorie intake progress</CardDescription>
               </CardHeader>
               <CardContent className="flex justify-center">
-                <KcalRing value={profile.currentKcal} target={profile.dailyGoal} />
+                <KcalRing value={summary.kcal} target={dailyGoal} />
               </CardContent>
             </Card>
             
@@ -96,11 +150,21 @@ const ProfileDetail = () => {
                 <CardDescription>Logged food items</CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="grid grid-cols-2 gap-4">
-                  {fakeMeals.map(meal => (
-                    <MealTile key={meal.id} meal={meal} />
-                  ))}
-                </div>
+                {mealsLoading ? (
+                  <div className="grid grid-cols-2 gap-4">
+                    {[1, 2, 3, 4].map(i => (
+                      <Skeleton key={i} className="h-40 w-full rounded-md" />
+                    ))}
+                  </div>
+                ) : meals?.length > 0 ? (
+                  <div className="grid grid-cols-2 gap-4">
+                    {meals.map(meal => (
+                      <MealTile key={meal.id} meal={meal} />
+                    ))}
+                  </div>
+                ) : (
+                  <p className="text-center text-muted-foreground py-8">No meals recorded</p>
+                )}
               </CardContent>
             </Card>
           </div>
