@@ -9,6 +9,24 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      bot_settings: {
+        Row: {
+          owner_id: string
+          system_prompt: string | null
+          temperature: number | null
+        }
+        Insert: {
+          owner_id?: string
+          system_prompt?: string | null
+          temperature?: number | null
+        }
+        Update: {
+          owner_id?: string
+          system_prompt?: string | null
+          temperature?: number | null
+        }
+        Relationships: []
+      }
       finances: {
         Row: {
           date: string | null
