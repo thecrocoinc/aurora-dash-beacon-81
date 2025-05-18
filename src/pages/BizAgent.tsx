@@ -1,6 +1,7 @@
 
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 type FeatureCardProps = {
   icon: string;
@@ -41,29 +42,80 @@ const FeatureCard = ({ icon, title, description, tooltip }: FeatureCardProps) =>
 const BizAgent = () => {
   return (
     <div className="space-y-6">
-      <h1 className="text-3xl font-bold tracking-tight">BizAgent</h1>
+      <h1 className="text-3xl font-bold tracking-tight">Бизнес-центр</h1>
       <p className="text-muted-foreground">
-        AI agent for business operations.
+        Управление, оптимизация и рост вашего бизнеса нутрициологии.
       </p>
       
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <FeatureCard 
-          icon="⚡" 
-          title="Code" 
-          description="Generate and patch code snippets for your nutrition app and integrations." 
-        />
-        <FeatureCard 
-          icon="📈" 
-          title="Promote" 
-          description="Draft social posts and ads to engage more users with your nutrition content." 
-        />
-        <FeatureCard 
-          icon="🔄" 
-          title="Voice" 
-          description="Connect new integrations on voice command to extend your nutrition platform."
-          tooltip="Trigger ⌘K – Coming soon"
-        />
-      </div>
+      <Tabs defaultValue="tools">
+        <TabsList className="mb-4">
+          <TabsTrigger value="tools">Инструменты</TabsTrigger>
+          <TabsTrigger value="revenue">Доходность</TabsTrigger>
+          <TabsTrigger value="automation">Автоматизация</TabsTrigger>
+        </TabsList>
+        
+        <TabsContent value="tools" className="space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <FeatureCard 
+              icon="⚡" 
+              title="Генерация контента" 
+              description="Создание персонализированных планов питания и рекомендаций" 
+            />
+            <FeatureCard 
+              icon="📈" 
+              title="Маркетинг" 
+              description="Автоматизация рассылок и кампаний для привлечения клиентов" 
+            />
+            <FeatureCard 
+              icon="🔄" 
+              title="Голосовой помощник" 
+              description="Управление бизнесом с помощью голосовых команд"
+              tooltip="Нажмите ⌘K – Скоро будет доступно"
+            />
+            <FeatureCard 
+              icon="💰" 
+              title="Монетизация" 
+              description="Инструменты для создания и продажи премиум-предложений" 
+            />
+            <FeatureCard 
+              icon="📊" 
+              title="Аналитика" 
+              description="Отчеты и инсайты для оптимизации бизнес-процессов" 
+            />
+            <FeatureCard 
+              icon="🤖" 
+              title="AI-ассистент" 
+              description="Персональный помощник для автоматизации рутинных задач" 
+            />
+          </div>
+        </TabsContent>
+        
+        <TabsContent value="revenue">
+          <Card>
+            <CardHeader>
+              <CardTitle>Доходность и конверсия</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-center text-muted-foreground py-10">
+                Скоро здесь появятся детальные отчеты о доходности и конверсии. Оставайтесь на связи!
+              </p>
+            </CardContent>
+          </Card>
+        </TabsContent>
+        
+        <TabsContent value="automation">
+          <Card>
+            <CardHeader>
+              <CardTitle>Автоматизация бизнес-процессов</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-center text-muted-foreground py-10">
+                Скоро здесь появятся инструменты для автоматизации бизнес-процессов. Оставайтесь на связи!
+              </p>
+            </CardContent>
+          </Card>
+        </TabsContent>
+      </Tabs>
     </div>
   );
 };
