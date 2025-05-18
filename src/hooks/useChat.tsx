@@ -2,7 +2,6 @@
 import { useState, useEffect } from "react";
 import { supabase } from "@/lib/supabase";
 import type { Message } from "@/utils/dummy";
-import { format } from "date-fns";
 
 interface DatabaseMessage {
   id: number;
@@ -48,7 +47,7 @@ export const useChat = (profileId: string | undefined) => {
             text: msg.content,
             timestamp: new Date(msg.created_at),
             isUser: msg.role === "user",
-            senderId: profileId // Add the missing senderId property
+            senderId: profileId
           })
         );
 
@@ -66,7 +65,7 @@ export const useChat = (profileId: string | undefined) => {
 
     // Subscribe to new messages for this profile
     const channel = supabase
-      .channel("messages")
+      .channel(`msgs_${profileId}`)
       .on(
         "postgres_changes",
         {
