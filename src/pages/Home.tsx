@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { WeeklyKcalTrend } from "@/components/WeeklyKcalTrend";
 import { NavLink } from "react-router-dom";
 import { BarChart2, Bot, MessageCircle, Users } from "lucide-react";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function Home() {
   // Основные разделы для быстрой навигации
@@ -64,7 +65,7 @@ export default function Home() {
       {/* Быстрая навигация по ключевым разделам */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {quickLinks.map((link) => (
-          <NavLink key={link.title} to={link.path}>
+          <NavLink key={link.title} to={link.path} className="block">
             <Card className="h-full hover:shadow-md transition-shadow overflow-hidden">
               <div className={`h-2 bg-gradient-to-r ${link.color}`}></div>
               <CardContent className="pt-6">
