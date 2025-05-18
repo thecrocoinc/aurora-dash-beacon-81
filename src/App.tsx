@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -10,14 +11,14 @@ import Dialogs from "./pages/Dialogs";
 import Settings from "./pages/Settings";
 import BizAgent from "./pages/BizAgent";
 import NotFound from "./pages/NotFound";
-import * as TooltipPrimitive from "@radix-ui/react-tooltip";
+import { TooltipProvider } from "@/components/ui/tooltip";
 
 const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    {/* Tooltip provider must wrap its children to satisfy TypeScript */}
-    <TooltipPrimitive.Provider delayDuration={0}>
+    {/* Use TooltipProvider from our UI library */}
+    <TooltipProvider>
       <Toaster />
       <Sonner />
 
@@ -35,7 +36,7 @@ const App = () => (
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
-    </TooltipPrimitive.Provider>
+    </TooltipProvider>
   </QueryClientProvider>
 );
 
