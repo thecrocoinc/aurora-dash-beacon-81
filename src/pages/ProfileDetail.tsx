@@ -1,4 +1,5 @@
-import { useState } from "react";
+
+import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { format } from "date-fns";
@@ -11,10 +12,14 @@ import { supabase } from "@/lib/supabase";
 import KcalRing from "@/components/KcalRing";
 import MealTile from "@/components/MealTile";
 import ChatInterface from "@/components/ChatInterface";
+import MasonryGrid from "@/components/MasonryGrid";
+import MealGridSkeleton from "@/components/MealGridSkeleton";
 
 const ProfileDetail = () => {
   const { id } = useParams<{ id: string }>();
   const today = format(new Date(), "yyyy-MM-dd");
+  const [kcalRatio, setKcalRatio] = useState(0);
+  const [dailyGoal, setDailyGoal] = useState(2000);
   
   // Fetch profile data
   const { data: profile, isLoading: profileLoading } = useQuery({
@@ -48,13 +53,20 @@ const ProfileDetail = () => {
     enabled: !!id
   });
 
+  // Update kcalRatio when summary changes
+  useEffect(() => {
+    if (summary) {
+      setKcalRatio(summary.kcal / dailyGoal || 0);
+    }
+  }, [summary, dailyGoal]);
+
   // Fetch meals for this profile
   const { data: meals, isLoading: mealsLoading } = useQuery({
     queryKey: ['profile-meals', id],
     queryFn: async () => {
       const { data, error } = await supabase
         .from('meals')
-        .select('dish,grams,photo_id,kcal,prot,fat,carb,eaten_at,id')
+        .select('id,dish,grams,photo_id,eaten_at,kcal,prot,fat,carb')
         .eq('profile_id', id)
         .order('eaten_at', { ascending: false })
         .limit(20);
@@ -67,7 +79,7 @@ const ProfileDetail = () => {
 
   const loading = profileLoading || summaryLoading || mealsLoading;
 
-  if (loading) {
+  if (loading && !meals) {
     return (
       <div className="space-y-6">
         <div className="flex items-center gap-4">
@@ -98,21 +110,13 @@ const ProfileDetail = () => {
     .map((n) => n[0])
     .join("") || "";
 
-  // Default daily goal
-  const dailyGoal = 2000;
-
   return (
     <div className="space-y-6">
       <div className="flex items-start justify-between">
         <div className="flex items-center gap-4">
           <Avatar className="h-20 w-20">
             <AvatarImage src={profile?.avatar_url ? `${profile.avatar_url}?w=160&h=160&fit=crop&crop=faces` : undefined} alt={profile?.name} />
-            <AvatarFallback className="text-2xl">{profile?.name
-              ? profile.name
-                  .split(" ")
-                  .map((n) => n[0])
-                  .join("")
-              : "?"}</AvatarFallback>
+            <AvatarFallback className="text-2xl">{initials}</AvatarFallback>
           </Avatar>
           <div>
             <h1 className="text-3xl font-bold tracking-tight">{profile?.name}</h1>
@@ -155,17 +159,9 @@ const ProfileDetail = () => {
               </CardHeader>
               <CardContent>
                 {mealsLoading ? (
-                  <div className="grid grid-cols-2 gap-4">
-                    {[1, 2, 3, 4].map(i => (
-                      <Skeleton key={i} className="h-40 w-full rounded-md" />
-                    ))}
-                  </div>
+                  <MealGridSkeleton />
                 ) : meals && meals.length > 0 ? (
-                  <div className="grid grid-cols-2 gap-4">
-                    {meals.map(meal => (
-                      <MealTile key={meal.id} meal={meal} />
-                    ))}
-                  </div>
+                  <MasonryGrid meals={meals} />
                 ) : (
                   <p className="text-center text-muted-foreground py-8">No meals recorded</p>
                 )}
