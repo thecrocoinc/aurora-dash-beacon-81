@@ -7,7 +7,7 @@ import { Outlet } from "react-router-dom"
 
 export function DashboardLayout({ children }: { children?: React.ReactNode }) {
   return (
-    <div className="flex min-h-screen">
+    <div className="flex min-h-screen bg-background">
       <SidebarProvider>
         <CustomSidebar />
         <div className="flex-1">

@@ -8,7 +8,7 @@ import { BarChart2, Bot, MessageCircle, Users } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 
 export default function Home() {
-  // Основные разделы для быстрой навигации
+  // Основные разделы для быстрой навигации - синхронизированы с боковым меню
   const quickLinks = [
     {
       title: "Клиенты",
@@ -42,7 +42,8 @@ export default function Home() {
 
   return (
     <section className="space-y-8">
-      <div className="rounded-3xl bg-gradient-to-r from-emerald-500 via-lime-500 to-yellow-300 p-10 text-white">
+      <div className="rounded-3xl glass-morphism p-10 text-white overflow-hidden relative">
+        <div className="absolute inset-0 bg-gradient-to-r from-blue-600/80 via-purple-600/80 to-violet-600/80 z-[-1]"></div>
         <h1 className="text-3xl font-bold">AI-Nutrition Console</h1>
         <p className="mt-2 text-lg max-w-2xl">
           Track meals, coach with GPT-4o and grow revenue — all in one dashboard.
@@ -53,7 +54,7 @@ export default function Home() {
       <StatsGrid />
       
       {/* График роста */}
-      <Card>
+      <Card className="card-gradient">
         <CardHeader>
           <CardTitle>Недельная активность</CardTitle>
         </CardHeader>
@@ -66,12 +67,12 @@ export default function Home() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {quickLinks.map((link) => (
           <NavLink key={link.title} to={link.path} className="block">
-            <Card className="h-full hover:shadow-md transition-shadow overflow-hidden">
-              <div className={`h-2 bg-gradient-to-r ${link.color}`}></div>
+            <Card className="h-full hover:shadow-md transition-shadow overflow-hidden card-gradient">
+              <div className={`h-1.5 bg-gradient-to-r ${link.color}`}></div>
               <CardContent className="pt-6">
                 <div className="flex flex-col items-center text-center space-y-3">
-                  <div className="p-3 bg-primary/10 rounded-full">
-                    <link.icon className="h-6 w-6 text-primary" />
+                  <div className="p-3 rounded-full glass-morphism">
+                    <link.icon className="h-5 w-5 text-white" />
                   </div>
                   <h3 className="font-medium">{link.title}</h3>
                   <p className="text-sm text-muted-foreground">{link.description}</p>
