@@ -65,7 +65,7 @@ export function CustomSidebar() {
   };
   
   return (
-    <Sidebar>
+    <Sidebar className="w-56 bg-zinc-950/90">
       <SidebarContent>
         <SidebarMenu>
           {menuItems.map((item) => (

@@ -1,9 +1,13 @@
 
 import { Card, CardContent } from "@/components/ui/card";
 import { NavLink } from "react-router-dom";
-import { Bot, MessageCircle, Settings, Users } from "lucide-react";
+import { Bot, HeartPulse, MessageCircle, Settings, Users } from "lucide-react";
+import EmptyState from "@/components/EmptyState";
 
 const Home = () => {
+  // Simulate no data scenario (remove this line when implementing actual data fetching)
+  const hasData = false;
+
   const menuItems = [
     {
       title: "Profiles",
@@ -38,23 +42,35 @@ const Home = () => {
         Welcome to Nutrio Dashboard. Select a menu option to continue.
       </p>
 
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-        {menuItems.map((item) => (
-          <NavLink key={item.title} to={item.path}>
-            <Card className="hover:bg-accent/50 transition-colors duration-200 h-full">
-              <CardContent className="pt-6">
-                <div className="flex flex-col items-center text-center space-y-2">
-                  <div className="p-2 bg-primary/10 rounded-full">
-                    <item.icon className="h-6 w-6 text-primary" />
+      {hasData ? (
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+          {menuItems.map((item) => (
+            <NavLink key={item.title} to={item.path}>
+              <Card className="hover:bg-accent/50 transition-colors duration-200 h-full">
+                <CardContent className="pt-6">
+                  <div className="flex flex-col items-center text-center space-y-2">
+                    <div className="p-2 bg-primary/10 rounded-full">
+                      <item.icon className="h-6 w-6 text-primary" />
+                    </div>
+                    <h3 className="font-medium">{item.title}</h3>
+                    <p className="text-sm text-muted-foreground">{item.description}</p>
                   </div>
-                  <h3 className="font-medium">{item.title}</h3>
-                  <p className="text-sm text-muted-foreground">{item.description}</p>
-                </div>
-              </CardContent>
-            </Card>
-          </NavLink>
-        ))}
-      </div>
+                </CardContent>
+              </Card>
+            </NavLink>
+          ))}
+        </div>
+      ) : (
+        <Card>
+          <CardContent className="py-10">
+            <EmptyState
+              icon={HeartPulse}
+              title="Healthy starts here"
+              description="Connect your bot to see live stats"
+            />
+          </CardContent>
+        </Card>
+      )}
     </div>
   );
 };

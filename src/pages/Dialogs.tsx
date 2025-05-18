@@ -11,6 +11,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { MessageCircle } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/lib/supabase";
+import EmptyState from "@/components/EmptyState";
 
 type Dialog = {
   id: string;
@@ -140,15 +141,11 @@ const Dialogs = () => {
               })}
             </div>
           ) : (
-            <div className="py-12 flex flex-col items-center justify-center text-center">
-              <div className="bg-muted/30 p-4 rounded-full mb-4">
-                <MessageCircle className="h-8 w-8 text-muted-foreground" />
-              </div>
-              <h3 className="text-lg font-medium">No chats yet</h3>
-              <p className="text-muted-foreground mt-1">
-                Talk to the bot to start a conversation
-              </p>
-            </div>
+            <EmptyState 
+              icon={MessageCircle}
+              title="No dialogs yet"
+              description="Talk to the bot to start a conversation"
+            />
           )}
         </CardContent>
       </Card>
