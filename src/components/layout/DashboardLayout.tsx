@@ -12,7 +12,7 @@ export function DashboardLayout({ children }: { children?: React.ReactNode }) {
         <div className="flex-1">
           <Header />
           <main className="flex-1 p-6">
-            <div className="max-w-6xl mx-auto py-10 px-6">{children}</div>
+            <div className="max-w-6xl mx-auto py-10 px-6 space-y-10">{children}</div>
           </main>
         </div>
       </SidebarProvider>

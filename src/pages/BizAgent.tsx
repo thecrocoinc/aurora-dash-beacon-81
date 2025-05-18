@@ -1,14 +1,16 @@
 
 import { Card, CardContent } from "@/components/ui/card";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 type FeatureCardProps = {
   icon: string;
   title: string;
   description: string;
+  tooltip?: string;
 };
 
-const FeatureCard = ({ icon, title, description }: FeatureCardProps) => {
-  return (
+const FeatureCard = ({ icon, title, description, tooltip }: FeatureCardProps) => {
+  const card = (
     <Card className="rounded-2xl shadow hover:scale-105 transition duration-300">
       <CardContent className="p-6">
         <div className="text-3xl mb-4">{icon}</div>
@@ -17,6 +19,23 @@ const FeatureCard = ({ icon, title, description }: FeatureCardProps) => {
       </CardContent>
     </Card>
   );
+
+  if (tooltip) {
+    return (
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            {card}
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>{tooltip}</p>
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
+    );
+  }
+
+  return card;
 };
 
 const BizAgent = () => {
@@ -40,8 +59,9 @@ const BizAgent = () => {
         />
         <FeatureCard 
           icon="🔄" 
-          title="Automate" 
-          description="Connect new integrations on voice command to extend your nutrition platform." 
+          title="Voice" 
+          description="Connect new integrations on voice command to extend your nutrition platform."
+          tooltip="Trigger ⌘K – Coming soon"
         />
       </div>
     </div>

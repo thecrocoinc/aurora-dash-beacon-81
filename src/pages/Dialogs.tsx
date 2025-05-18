@@ -12,6 +12,8 @@ import { MessageCircle } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/lib/supabase";
 import EmptyState from "@/components/EmptyState";
+import { DialogEmptyState } from "@/components/DialogEmptyState";
+import { toast } from "@/components/ui/use-toast";
 
 type Dialog = {
   id: string;
@@ -75,6 +77,13 @@ const Dialogs = () => {
   const handleDialogClick = (dialogId: string) => {
     setSelectedDialog(dialogId);
     setOpenDrawer(true);
+  };
+  
+  const handlePingBot = () => {
+    toast({
+      title: "Bot notification sent",
+      description: "The bot has been pinged. Check back soon for responses.",
+    });
   };
 
   return (
@@ -141,11 +150,7 @@ const Dialogs = () => {
               })}
             </div>
           ) : (
-            <EmptyState 
-              icon={MessageCircle}
-              title="No dialogs yet"
-              description="Talk to the bot to start a conversation"
-            />
+            <DialogEmptyState onAction={handlePingBot} />
           )}
         </CardContent>
       </Card>

@@ -16,6 +16,8 @@ import MasonryGrid from "@/components/MasonryGrid";
 import MealGridSkeleton from "@/components/MealGridSkeleton";
 import MacroChips from "@/components/MacroChips";
 import MealTilePlaceholder from "@/components/MealTilePlaceholder";
+import { RadarChart } from "@/components/RadarChart";
+import { WaterRing } from "@/components/WaterRing";
 
 const ProfileDetail = () => {
   const { id } = useParams<{ id: string }>();
@@ -145,6 +147,7 @@ const ProfileDetail = () => {
       <Tabs defaultValue="overview">
         <TabsList>
           <TabsTrigger value="overview">Overview</TabsTrigger>
+          <TabsTrigger value="insights">Insights</TabsTrigger>
           <TabsTrigger value="chat">Chat</TabsTrigger>
         </TabsList>
         <TabsContent value="overview" className="mt-6">
@@ -184,6 +187,14 @@ const ProfileDetail = () => {
             </Card>
           </div>
         </TabsContent>
+
+        <TabsContent value="insights" className="mt-6">
+          <div className="grid gap-6 md:grid-cols-2">
+            <RadarChart />
+            <WaterRing />
+          </div>
+        </TabsContent>
+
         <TabsContent value="chat" className="mt-6">
           <Card className="h-[600px]">
             <CardHeader>

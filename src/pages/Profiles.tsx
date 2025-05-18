@@ -7,6 +7,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/lib/supabase";
 import { format } from "date-fns";
+import { EmptyBanner } from "@/components/EmptyBanner";
 
 // Define a proper type for profile data
 interface ProfileData {
@@ -85,9 +86,9 @@ const Profiles = () => {
                 </div>
               ))}
             </div>
-          ) : (
+          ) : profiles && profiles.length > 0 ? (
             <div className="space-y-4">
-              {profiles?.map((profile) => (
+              {profiles.map((profile) => (
                 <Link key={profile.id} to={`/profiles/${profile.id}`}>
                   <ProfileCard 
                     profile={{
@@ -105,12 +106,13 @@ const Profiles = () => {
                   />
                 </Link>
               ))}
-              {profiles?.length === 0 && (
-                <p className="text-muted-foreground py-4 text-center">
-                  No profiles found. Add profiles in your Supabase database.
-                </p>
-              )}
             </div>
+          ) : (
+            <EmptyBanner
+              icon={UserPlus}
+              title="No clients yet"
+              subtitle="Connect your Telegram bot to see live data"
+            />
           )}
         </CardContent>
       </Card>

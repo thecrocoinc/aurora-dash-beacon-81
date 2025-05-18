@@ -65,7 +65,7 @@ export function CustomSidebar() {
   };
   
   return (
-    <Sidebar className="w-56 bg-zinc-950/90">
+    <Sidebar className="w-56 border-r bg-background/80 backdrop-blur">
       <SidebarContent>
         <SidebarMenu>
           {menuItems.map((item) => (
