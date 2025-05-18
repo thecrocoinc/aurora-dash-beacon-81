@@ -24,7 +24,7 @@ const Profiles = () => {
       
       // For each profile, fetch their daily summary to calculate kcal ratio
       const profilesWithKcal = await Promise.all(
-        profilesData.map(async (profile) => {
+        (profilesData || []).map(async (profile) => {
           const { data: summaryData } = await supabase
             .rpc('day_summary', { 
               _pid: profile.id, 
