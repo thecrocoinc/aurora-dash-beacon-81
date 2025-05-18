@@ -23,8 +23,6 @@ type DatabaseDialog = {
   profile_id: string;
   ts: string;
   last: string;
-  name: string;
-  avatar_url: string;
 };
 
 const Dialogs = () => {
@@ -36,8 +34,7 @@ const Dialogs = () => {
     queryFn: async () => {
       // Query for the latest message from each profile
       const { data: dialogsData, error: dialogsError } = await supabase
-        .rpc('get_latest_messages_by_profile')
-        .select();
+        .rpc('get_latest_messages_by_profile');
 
       if (dialogsError) {
         throw dialogsError;
@@ -71,10 +68,11 @@ const Dialogs = () => {
         };
       });
     },
-    // Fall back to empty array on error
-    onError: (error) => {
-      console.error("Error fetching dialogs:", error);
-      return [];
+    meta: {
+      onError: (error: Error) => {
+        console.error("Error fetching dialogs:", error);
+        return [];
+      }
     }
   });
 

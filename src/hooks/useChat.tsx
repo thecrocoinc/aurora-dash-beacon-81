@@ -47,7 +47,8 @@ export const useChat = (profileId: string | undefined) => {
             id: msg.id.toString(),
             text: msg.content,
             timestamp: new Date(msg.created_at),
-            isUser: msg.role === "user"
+            isUser: msg.role === "user",
+            senderId: profileId // Add the missing senderId property
           })
         );
 
@@ -84,7 +85,8 @@ export const useChat = (profileId: string | undefined) => {
               id: newMessage.id.toString(),
               text: newMessage.content,
               timestamp: new Date(newMessage.created_at),
-              isUser: newMessage.role === "user"
+              isUser: newMessage.role === "user",
+              senderId: profileId
             }
           ]);
         }

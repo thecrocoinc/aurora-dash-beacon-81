@@ -156,6 +156,16 @@ export type Database = {
           carb: number
         }[]
       }
+      get_latest_messages_by_profile: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          profile_id: string
+          avatar_url: string
+          name: string
+          last_message: string
+          ts: string
+        }[]
+      }
     }
     Enums: {
       [_ in never]: never
