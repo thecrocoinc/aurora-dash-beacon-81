@@ -18,50 +18,103 @@ interface ProfileData {
 }
 
 const Profiles = () => {
+  const [error, setError] = useState<string | null>(null);
+  
   // Get today's date in YYYY-MM-DD format for the day_summary RPC call
   const today = format(new Date(), "yyyy-MM-dd");
   
   // Fetch profiles from Supabase
-  const { data: profiles, isLoading } = useQuery({
+  const { data: profiles, isLoading, isError } = useQuery({
     queryKey: ['profiles'],
     queryFn: async () => {
-      const { data: profilesData, error } = await supabase
-        .from('profiles')
-        .select('id,name,avatar_url');
-      
-      if (error) throw error;
-      
-      // For each profile, fetch their daily summary to calculate kcal ratio
-      const profilesWithKcal = await Promise.all(
-        (profilesData || []).map(async (profile: ProfileData) => {
-          const { data: summaryData } = await supabase
-            .rpc('day_summary', { 
-              _pid: profile.id, 
-              _d: today 
-            });
-          
-          // Get the summary data or default values
-          const summary = summaryData?.[0] || { kcal: 0, prot: 0, fat: 0, carb: 0 };
-          const dailyGoal = 2000; // Default goal
-          
-          return {
-            id: profile.id,
-            name: profile.name || 'Unnamed User',
-            avatar: profile.avatar_url,
-            watch_connected: false, // Default value since this column doesn't exist
-            kcalRatio: summary.kcal / dailyGoal, // Calculate the ratio
-            currentKcal: summary.kcal,
-            dailyGoal,
-            prot: summary.prot,
-            fat: summary.fat,
-            carb: summary.carb
-          };
-        })
-      );
-      
-      return profilesWithKcal;
-    }
+      try {
+        const { data: profilesData, error } = await supabase
+          .from('profiles')
+          .select('id,name,avatar_url');
+        
+        if (error) {
+          console.error("Error fetching profiles:", error);
+          throw error;
+        }
+        
+        // For each profile, fetch their daily summary to calculate kcal ratio
+        const profilesWithKcal = await Promise.all(
+          (profilesData || []).map(async (profile: ProfileData) => {
+            try {
+              const { data: summaryData, error: summaryError } = await supabase
+                .rpc('day_summary', { 
+                  _pid: profile.id, 
+                  _d: today 
+                });
+              
+              if (summaryError) {
+                console.warn("Error fetching summary for profile:", profile.id, summaryError);
+              }
+              
+              // Get the summary data or default values
+              const summary = summaryData?.[0] || { kcal: 0, prot: 0, fat: 0, carb: 0 };
+              const dailyGoal = 2000; // Default goal
+              
+              return {
+                id: profile.id,
+                name: profile.name || 'Unnamed User',
+                avatar: profile.avatar_url,
+                watch_connected: false, // Default value since this column doesn't exist
+                kcalRatio: summary.kcal / dailyGoal, // Calculate the ratio
+                currentKcal: summary.kcal,
+                dailyGoal,
+                prot: summary.prot,
+                fat: summary.fat,
+                carb: summary.carb
+              };
+            } catch (err) {
+              console.error("Error processing profile summary:", err);
+              return {
+                id: profile.id,
+                name: profile.name || 'Unnamed User',
+                avatar: profile.avatar_url,
+                watch_connected: false,
+                kcalRatio: 0,
+                currentKcal: 0,
+                dailyGoal: 2000,
+                prot: 0,
+                fat: 0,
+                carb: 0
+              };
+            }
+          })
+        );
+        
+        return profilesWithKcal;
+      } catch (err) {
+        console.error("Error in query function:", err);
+        setError(err instanceof Error ? err.message : "Unknown error occurred");
+        return [];
+      }
+    },
+    retry: 1,
+    refetchOnWindowFocus: false
   });
+
+  if (error) {
+    return (
+      <div className="space-y-6">
+        <h1 className="text-3xl font-bold tracking-tight">Profiles</h1>
+        <Card className="p-6">
+          <div className="text-center text-red-500">
+            <p>Произошла ошибка при загрузке данных:</p>
+            <p className="font-mono text-sm">{error}</p>
+            <button 
+              className="mt-4 px-4 py-2 bg-primary text-white rounded" 
+              onClick={() => window.location.reload()}
+            >
+              Обновить страницу
+            </button>
+          </div>
+        </Card>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">
@@ -86,6 +139,16 @@ const Profiles = () => {
                   </div>
                 </div>
               ))}
+            </div>
+          ) : isError ? (
+            <div className="text-center text-red-500 py-8">
+              <p>Не удалось загрузить данные профилей.</p>
+              <button 
+                className="mt-4 px-4 py-2 bg-primary text-white rounded" 
+                onClick={() => window.location.reload()}
+              >
+                Попробовать снова
+              </button>
             </div>
           ) : profiles && profiles.length > 0 ? (
             <div className="space-y-4">
