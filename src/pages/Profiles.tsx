@@ -13,7 +13,6 @@ interface ProfileData {
   id: string;
   name: string | null;
   avatar_url: string | null;
-  watch_connected: boolean | null;
 }
 
 const Profiles = () => {
@@ -26,7 +25,7 @@ const Profiles = () => {
     queryFn: async () => {
       const { data: profilesData, error } = await supabase
         .from('profiles')
-        .select('id,name,avatar_url,watch_connected');
+        .select('id,name,avatar_url');
       
       if (error) throw error;
       
@@ -47,7 +46,7 @@ const Profiles = () => {
             id: profile.id,
             name: profile.name || 'Unnamed User',
             avatar: profile.avatar_url,
-            watch_connected: profile.watch_connected,
+            watch_connected: false, // Default value since this column doesn't exist
             kcalRatio: summary.kcal / dailyGoal, // Calculate the ratio
             currentKcal: summary.kcal,
             dailyGoal,
