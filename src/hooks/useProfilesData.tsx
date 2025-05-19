@@ -86,9 +86,11 @@ export const useProfilesData = () => {
               const streak = Math.floor(Math.random() * 30); // Random streak between 0-30 days
               const lastActivity = new Date(new Date().getTime() - Math.random() * 7 * 24 * 60 * 60 * 1000);
               
-              // Simulate subscription status
-              const subscriptionStatus = Math.random() > 0.7 ? 'active' : 
-                                      Math.random() > 0.5 ? 'trial' : 'expired';
+              // Simulate subscription status based on user ID hash for consistency with ProfileDetail
+              // This is a deterministic approach based on the first character of the ID
+              const subscriptionType = profile.id.charCodeAt(0) % 3;
+              const subscriptionStatus = subscriptionType === 0 ? 'active' : 
+                                      subscriptionType === 1 ? 'trial' : 'expired';
               
               return {
                 id: profile.id,

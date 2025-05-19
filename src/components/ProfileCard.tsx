@@ -5,6 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Watch } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
+import MacroChips from "./MacroChips";
 
 type ProfileCardProps = {
   profile: {
@@ -30,10 +31,21 @@ const ProfileCard = ({ profile }: ProfileCardProps) => {
 
   const kcalPercentage = Math.round((profile.kcalRatio || 0) * 100);
   
-  // Get plan type based on subscription status
+  // Get plan type based on subscription status or ID
   const getPlanBadge = () => {
-    if (!profile.subscription_status) return null;
+    if (!profile.subscription_status) {
+      // Fallback using ID hash for consistency with ProfileDetail
+      const isPremium = profile.id.charCodeAt(0) % 2 === 0;
+      return (
+        <Badge className={`absolute top-3 right-3 ${
+          isPremium ? "bg-purple-600/90" : "bg-blue-600/90"
+        } text-white text-xs`}>
+          {isPremium ? "Premium" : "Basic"}
+        </Badge>
+      );
+    }
     
+    // If subscription_status exists, use it
     switch(profile.subscription_status) {
       case 'active':
         return <Badge className="absolute top-3 right-3 bg-purple-600/90 text-white text-xs">Premium</Badge>;
@@ -88,11 +100,11 @@ const ProfileCard = ({ profile }: ProfileCardProps) => {
                   <span className="font-mono">{profile.currentKcal} / {profile.dailyGoal} ккал</span>
                 )}
               </div>
-              <div className="flex gap-2 text-xs">
-                <span className="rounded-sm bg-blue-500/10 px-2 py-0.5 text-blue-400">Б {profile.prot || 0}</span>
-                <span className="rounded-sm bg-amber-500/10 px-2 py-0.5 text-amber-400">Ж {profile.fat || 0}</span>
-                <span className="rounded-sm bg-green-500/10 px-2 py-0.5 text-green-400">У {profile.carb || 0}</span>
-              </div>
+              <MacroChips 
+                protein={profile.prot} 
+                fat={profile.fat} 
+                carbs={profile.carb}
+              />
             </div>
           </div>
         </div>
