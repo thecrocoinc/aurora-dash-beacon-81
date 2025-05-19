@@ -1,0 +1,73 @@
+
+@tailwind components;
+
+/* Button Styles */
+.btn-primary {
+  @apply bg-gradient-to-br from-[var(--color-primary-start)] to-[var(--color-primary-end)] 
+         text-[var(--color-bg)] shadow 
+         hover:ring-2 hover:ring-[var(--color-accent)/40] 
+         focus:ring-2 focus:ring-[var(--color-accent)/40] 
+         transition-all;
+}
+
+.btn-secondary {
+  @apply border border-[var(--color-surface-muted)] text-[var(--color-text)] bg-transparent hover:bg-[var(--color-surface-muted)/40] transition-all;
+}
+
+/* Base component styles */
+.glass-morphism {
+  @apply backdrop-blur-lg bg-black/30 border border-white/10 shadow;
+}
+
+.apple-glass {
+  @apply backdrop-blur-xl bg-white/10 border border-white/20 shadow;
+}
+
+.card-gradient {
+  @apply bg-[var(--color-surface)] backdrop-blur-sm shadow rounded-[var(--radius)];
+}
+
+.admin-panel-gradient {
+  @apply bg-[var(--color-surface)];
+}
+
+/* Gold gradient classes */
+.gold-gradient {
+  @apply bg-gradient-to-r from-[var(--color-primary-start)] to-[var(--color-primary-end)];
+}
+
+/* Premium gradient */
+.premium-gradient {
+  @apply bg-gradient-to-r from-[var(--color-surface)] to-[var(--color-surface-muted)];
+}
+
+/* Button effects */
+.btn-apple {
+  @apply transition-all duration-300 relative overflow-hidden;
+}
+
+.btn-apple::after {
+  content: '';
+  @apply absolute inset-0 bg-white/10 opacity-0 transition-opacity duration-300;
+}
+
+.btn-apple:hover::after {
+  @apply opacity-100;
+}
+
+/* Premium effects */
+.premium-border {
+  @apply border border-[var(--color-primary-end)/30] shadow-sm;
+}
+
+.premium-card {
+  @apply bg-[var(--color-surface)] backdrop-blur-lg border border-[var(--color-primary-end)/20] shadow;
+}
+
+.premium-button {
+  @apply bg-[var(--color-primary-end)] text-[var(--color-bg)] font-medium hover:bg-[var(--color-primary-start)] transition-colors;
+}
+
+.premium-text {
+  @apply text-transparent bg-clip-text bg-gradient-to-r from-[var(--color-primary-start)] to-[var(--color-primary-end)];
+}
