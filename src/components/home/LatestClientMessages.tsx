@@ -58,7 +58,7 @@ export const LatestClientMessages = () => {
   };
 
   return (
-    <Card className="shadow-md border-zinc-800 bg-zinc-900/80 backdrop-blur-sm">
+    <Card className="h-full">
       <CardHeader className="pb-2 border-b border-zinc-800">
         <CardTitle className="text-lg">Недавние сообщения</CardTitle>
       </CardHeader>
@@ -113,4 +113,4 @@ export const LatestClientMessages = () => {
       </CardContent>
     </Card>
   );
-};
+}

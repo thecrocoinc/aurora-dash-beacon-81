@@ -13,12 +13,14 @@ const Home = () => {
     <div className="space-y-8">
       <HeroBanner />
       
-      <div className="grid gap-6 md:grid-cols-2">
+      {/* Two-column grid for activity chart and stats */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <UserActivityChart />
         <StatsGrid />
       </div>
 
-      <div className="grid gap-6 md:grid-cols-3">
+      {/* Three-column grid with client data taking 2/3 of space */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div className="md:col-span-2">
           <ClientDataMetrics />
         </div>
@@ -27,7 +29,8 @@ const Home = () => {
         </div>
       </div>
 
-      <div className="grid gap-6 md:grid-cols-2">
+      {/* Two-column grid for messages and subscribers */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <LatestClientMessages />
         <SubscribersTable />
       </div>

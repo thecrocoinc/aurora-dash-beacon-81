@@ -1,3 +1,4 @@
+
 import { Card } from "@/components/ui/card";
 import { useEffect, useState } from "react";
 import { Users, ArrowUp, ArrowDown, TrendingUp, DollarSign } from "lucide-react";
@@ -42,19 +43,21 @@ export function StatsGrid() {
   ];
   
   return (
-    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-      {stats.map(stat => (
-        <Card key={stat.label} className="stat-card">
-          <div className="stat-card-header">
-            <p className="stat-card-title">{stat.label}</p>
-            <div className="stat-card-icon">
-              {stat.icon}
+    <Card className="p-4">
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-2">
+        {stats.map(stat => (
+          <div key={stat.label} className="bg-card/50 border border-white/5 rounded-lg p-4 shadow-sm">
+            <div className="flex justify-between items-start mb-2">
+              <p className="text-sm text-muted-foreground">{stat.label}</p>
+              <div className="p-2 rounded-full bg-primary/10 flex items-center justify-center">
+                {stat.icon}
+              </div>
             </div>
+            <CountUpStat stat={stat} />
           </div>
-          <CountUpStat stat={stat} />
-        </Card>
-      ))}
-    </div>
+        ))}
+      </div>
+    </Card>
   );
 }
 
