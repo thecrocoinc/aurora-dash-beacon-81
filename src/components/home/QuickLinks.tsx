@@ -13,7 +13,7 @@ const quickLinks = [
     icon: Users,
     path: "/profiles",
     color: "from-blue-500 to-blue-700",
-    stats: "32 активных"
+    stats: "3680 активных"
   },
   {
     title: "Диалоги",
@@ -21,7 +21,7 @@ const quickLinks = [
     icon: MessageSquare,
     path: "/dialogs",
     color: "from-emerald-500 to-emerald-700",
-    stats: "5 непрочитанных"
+    stats: "45 непрочитанных"
   },
   {
     title: "Аналитика",
@@ -35,7 +35,7 @@ const quickLinks = [
     title: "Техподдержка",
     description: "Помощь и обучение",
     icon: LifeBuoy,
-    path: "/settings",
+    path: "/support",
     color: "from-amber-500 to-amber-700",
     stats: "24/7"
   }

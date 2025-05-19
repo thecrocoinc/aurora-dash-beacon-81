@@ -1,3 +1,4 @@
+
 import { Card } from "@/components/ui/card";
 import { useEffect, useState } from "react";
 import { BarChart2, Users, ArrowUp, ArrowDown, TrendingUp } from "lucide-react";
@@ -14,15 +15,15 @@ interface StatItem {
 export function StatsGrid() {
   const stats: StatItem[] = [
     {
-      label: "Активные клиенты",
-      value: 42,
-      trend: 12,
+      label: "Всего клиентов",
+      value: 3680,
+      trend: 14,
       icon: <Users className="h-5 w-5 stroke-[var(--color-primary-0)]" />
     }, 
     {
-      label: "Средн. ккал",
-      value: 1780,
-      trend: -5,
+      label: "Premium клиентов",
+      value: 1620,
+      trend: 12,
       icon: <BarChart2 className="h-5 w-5 stroke-[var(--color-primary-0)]" />
     }, 
     {
@@ -34,7 +35,7 @@ export function StatsGrid() {
     }, 
     {
       label: "Доход ежемес.",
-      value: 1870,
+      value: 486000,
       prefix: "₽",
       trend: 15.2,
       icon: <BarChart2 className="h-5 w-5 stroke-[var(--color-primary-0)]" />
@@ -93,7 +94,11 @@ function CountUpStat({
   if (typeof stat.value === 'number') {
     // For numeric values
     if (Number.isInteger(stat.value)) {
-      displayValue = Math.round(value).toString();
+      if (stat.value > 10000) {
+        displayValue = Math.round(value / 1000) + "K";
+      } else {
+        displayValue = Math.round(value).toLocaleString('ru-RU');
+      }
     } else {
       displayValue = value.toFixed(1);
     }

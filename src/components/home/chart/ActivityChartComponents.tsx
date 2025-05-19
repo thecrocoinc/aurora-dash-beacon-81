@@ -9,11 +9,11 @@ export const ChartLegend: React.FC = () => {
     <div className="flex items-center text-sm gap-4 mb-4">
       <span className="flex items-center">
         <span className="h-3 w-3 rounded-full bg-[var(--color-surface-muted)] mr-2"></span>
-        Всего пользователей
+        Базовый тариф
       </span>
       <span className="flex items-center">
         <span className="h-3 w-3 rounded-full bg-emerald-600 mr-2"></span>
-        Активные пользователи
+        Premium тариф
       </span>
     </div>
   );
@@ -26,14 +26,14 @@ export const ActivitySummary: React.FC<{ period: PeriodType }> = ({ period }) =>
   return (
     <div className="mt-6 grid grid-cols-2 gap-6">
       <div className="bg-[var(--color-surface)] p-4 rounded-[var(--radius)] shadow border border-[var(--color-surface-muted)]">
-        <p className="text-sm text-[var(--color-text-muted)] mb-1">Всего пользователей</p>
+        <p className="text-sm text-[var(--color-text-muted)] mb-1">Базовый тариф</p>
         <div className="flex items-baseline">
           <p className="text-2xl font-medium">{summaryData.users}</p>
           <span className="ml-2 text-sm font-medium text-[var(--color-text-muted)]">{summaryData.growth}</span>
         </div>
       </div>
       <div className="bg-[var(--color-surface)] p-4 rounded-[var(--radius)] shadow border border-emerald-600/20">
-        <p className="text-sm text-[var(--color-text-muted)] mb-1">Активных пользователей</p>
+        <p className="text-sm text-[var(--color-text-muted)] mb-1">Premium тариф</p>
         <div className="flex items-baseline">
           <p className="text-2xl font-medium">{summaryData.active}</p>
           <span className="ml-2 text-sm font-medium text-emerald-600">{summaryData.activeRate}</span>

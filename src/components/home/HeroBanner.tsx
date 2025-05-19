@@ -14,12 +14,12 @@ export function HeroBanner() {
           Управляйте вашим AI-ботом для трекинга питания и здоровья, анализируйте данные клиентов и развивайте свой бизнес
         </p>
         <div className="flex flex-wrap gap-4">
-          <Button className="btn-primary rounded-[var(--radius)]">
+          <Button className="btn-primary rounded-[var(--radius)] bg-primary hover:bg-primary/90 transition-all hover:scale-105">
             Обзор возможностей
           </Button>
           <Button 
             variant="outline" 
-            className="border-primary/30 hover:bg-primary/10 hover:border-primary hover:text-primary text-foreground rounded-[var(--radius)]"
+            className="border-primary/30 text-primary hover:bg-primary/10 hover:border-primary hover:text-primary transition-all rounded-[var(--radius)]"
           >
             Техподдержка
           </Button>
