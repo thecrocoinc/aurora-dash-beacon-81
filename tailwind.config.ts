@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -70,7 +69,9 @@ export default {
 					muted: 'hsl(var(--gold-muted))',
 					accent: 'hsl(var(--gold-accent))',
 					dim: '#C9A86C', // Using color_gold_dim directly
-				}
+				},
+				// Add the design tokens as direct colors to use with opacity
+				'accent-color': 'var(--color-accent)',
 			},
 			width: {
 				'44': '11rem',
