@@ -20,7 +20,7 @@ interface ProfileWithDetails {
   created_at?: string | null;
   last_activity?: string | null;
   streak_days?: number;
-  subscription_status?: 'active' | 'expired' | 'trial';
+  subscription_status?: 'active' | 'trial';
 }
 
 interface ProfilesGridProps {
@@ -28,13 +28,18 @@ interface ProfilesGridProps {
 }
 
 const ProfilesGrid = ({ profiles }: ProfilesGridProps) => {
-  if (!profiles || profiles.length === 0) {
-    // Generate placeholder profiles for demonstration
-    const placeholderProfiles = Array.from({ length: 9 }, (_, i) => ({
+  // Only show profiles with paid subscriptions
+  const paidProfiles = profiles?.filter(profile => 
+    profile.subscription_status === 'active' || profile.subscription_status === 'trial'
+  );
+  
+  if (!paidProfiles || paidProfiles.length === 0) {
+    // Generate placeholder profiles for demonstration - only with paid subscriptions
+    const placeholderProfiles = Array.from({ length: 12 }, (_, i) => ({
       id: `placeholder-${i}`,
       name: ["Анна Иванова", "Максим Петров", "Елена Сидорова", "Алексей Смирнов", 
              "Ольга Козлова", "Дмитрий Попов", "Наталья Волкова", "Сергей Соколов", 
-             "Юлия Морозова"][i],
+             "Юлия Морозова", "Иван Новиков", "Екатерина Морозова", "Андрей Соловьев"][i % 12],
       avatar: null,
       watch_connected: i % 3 === 0,
       kcalRatio: Math.random() * 0.9 + 0.1, // Random between 0.1 and 1.0
@@ -51,7 +56,7 @@ const ProfilesGrid = ({ profiles }: ProfilesGridProps) => {
     }));
 
     return (
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
         {placeholderProfiles.map((profile) => (
           <div key={profile.id} className="block h-full">
             <ProfileCard profile={profile} />
@@ -62,8 +67,8 @@ const ProfilesGrid = ({ profiles }: ProfilesGridProps) => {
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-      {profiles.map((profile) => (
+    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+      {paidProfiles.map((profile) => (
         <Link 
           key={profile.id} 
           to={`/profiles/${profile.id}`} 

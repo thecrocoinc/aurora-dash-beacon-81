@@ -17,8 +17,13 @@ const Profiles = () => {
   const [activeFilter, setActiveFilter] = useState<string | null>(null);
   const { profiles, isLoading, isError, error } = useProfilesData();
   
-  // Filter profiles based on search query and active filter
-  const filteredProfiles = profiles?.filter(profile => {
+  // Filter out clients without paid subscriptions first
+  const paidProfiles = profiles?.filter(profile => 
+    profile.subscription_status === 'active' || profile.subscription_status === 'trial'
+  );
+  
+  // Then filter based on search query and active filter
+  const filteredProfiles = paidProfiles?.filter(profile => {
     // Filter by search query
     const matchesSearch = profile.name.toLowerCase().includes(searchQuery.toLowerCase());
     
@@ -29,8 +34,6 @@ const Profiles = () => {
           return matchesSearch && profile.subscription_status === "active";
         case "trial":
           return matchesSearch && profile.subscription_status === "trial";
-        case "expired":
-          return matchesSearch && profile.subscription_status === "expired";
         case "weight_loss":
           return matchesSearch && profile.goal_type === "weight_loss";
         case "weight_gain":
@@ -59,7 +62,7 @@ const Profiles = () => {
       </div>
 
       {/* Statistics Panel */}
-      {!isLoading && !isError && profiles && <ProfilesStats profiles={profiles} />}
+      {!isLoading && !isError && paidProfiles && <ProfilesStats profiles={paidProfiles} />}
 
       {/* Search and filter row */}
       <SearchAndFilters 

@@ -11,7 +11,7 @@ const Progress = React.forwardRef<
   <ProgressPrimitive.Root
     ref={ref}
     className={cn(
-      "relative h-2.5 w-full overflow-hidden rounded-full bg-secondary/30",
+      "relative h-2 w-full overflow-hidden rounded-full bg-secondary/20",
       className
     )}
     {...props}
@@ -24,11 +24,11 @@ const Progress = React.forwardRef<
       }}
     />
     <div className="absolute inset-0 flex items-center justify-center">
-      <div className="h-full w-[1px] bg-white/10 mx-1 hidden sm:block" 
+      <div className="h-full w-[1px] bg-white/5 mx-1 hidden sm:block" 
            style={{left: "25%"}}/>
-      <div className="h-full w-[1px] bg-white/10 mx-1 hidden sm:block" 
+      <div className="h-full w-[1px] bg-white/5 mx-1 hidden sm:block" 
            style={{left: "50%"}}/>
-      <div className="h-full w-[1px] bg-white/10 mx-1 hidden sm:block" 
+      <div className="h-full w-[1px] bg-white/5 mx-1 hidden sm:block" 
            style={{left: "75%"}}/>
     </div>
   </ProgressPrimitive.Root>

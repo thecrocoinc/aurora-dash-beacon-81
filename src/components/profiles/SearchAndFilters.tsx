@@ -28,9 +28,8 @@ const SearchAndFilters = ({
 }: SearchAndFiltersProps) => {
   // Filter labels for display
   const filterLabels: Record<string, string> = {
-    'active': 'Активная подписка',
-    'trial': 'Пробный период',
-    'expired': 'Истекшая подписка',
+    'active': 'Premium',
+    'trial': 'Basic',
     'weight_loss': 'Снижение веса',
     'weight_gain': 'Набор массы',
     'maintenance': 'Поддержание формы'
@@ -69,19 +68,13 @@ const SearchAndFilters = ({
               className={activeFilter === "active" ? "bg-accent text-accent-foreground" : ""}
               onClick={() => setActiveFilter("active")}
             >
-              Активная подписка
+              Premium
             </DropdownMenuItem>
             <DropdownMenuItem 
               className={activeFilter === "trial" ? "bg-accent text-accent-foreground" : ""}
               onClick={() => setActiveFilter("trial")}
             >
-              Пробный период
-            </DropdownMenuItem>
-            <DropdownMenuItem 
-              className={activeFilter === "expired" ? "bg-accent text-accent-foreground" : ""}
-              onClick={() => setActiveFilter("expired")}
-            >
-              Истекшая подписка
+              Basic
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem 
