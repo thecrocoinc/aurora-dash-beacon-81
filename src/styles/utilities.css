@@ -44,7 +44,7 @@
 }
 
 .emerald-overlay {
-  @apply absolute inset-0 bg-gradient-to-t from-[var(--color-emerald-end)]/70 via-[var(--color-emerald-start)]/30 to-transparent;
+  @apply absolute inset-0 bg-gradient-to-t from-[rgba(18,132,98,0.7)] via-[rgba(32,180,134,0.3)] to-transparent;
 }
 
 /* Health metric colors */
@@ -130,4 +130,3 @@
 .text-pretty {
   text-wrap: pretty;
 }
-
