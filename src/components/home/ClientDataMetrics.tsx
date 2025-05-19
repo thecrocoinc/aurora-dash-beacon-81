@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -7,51 +6,52 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 
 // Имитация данных клиентов, требующих внимания
-const clientsNeedingAttention = [
-  {
-    id: "1",
-    name: "Ирина П.",
-    avatar: null,
-    issue: "Пропущено 3 дня отчетов",
-    type: "missed_reports",
-    lastActive: "3 дня назад"
-  },
-  {
-    id: "2",
-    name: "Алексей М.",
-    avatar: null,
-    issue: "Отклонение от плана питания",
-    type: "diet_deviation",
-    lastActive: "Сегодня"
-  },
-  {
-    id: "3",
-    name: "Светлана К.",
-    avatar: null,
-    issue: "Не достигает цели по белку",
-    type: "nutrient_deficit",
-    lastActive: "Вчера"
-  },
-  {
-    id: "4",
-    name: "Михаил Д.",
-    avatar: null,
-    issue: "Запрос консультации",
-    type: "support_request",
-    lastActive: "12 часов назад"
-  },
-];
+const clientsNeedingAttention = [{
+  id: "1",
+  name: "Ирина П.",
+  avatar: null,
+  issue: "Пропущено 3 дня отчетов",
+  type: "missed_reports",
+  lastActive: "3 дня назад"
+}, {
+  id: "2",
+  name: "Алексей М.",
+  avatar: null,
+  issue: "Отклонение от плана питания",
+  type: "diet_deviation",
+  lastActive: "Сегодня"
+}, {
+  id: "3",
+  name: "Светлана К.",
+  avatar: null,
+  issue: "Не достигает цели по белку",
+  type: "nutrient_deficit",
+  lastActive: "Вчера"
+}, {
+  id: "4",
+  name: "Михаил Д.",
+  avatar: null,
+  issue: "Запрос консультации",
+  type: "support_request",
+  lastActive: "12 часов назад"
+}];
 
 // Имитация данных о прогрессе клиентов в целом
-const progressMetrics = [
-  { label: "Соблюдают план", value: 68, color: "emerald" },
-  { label: "Требуют внимания", value: 23, color: "amber" },
-  { label: "Критические", value: 9, color: "red" },
-];
-
+const progressMetrics = [{
+  label: "Соблюдают план",
+  value: 68,
+  color: "emerald"
+}, {
+  label: "Требуют внимания",
+  value: 23,
+  color: "amber"
+}, {
+  label: "Критические",
+  value: 9,
+  color: "red"
+}];
 export function ClientDataMetrics() {
-  return (
-    <div className="space-y-4">
+  return <div className="space-y-4">
       <div className="flex flex-wrap items-center gap-3">
         <div className="p-2 rounded-lg bg-gradient-to-r from-purple-500/80 to-purple-700/80">
           <Users className="h-5 w-5 text-white" />
@@ -62,7 +62,7 @@ export function ClientDataMetrics() {
       
       <div className="mt-4 grid grid-cols-1 md:grid-cols-3 gap-6">
         <div className="md:col-span-2">
-          <Card>
+          <Card className="bg-neutral-900">
             <CardHeader>
               <CardTitle className="text-lg flex items-center gap-2">
                 <AlertTriangle className="h-4 w-4 text-amber-400" />
@@ -71,8 +71,7 @@ export function ClientDataMetrics() {
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                {clientsNeedingAttention.map((client) => (
-                  <div key={client.id} className="flex items-center justify-between p-3 rounded-md bg-background/40 border border-muted hover:bg-background/70 transition-colors">
+                {clientsNeedingAttention.map(client => <div key={client.id} className="flex items-center justify-between p-3 rounded-md bg-background/40 border border-muted hover:bg-background/70 transition-colors">
                     <div className="flex items-center gap-3">
                       <Avatar className="h-9 w-9">
                         <AvatarImage src={client.avatar || undefined} alt={client.name} />
@@ -81,12 +80,8 @@ export function ClientDataMetrics() {
                       <div>
                         <p className="font-medium">{client.name}</p>
                         <div className="flex items-center text-xs">
-                          {client.type === "missed_reports" && (
-                            <Calendar className="h-3 w-3 mr-1 text-red-400" />
-                          )}
-                          {client.type === "support_request" && (
-                            <AlertTriangle className="h-3 w-3 mr-1 text-blue-400" />
-                          )}
+                          {client.type === "missed_reports" && <Calendar className="h-3 w-3 mr-1 text-red-400" />}
+                          {client.type === "support_request" && <AlertTriangle className="h-3 w-3 mr-1 text-blue-400" />}
                           <span className="text-muted-foreground">{client.issue}</span>
                           <span className="mx-2">•</span>
                           <span>{client.lastActive}</span>
@@ -98,8 +93,7 @@ export function ClientDataMetrics() {
                         Детали
                       </Button>
                     </Link>
-                  </div>
-                ))}
+                  </div>)}
 
                 <Link to="/profiles" className="block w-full">
                   <Button variant="outline" className="w-full">
@@ -121,20 +115,17 @@ export function ClientDataMetrics() {
             </CardHeader>
             <CardContent>
               <div className="space-y-6 mt-2">
-                {progressMetrics.map((metric) => (
-                  <div key={metric.label} className="space-y-2">
+                {progressMetrics.map(metric => <div key={metric.label} className="space-y-2">
                     <div className="flex justify-between items-center">
                       <span className="text-sm">{metric.label}</span>
                       <span className={`text-sm font-medium text-${metric.color}-500`}>{metric.value}%</span>
                     </div>
                     <div className="w-full h-2 bg-muted/50 rounded-full">
-                      <div 
-                        className={`h-full rounded-full bg-${metric.color}-500`}
-                        style={{ width: `${metric.value}%` }}
-                      ></div>
+                      <div className={`h-full rounded-full bg-${metric.color}-500`} style={{
+                    width: `${metric.value}%`
+                  }}></div>
                     </div>
-                  </div>
-                ))}
+                  </div>)}
                 
                 <div className="pt-4 border-t border-border/40">
                   <div className="flex justify-between items-center text-sm mb-2">
@@ -150,6 +141,5 @@ export function ClientDataMetrics() {
           </Card>
         </div>
       </div>
-    </div>
-  );
+    </div>;
 }
