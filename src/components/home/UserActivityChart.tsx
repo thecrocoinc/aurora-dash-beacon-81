@@ -1,7 +1,39 @@
 
 import React from "react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { WeeklyKcalTrend } from "@/components/WeeklyKcalTrend";
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+  Legend,
+} from "recharts";
+import { ChartContainer, ChartTooltipContent } from "@/components/ui/chart";
+
+// Sample data for the past week
+const activityData = [
+  { day: "Пн", users: 32, active: 28 },
+  { day: "Вт", users: 35, active: 30 },
+  { day: "Ср", users: 38, active: 29 },
+  { day: "Чт", users: 40, active: 32 },
+  { day: "Пт", users: 42, active: 36 },
+  { day: "Сб", users: 35, active: 28 },
+  { day: "Вс", users: 30, active: 24 },
+];
+
+const config = {
+  users: {
+    label: "Пользователи",
+    theme: { light: "#3b82f6", dark: "#60a5fa" },
+  },
+  active: {
+    label: "Активность",
+    theme: { light: "#10b981", dark: "#34d399" },
+  },
+};
 
 export function UserActivityChart() {
   return (
@@ -20,7 +52,33 @@ export function UserActivityChart() {
         </div>
       </CardHeader>
       <CardContent>
-        <WeeklyKcalTrend />
+        <div className="h-[250px] w-full">
+          <ChartContainer config={config}>
+            <ResponsiveContainer width="100%" height="100%">
+              <LineChart data={activityData} margin={{ top: 5, right: 10, left: 0, bottom: 5 }}>
+                <CartesianGrid strokeDasharray="3 3" vertical={false} />
+                <XAxis dataKey="day" />
+                <YAxis />
+                <Tooltip content={<ChartTooltipContent />} />
+                <Legend />
+                <Line
+                  type="monotone"
+                  dataKey="users"
+                  stroke="var(--color-users)"
+                  strokeWidth={2}
+                  activeDot={{ r: 6 }}
+                />
+                <Line
+                  type="monotone"
+                  dataKey="active"
+                  stroke="var(--color-active)"
+                  strokeWidth={2}
+                  activeDot={{ r: 6 }}
+                />
+              </LineChart>
+            </ResponsiveContainer>
+          </ChartContainer>
+        </div>
       </CardContent>
     </Card>
   );
