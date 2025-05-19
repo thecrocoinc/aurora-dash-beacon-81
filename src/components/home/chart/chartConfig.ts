@@ -3,11 +3,11 @@
 export const chartConfig = {
   users: {
     label: "Пользователи",
-    theme: { light: "#3b82f6", dark: "#60a5fa" },
+    theme: { light: "#6366f1", dark: "#818cf8" }, // Улучшенный индиго цвет
   },
   active: {
     label: "Активные пользователи",
-    theme: { light: "#10b981", dark: "#34d399" },
+    theme: { light: "#10b981", dark: "#34d399" }, // Оставляем тот же зеленый цвет
   }
 };
 
