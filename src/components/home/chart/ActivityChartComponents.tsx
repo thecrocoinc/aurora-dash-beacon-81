@@ -8,11 +8,11 @@ export const ChartLegend: React.FC = () => {
   return (
     <div className="flex items-center text-sm gap-4 mb-4">
       <span className="flex items-center">
-        <span className="h-3 w-3 rounded-full bg-amber-500 mr-2"></span>
+        <span className="h-3 w-3 rounded-full bg-blue-500 mr-2"></span>
         Всего пользователей
       </span>
       <span className="flex items-center">
-        <span className="h-3 w-3 rounded-full bg-orange-400 mr-2"></span>
+        <span className="h-3 w-3 rounded-full bg-emerald-500 mr-2"></span>
         Активные пользователи
       </span>
     </div>
@@ -25,18 +25,18 @@ export const ActivitySummary: React.FC<{ period: PeriodType }> = ({ period }) =>
   
   return (
     <div className="mt-6 grid grid-cols-2 gap-6">
-      <div className="bg-card dark:bg-amber-800/20 p-4 rounded-lg backdrop-blur-sm border border-amber-500/10">
+      <div className="bg-card dark:bg-blue-800/20 p-4 rounded-lg backdrop-blur-sm border border-blue-500/10">
         <p className="text-sm text-muted-foreground mb-1">Всего пользователей</p>
         <div className="flex items-baseline">
           <p className="text-2xl font-medium">{summaryData.users}</p>
-          <span className="ml-2 text-sm font-medium text-amber-500">{summaryData.growth}</span>
+          <span className="ml-2 text-sm font-medium text-blue-500">{summaryData.growth}</span>
         </div>
       </div>
-      <div className="bg-card dark:bg-amber-800/20 p-4 rounded-lg backdrop-blur-sm border border-amber-500/10">
+      <div className="bg-card dark:bg-emerald-800/20 p-4 rounded-lg backdrop-blur-sm border border-emerald-500/10">
         <p className="text-sm text-muted-foreground mb-1">Активных пользователей</p>
         <div className="flex items-baseline">
           <p className="text-2xl font-medium">{summaryData.active}</p>
-          <span className="ml-2 text-sm font-medium text-amber-500">{summaryData.activeRate}</span>
+          <span className="ml-2 text-sm font-medium text-emerald-500">{summaryData.activeRate}</span>
         </div>
       </div>
     </div>

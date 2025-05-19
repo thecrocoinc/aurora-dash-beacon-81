@@ -3,11 +3,11 @@
 export const chartConfig = {
   users: {
     label: "Пользователи",
-    theme: { light: "#ff7e5f", dark: "#ffb347" }, // Теплый оранжево-красный цвет
+    theme: { light: "#3B82F6", dark: "#60A5FA" }, // Bright blue - more energetic and fresh
   },
   active: {
     label: "Активные пользователи",
-    theme: { light: "#feb47b", dark: "#ffcb80" }, // Теплый оранжево-желтый цвет
+    theme: { light: "#10B981", dark: "#34D399" }, // Vibrant green - represents health and wellness
   }
 };
 

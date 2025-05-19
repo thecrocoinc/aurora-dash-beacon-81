@@ -97,8 +97,8 @@ export default {
 					'50%': { transform: 'translateY(-5px)' }
 				},
 				'glow': {
-					'0%, 100%': { boxShadow: '0 0 10px rgba(255, 107, 107, 0.2)' },
-					'50%': { boxShadow: '0 0 20px rgba(255, 107, 107, 0.4)' }
+					'0%, 100%': { boxShadow: '0 0 10px rgba(59, 130, 246, 0.2)' },
+					'50%': { boxShadow: '0 0 20px rgba(59, 130, 246, 0.4)' }
 				}
 			},
 			animation: {
@@ -109,7 +109,7 @@ export default {
 			},
 			boxShadow: {
 				'soft': '0 4px 20px -2px rgba(0, 0, 0, 0.1)',
-				'glow': '0 0 25px rgba(255, 107, 107, 0.15)'
+				'glow': '0 0 25px rgba(59, 130, 246, 0.15)'
 			}
 		}
 	},
