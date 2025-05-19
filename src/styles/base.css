@@ -3,6 +3,19 @@
 
 @layer base {
   :root {
+    /* Core palette */
+    --color-bg: #121316;
+    --color-surface: #1E1F24;
+    --color-surface-muted: #26282E;
+    --color-text: #E8EAEE;
+    --color-text-muted: #9AA0AC;
+    --color-primary-0: #F5CE83;
+    --color-primary-1: #CFA34D;
+    --color-accent: #FFB043;
+    --color-success: #21C287;
+    --color-danger: #EF5E5E;
+    
+    /* ShadCN variables */
     --background: 240 10% 3.9%;
     --foreground: 0 0% 98%;
     
@@ -12,43 +25,31 @@
     --popover: 240 10% 3.9%;
     --popover-foreground: 0 0% 98%;
     
-    --primary: 46 70% 50%;
+    --primary: 41 90% 73%; /* Updated to match --color-primary-0 */
     --primary-foreground: 240 5.9% 10%;
     
     --secondary: 240 3.7% 15.9%;
     --secondary-foreground: 0 0% 98%;
     
     --muted: 240 3.7% 15.9%;
-    --muted-foreground: 240 5% 64.9%;
+    --muted-foreground: 220 8% 64%; /* Adjusted for better readability */
     
-    --accent: 47 100% 50%;
+    --accent: 36 100% 63%; /* Updated to match --color-accent */
     --accent-foreground: 240 5.9% 10%;
     
-    --destructive: 0 62.8% 30.6%;
+    --destructive: 0 84% 65%;
     --destructive-foreground: 0 0% 98%;
     
     --border: 240 3.7% 15.9%;
     --input: 240 3.7% 15.9%;
-    --ring: 240 4.9% 83.9%;
+    --ring: 41 73% 63%;
     
-    --gold: 41 73% 55%;
-    --gold-foreground: 0 0% 0%;
-    --gold-muted: 40 60% 30%;
-    --gold-accent: 40 100% 40%;
-
+    /* Chart colors */
+    --color-users: var(--color-primary-0);
+    --color-active: #E0E3E9;
+    
     --radius: 12px;
     --shadow: 0 2px 6px rgba(0,0,0,.40);
-
-    /* Design tokens */
-    --color-bg: #121316;
-    --color-surface: #1E1F24;
-    --color-surface-muted: #26282E;
-    --color-text: #E6E8EC;
-    --color-text-muted: #8C9099;
-    --color-primary-start: #F4C978;
-    --color-primary-end: #CE9F49;
-    --color-accent: #FFB043;
-    --color-gold-dim: #C9A86C;
   }
 }
 
@@ -57,8 +58,19 @@
     @apply border-border;
   }
 
-  body {
-    @apply bg-[var(--color-bg)] text-[var(--color-text)] font-['Inter'] text-base;
+  html, body {
+    @apply bg-[var(--color-bg)] text-[var(--color-text)] font-['Inter',sans-serif] text-base leading-relaxed;
+  }
+  
+  h1, h2, h3, 
+  .card-title,
+  .section-title {
+    @apply font-['Manrope',Inter,sans-serif] font-semibold;
+  }
+  
+  .stat-number {
+    @apply font-['IBM_Plex_Mono',monospace];
+    font-feature-settings: "tnum";
   }
   
   /* Status and Badge Styles */

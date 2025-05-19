@@ -3,7 +3,7 @@
 
 /* Button Styles */
 .btn-primary {
-  @apply bg-gradient-to-br from-[var(--color-primary-start)] to-[var(--color-primary-end)] 
+  @apply bg-gradient-to-br from-[var(--color-primary-0)] to-[var(--color-primary-1)] 
          text-[var(--color-bg)] shadow 
          hover:ring-2 hover:ring-[var(--color-accent)/40] 
          focus:ring-2 focus:ring-[var(--color-accent)/40] 
@@ -11,7 +11,7 @@
 }
 
 .btn-secondary {
-  @apply border border-[var(--color-surface-muted)] text-[var(--color-text)] bg-transparent hover:bg-[var(--color-surface-muted)/40] transition-all;
+  @apply border border-[var(--color-surface-muted)] text-[var(--color-text)] bg-transparent hover:bg-[var(--color-surface-muted)/50] transition-all;
 }
 
 /* Base component styles */
@@ -24,7 +24,7 @@
 }
 
 .card-gradient {
-  @apply bg-[var(--color-surface)] backdrop-blur-sm shadow rounded-[var(--radius)];
+  @apply bg-[var(--color-surface)] backdrop-blur-sm shadow-[var(--shadow)] rounded-[var(--radius)];
 }
 
 .admin-panel-gradient {
@@ -33,7 +33,7 @@
 
 /* Gold gradient classes */
 .gold-gradient {
-  @apply bg-gradient-to-r from-[var(--color-primary-start)] to-[var(--color-primary-end)];
+  @apply bg-gradient-to-r from-[var(--color-primary-0)] to-[var(--color-primary-1)];
 }
 
 /* Premium gradient */
@@ -57,17 +57,59 @@
 
 /* Premium effects */
 .premium-border {
-  @apply border border-[var(--color-primary-end)/30] shadow-sm;
+  @apply border border-[var(--color-primary-1)/30] shadow-sm;
 }
 
 .premium-card {
-  @apply bg-[var(--color-surface)] backdrop-blur-lg border border-[var(--color-primary-end)/20] shadow;
+  @apply bg-[var(--color-surface)] backdrop-blur-lg border border-[var(--color-primary-1)/20] shadow-[var(--shadow)];
 }
 
 .premium-button {
-  @apply bg-[var(--color-primary-end)] text-[var(--color-bg)] font-medium hover:bg-[var(--color-primary-start)] transition-colors;
+  @apply bg-[var(--color-primary-1)] text-[var(--color-bg)] font-medium hover:bg-[var(--color-primary-0)] transition-colors;
 }
 
 .premium-text {
-  @apply text-transparent bg-clip-text bg-gradient-to-r from-[var(--color-primary-start)] to-[var(--color-primary-end)];
+  @apply text-transparent bg-clip-text bg-gradient-to-r from-[var(--color-primary-0)] to-[var(--color-primary-1)];
+}
+
+/* Sidebar specific styles */
+.sidebar-nav .logo,
+[class*="sidebar-accent"],
+.sidebar-accent {
+  @apply text-[var(--color-primary-0)];
+}
+
+.badge, .counter {
+  @apply bg-[var(--color-primary-0)/20] text-[var(--color-primary-0)];
+}
+
+/* Card and surface styles */
+.card, .modal, .panel {
+  @apply bg-[var(--color-surface)] rounded-[var(--radius)] shadow-[var(--shadow)];
+}
+
+[aria-role="secondary"] {
+  @apply bg-[var(--color-surface-muted)];
+}
+
+/* Progress rings */
+.progress-ring path.active {
+  @apply stroke-[var(--color-primary-1)];
+}
+
+.progress-ring path.bg {
+  @apply stroke-[var(--color-surface-muted)];
+}
+
+/* Chart styles */
+.chart-primary {
+  @apply stroke-[var(--color-primary-0)] fill-none;
+}
+
+.chart-secondary {
+  @apply stroke-[#E0E3E9] fill-none;
+}
+
+.chart-grid {
+  @apply stroke-[#30333A];
 }
