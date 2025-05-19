@@ -3,11 +3,9 @@ import React from "react";
 import { Card } from "@/components/ui/card";
 import { 
   Users, 
-  ArrowUp,
-  ArrowDown, 
-  Zap, 
-  Watch, 
-  TrendingUp 
+  TrendingUp, 
+  Crown, 
+  Watch
 } from "lucide-react";
 
 interface ProfileWithDetails {
@@ -38,66 +36,40 @@ export function ProfilesStats({ profiles }: ProfilesStatsProps) {
     : 0;
   const avgKcalPercentage = Math.round(avgKcalRatio * 100);
   
-  // Calculate trend (this would be better with historical data, but we'll simulate for now)
-  const simulatedLastWeekRatio = avgKcalRatio * (0.9 + Math.random() * 0.2); // Random variation
-  const trendDiff = Math.round((avgKcalRatio - simulatedLastWeekRatio) * 100);
-  const isPositiveTrend = trendDiff > 0;
-  
   const stats = [
     {
-      label: "Всего клиентов",
+      label: "Клиенты",
       value: totalUsers,
-      icon: <Users className="h-5 w-5 text-primary" />
+      icon: <Users className="h-4 w-4 text-primary" />
     },
     {
-      label: "Активные подписки",
+      label: "Premium",
       value: activeSubscriptions,
-      suffix: totalUsers > 0 ? ` (${Math.round((activeSubscriptions / totalUsers) * 100)}%)` : "",
-      icon: <Zap className="h-5 w-5 text-primary" />
+      icon: <Crown className="h-4 w-4 text-primary" />
     },
     {
-      label: "Часы подключены",
+      label: "Часы",
       value: `${watchConnectedPercentage}%`,
-      icon: <Watch className="h-5 w-5 text-primary" />
+      icon: <Watch className="h-4 w-4 text-primary" />
     },
     {
-      label: "Средний прогресс",
+      label: "Прогресс",
       value: `${avgKcalPercentage}%`,
-      trend: trendDiff,
-      trendLabel: "от прошлой недели",
-      icon: <TrendingUp className="h-5 w-5 text-primary" />
+      icon: <TrendingUp className="h-4 w-4 text-primary" />
     }
   ];
   
   return (
     <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
       {stats.map((stat) => (
-        <Card key={stat.label} className="stat-card border border-white/5 hover:border-white/10">
-          <div className="flex items-center justify-between p-4 h-full">
-            <div className="space-y-1">
-              <p className="text-sm text-muted-foreground">{stat.label}</p>
-              <p className="text-2xl font-semibold">{stat.value}{stat.suffix || ''}</p>
-              
-              {stat.trend !== undefined && (
-                <div className={`flex items-center text-xs ${isPositiveTrend ? 'text-emerald-500' : 'text-red-500'}`}>
-                  {isPositiveTrend ? (
-                    <>
-                      <ArrowUp className="h-3 w-3 mr-1" />
-                      <span>+{Math.abs(stat.trend)}%</span>
-                    </>
-                  ) : (
-                    <>
-                      <ArrowDown className="h-3 w-3 mr-1" />
-                      <span>-{Math.abs(stat.trend)}%</span>
-                    </>
-                  )}
-                  {stat.trendLabel && <span className="text-muted-foreground ml-1">{stat.trendLabel}</span>}
-                </div>
-              )}
-            </div>
-            
-            <div className="rounded-full p-3 bg-primary/10">
+        <Card key={stat.label} className="border border-white/5 hover:border-white/10">
+          <div className="flex items-center p-3 h-full">
+            <div className="rounded-full p-2 bg-primary/10 mr-3">
               {stat.icon}
+            </div>
+            <div>
+              <p className="text-xs text-muted-foreground">{stat.label}</p>
+              <p className="text-xl font-semibold">{stat.value}</p>
             </div>
           </div>
         </Card>

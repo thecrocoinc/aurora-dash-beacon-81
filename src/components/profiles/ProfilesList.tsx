@@ -1,13 +1,19 @@
+
 import React from "react";
 import { Link } from "react-router-dom";
 import { EmptyBanner } from "@/components/EmptyBanner";
-import { UserPlus, Watch, ArrowUp, ArrowDown } from "lucide-react";
+import { UserPlus, Watch } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import { Card, CardContent } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
-import { formatDistanceToNow, parseISO } from "date-fns";
-import { ru } from "date-fns/locale";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 
 interface ProfileWithDetails {
   id: string;
@@ -46,21 +52,18 @@ const ProfilesList = ({ profiles }: ProfilesListProps) => {
   const getSubscriptionBadge = (status?: string) => {
     switch(status) {
       case 'active':
-        return <Badge className="bg-purple-600 text-white">Premium</Badge>;
-      case 'trial':
-        return <Badge className="bg-blue-600 text-white">Trial</Badge>;
-      case 'expired':
+        return <Badge className="bg-primary text-white">Premium</Badge>;
       default:
-        return <Badge className="bg-zinc-500 text-white">Expired</Badge>;
+        return <Badge className="bg-muted text-foreground">Basic</Badge>;
     }
   };
 
   const getGoalBadge = (goalType?: string | null) => {
     switch(goalType) {
       case 'weight_loss':
-        return <Badge variant="outline" className="bg-blue-100/10 border-blue-300/20 text-blue-400">Снижение веса</Badge>;
+        return <Badge variant="outline" className="bg-blue-100/10 border-blue-300/20 text-blue-400">Снижение</Badge>;
       case 'weight_gain':
-        return <Badge variant="outline" className="bg-amber-100/10 border-amber-300/20 text-amber-400">Набор массы</Badge>;
+        return <Badge variant="outline" className="bg-amber-100/10 border-amber-300/20 text-amber-400">Набор</Badge>;
       case 'maintenance':
         return <Badge variant="outline" className="bg-emerald-100/10 border-emerald-300/20 text-emerald-400">Поддержание</Badge>;
       default:
@@ -68,95 +71,80 @@ const ProfilesList = ({ profiles }: ProfilesListProps) => {
     }
   };
 
-  const getLastActivity = (lastActivity?: string) => {
-    if (!lastActivity) return null;
-    
-    try {
-      const lastActivityDate = parseISO(lastActivity);
-      return formatDistanceToNow(lastActivityDate, { addSuffix: true, locale: ru });
-    } catch (error) {
-      return null;
-    }
-  };
-
-  const getProgressIndicator = (ratio: number) => {
-    const percentage = Math.round(ratio * 100);
-    const color = percentage >= 90 ? 'text-orange-500' : 
-                 percentage >= 70 ? 'text-emerald-500' : 
-                 'text-blue-400';
-    const Icon = percentage >= 70 ? ArrowUp : ArrowDown;
-    
-    return (
-      <div className="flex items-center gap-1">
-        <span className={color}>{percentage}%</span>
-        <Icon className={`h-4 w-4 ${color}`} />
-      </div>
-    );
-  };
-
   return (
-    <div className="space-y-3">
-      {profiles.map((profile) => {
-        const initials = profile.name
-          .split(" ")
-          .map((n) => n[0])
-          .join("");
-        
-        return (
-          <Link key={profile.id} to={`/profiles/${profile.id}`} className="block">
-            <Card className="w-full transition-all duration-200 hover:shadow-md hover:-translate-y-0.5">
-              <CardContent className="p-4">
-                <div className="flex items-center gap-4">
-                  <Avatar className="h-12 w-12 flex-shrink-0 ring-2 ring-white/10 shadow-md">
+    <div className="overflow-x-auto">
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead>Клиент</TableHead>
+            <TableHead>Тариф</TableHead>
+            <TableHead>Цель</TableHead>
+            <TableHead>Часы</TableHead>
+            <TableHead className="text-right">Прогресс</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {profiles.map((profile) => {
+            const initials = profile.name
+              .split(" ")
+              .map((n) => n[0])
+              .join("");
+            
+            const progressPercentage = Math.round(profile.kcalRatio * 100);
+            
+            return (
+              <TableRow 
+                key={profile.id} 
+                className="cursor-pointer hover:bg-muted/50"
+                onClick={() => window.location.href = `/profiles/${profile.id}`}
+              >
+                <TableCell className="flex items-center gap-2">
+                  <Avatar className="h-8 w-8 ring-1 ring-white/10">
                     <AvatarImage src={profile.avatar || undefined} alt={profile.name} />
-                    <AvatarFallback className="bg-purple-800/30 text-purple-200">{initials}</AvatarFallback>
+                    <AvatarFallback className="bg-primary/20 text-primary">{initials}</AvatarFallback>
                   </Avatar>
-                  
-                  <div className="flex-1">
-                    <div className="flex justify-between items-center">
-                      <div className="font-medium">{profile.name}</div>
-                      <div className="flex items-center gap-3">
-                        {getSubscriptionBadge(profile.subscription_status)}
-                        <Watch className={`${profile.watch_connected ? "text-emerald-500" : "text-zinc-400"}`} size={16} />
-                      </div>
+                  <span className="font-medium">{profile.name}</span>
+                </TableCell>
+                
+                <TableCell>
+                  {getSubscriptionBadge(profile.subscription_status)}
+                </TableCell>
+                
+                <TableCell>
+                  {getGoalBadge(profile.goal_type)}
+                </TableCell>
+                
+                <TableCell>
+                  {profile.watch_connected && (
+                    <Watch className="text-emerald-500 h-4 w-4" />
+                  )}
+                </TableCell>
+                
+                <TableCell>
+                  <div className="flex flex-col items-end">
+                    <div className="text-sm mb-1">
+                      {profile.currentKcal}/{profile.dailyGoal} ккал
                     </div>
-                    
-                    <div className="mt-1 flex items-center gap-2 text-xs text-muted-foreground">
-                      {profile.last_activity && (
-                        <span>Активность: {getLastActivity(profile.last_activity)}</span>
-                      )}
-                      {profile.streak_days !== undefined && (
-                        <span className="flex items-center gap-1">
-                          <span>•</span>
-                          <span>Серия: {profile.streak_days} {profile.streak_days === 1 ? 'день' : 
-                                profile.streak_days > 1 && profile.streak_days < 5 ? 'дня' : 'дней'}</span>
-                        </span>
-                      )}
-                    </div>
-                    
-                    <div className="flex justify-between mt-2 items-center">
-                      <div className="flex items-center gap-2">
-                        {getGoalBadge(profile.goal_type)}
-                        <div className="w-32">
-                          <Progress 
-                            value={Math.round(profile.kcalRatio * 100)} 
-                            className="h-1.5" 
-                          />
-                        </div>
-                      </div>
-                      
-                      <div className="flex items-center gap-1 text-sm">
-                        <span>Цель: {profile.currentKcal}/{profile.dailyGoal} ккал</span>
-                        {getProgressIndicator(profile.kcalRatio)}
-                      </div>
+                    <div className="w-full flex items-center gap-2">
+                      <Progress 
+                        value={progressPercentage} 
+                        className="h-2 flex-1 bg-muted/50" 
+                        // Make progress bar green
+                        style={{ 
+                          "--progress-background": "rgb(16, 185, 129)",
+                        } as React.CSSProperties}
+                      />
+                      <span className="text-xs text-muted-foreground w-8 text-right">
+                        {progressPercentage}%
+                      </span>
                     </div>
                   </div>
-                </div>
-              </CardContent>
-            </Card>
-          </Link>
-        );
-      })}
+                </TableCell>
+              </TableRow>
+            );
+          })}
+        </TableBody>
+      </Table>
     </div>
   );
 };
