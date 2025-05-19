@@ -1,47 +1,41 @@
 
 import React from "react";
-import { StatsGrid } from "@/components/StatsGrid";
 import { HeroBanner } from "@/components/home/HeroBanner";
 import { UserActivityChart } from "@/components/home/UserActivityChart";
-import { SubscriptionManagement } from "@/components/home/SubscriptionManagement";
+import { StatsGrid } from "@/components/StatsGrid";
 import { QuickLinks } from "@/components/home/QuickLinks";
-import { BarChart2, CreditCard } from "lucide-react";
+import { ClientDataMetrics } from "@/components/home/ClientDataMetrics";
+import { NotificationManager } from "@/components/home/NotificationManager";
+import { SubscribersTable } from "@/components/home/subscription/SubscribersTable";
+import { LatestClientMessages } from "@/components/home/LatestClientMessages";
 
-export default function Home() {
+const Home = () => {
   return (
-    <section className="space-y-10">
-      {/* Hero Banner */}
+    <div className="space-y-8">
       <HeroBanner />
       
-      <hr className="border-t border-white/5 mt-12 mb-8" />
-      
-      {/* Бизнес-метрики */}
-      <div className="section">
-        <div className="flex items-center gap-3">
-          <div className="p-2 rounded-lg bg-gradient-to-r from-emerald-600/80 to-emerald-700/80">
-            <BarChart2 className="h-5 w-5 text-white" />
-          </div>
-          <h2 className="text-xl font-semibold">Ключевые показатели</h2>
-        </div>
+      <div className="grid gap-6 md:grid-cols-2">
+        <UserActivityChart />
         <StatsGrid />
       </div>
-      
-      {/* График активности */}
-      <UserActivityChart />
-      
-      {/* Admin feature section */}
-      <div className="section">
-        <div className="flex items-center gap-3">
-          <div className="p-2 rounded-lg bg-gradient-to-r from-emerald-600/80 to-emerald-700/80">
-            <CreditCard className="h-5 w-5 text-white" />
-          </div>
-          <h2 className="text-xl font-semibold">Управление подписками</h2>
+
+      <div className="grid gap-6 md:grid-cols-3">
+        <div className="md:col-span-2">
+          <ClientDataMetrics />
         </div>
-        <SubscriptionManagement />
+        <div>
+          <QuickLinks />
+        </div>
+      </div>
+
+      <div className="grid gap-6 md:grid-cols-2">
+        <LatestClientMessages />
+        <SubscribersTable />
       </div>
       
-      {/* Быстрая навигация по ключевым разделам */}
-      <QuickLinks />
-    </section>
+      <NotificationManager />
+    </div>
   );
-}
+};
+
+export default Home;

@@ -48,6 +48,47 @@ export type Database = {
         }
         Relationships: []
       }
+      fitness_goals: {
+        Row: {
+          achieved: boolean | null
+          created_at: string
+          description: string | null
+          goal_type: string
+          id: string
+          profile_id: string
+          target_date: string | null
+          target_value: number | null
+        }
+        Insert: {
+          achieved?: boolean | null
+          created_at?: string
+          description?: string | null
+          goal_type: string
+          id?: string
+          profile_id: string
+          target_date?: string | null
+          target_value?: number | null
+        }
+        Update: {
+          achieved?: boolean | null
+          created_at?: string
+          description?: string | null
+          goal_type?: string
+          id?: string
+          profile_id?: string
+          target_date?: string | null
+          target_value?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "fitness_goals_profile_id_fkey"
+            columns: ["profile_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       meals: {
         Row: {
           carb: number | null
@@ -98,6 +139,47 @@ export type Database = {
           },
         ]
       }
+      measurements: {
+        Row: {
+          arms: number | null
+          chest: number | null
+          hips: number | null
+          id: string
+          profile_id: string
+          recorded_at: string
+          thighs: number | null
+          waist: number | null
+        }
+        Insert: {
+          arms?: number | null
+          chest?: number | null
+          hips?: number | null
+          id?: string
+          profile_id: string
+          recorded_at?: string
+          thighs?: number | null
+          waist?: number | null
+        }
+        Update: {
+          arms?: number | null
+          chest?: number | null
+          hips?: number | null
+          id?: string
+          profile_id?: string
+          recorded_at?: string
+          thighs?: number | null
+          waist?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "measurements_profile_id_fkey"
+            columns: ["profile_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       messages: {
         Row: {
           content: string | null
@@ -132,33 +214,92 @@ export type Database = {
       }
       profiles: {
         Row: {
+          activity_level: string | null
           avatar_url: string | null
+          birthdate: string | null
           created_at: string | null
+          dietary_restrictions: string[] | null
+          gender: string | null
           goal_type: string | null
+          height: number | null
           id: string
+          medical_conditions: string[] | null
           name: string | null
+          notes: string | null
+          target_weight: number | null
           telegram_id: number | null
           username: string | null
+          weight: number | null
         }
         Insert: {
+          activity_level?: string | null
           avatar_url?: string | null
+          birthdate?: string | null
           created_at?: string | null
+          dietary_restrictions?: string[] | null
+          gender?: string | null
           goal_type?: string | null
+          height?: number | null
           id?: string
+          medical_conditions?: string[] | null
           name?: string | null
+          notes?: string | null
+          target_weight?: number | null
           telegram_id?: number | null
           username?: string | null
+          weight?: number | null
         }
         Update: {
+          activity_level?: string | null
           avatar_url?: string | null
+          birthdate?: string | null
           created_at?: string | null
+          dietary_restrictions?: string[] | null
+          gender?: string | null
           goal_type?: string | null
+          height?: number | null
           id?: string
+          medical_conditions?: string[] | null
           name?: string | null
+          notes?: string | null
+          target_weight?: number | null
           telegram_id?: number | null
           username?: string | null
+          weight?: number | null
         }
         Relationships: []
+      }
+      weight_logs: {
+        Row: {
+          id: string
+          notes: string | null
+          profile_id: string
+          recorded_at: string
+          weight: number
+        }
+        Insert: {
+          id?: string
+          notes?: string | null
+          profile_id: string
+          recorded_at?: string
+          weight: number
+        }
+        Update: {
+          id?: string
+          notes?: string | null
+          profile_id?: string
+          recorded_at?: string
+          weight?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "weight_logs_profile_id_fkey"
+            columns: ["profile_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
       }
     }
     Views: {
@@ -178,10 +319,10 @@ export type Database = {
         Args: Record<PropertyKey, never>
         Returns: {
           profile_id: string
-          avatar_url: string
-          name: string
-          last_message: string
           ts: string
+          last_message: string
+          name: string
+          avatar_url: string
         }[]
       }
     }
