@@ -25,4 +25,3 @@ export function UserActivityChart() {
     </Card>
   );
 }
-
