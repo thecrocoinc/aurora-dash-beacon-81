@@ -15,7 +15,7 @@ export function BasicPlanCard() {
               <div className="bg-blue-500/20 p-2.5 rounded-full">
                 <Bot className="h-5 w-5 text-blue-400" />
               </div>
-              <CardTitle>Базовый</CardTitle>
+              <CardTitle>Basic</CardTitle>
             </div>
             <div className="text-xs text-blue-400 px-2.5 py-1 rounded-full bg-blue-500/10">
               Эконом
@@ -61,7 +61,7 @@ export function BasicPlanCard() {
           </ul>
         </CardContent>
         <CardFooter className="pt-2 pb-4">
-          <Button variant="outline" className="w-full gap-1.5 border-blue-800/50 bg-transparent hover:bg-blue-800/20 hover:text-white group">
+          <Button className="w-full gap-1.5 bg-blue-600 hover:bg-blue-700 text-white group">
             Редактировать <ArrowRight className="h-3.5 w-3.5 transform group-hover:translate-x-0.5 transition-transform" />
           </Button>
         </CardFooter>

@@ -11,7 +11,7 @@ export function HeroBanner() {
           Панель управления AI-Nutrition
         </h1>
         <p className="text-lg md:text-xl mb-6 text-foreground">
-          Управляйте вашим AI-ботом для трекинга питания и здоровья, анализируйте данные клиентов и развивайте свой бизнес
+          Управляйте AI-ботом для трекинга питания и здоровья, анализируйте данные клиентов и развивайте свой бизнес
         </p>
         <div className="flex flex-wrap gap-4">
           <Button className="btn-primary rounded-[var(--radius)] bg-primary hover:bg-primary/90 hover:scale-105 transition-all">

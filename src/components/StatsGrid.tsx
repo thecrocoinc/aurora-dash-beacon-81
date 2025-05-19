@@ -1,7 +1,7 @@
 
 import { Card } from "@/components/ui/card";
 import { useEffect, useState } from "react";
-import { BarChart2, Users, ArrowUp, ArrowDown, TrendingUp } from "lucide-react";
+import { BarChart2, Users, ArrowUp, ArrowDown, TrendingUp, DollarSign } from "lucide-react";
 
 interface StatItem {
   label: string;
@@ -38,7 +38,7 @@ export function StatsGrid() {
       value: 4680000,
       prefix: "₽",
       trend: 15.2,
-      icon: <BarChart2 className="h-5 w-5 stroke-[var(--color-primary-0)]" />
+      icon: <DollarSign className="h-5 w-5 stroke-[var(--color-primary-0)]" />
     }
   ];
   

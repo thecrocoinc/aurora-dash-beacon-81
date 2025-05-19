@@ -7,7 +7,7 @@ import { SubscribersTable } from "./subscription/SubscribersTable";
 export function SubscriptionManagement() {
   return (
     <div className="space-y-4">
-      <p className="text-muted-foreground">Мониторинг активности подписок клиентов и настройка тарифов</p>
+      <p className="text-muted-foreground">Настройка тарифов и мониторинг оплат</p>
       
       <Tabs defaultValue="plans">
         <TabsList className="w-full md:w-auto mb-4">
