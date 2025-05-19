@@ -7,9 +7,6 @@ import {
   Settings, 
   Bot, 
   BarChart2,
-  Utensils,
-  Camera,
-  Heart,
   Database,
   Bell
 } from "lucide-react";
@@ -28,7 +25,7 @@ import {
 export function CustomSidebar() {
   const location = useLocation();
   
-  // Admin dashboard main menu items
+  // Streamlined admin dashboard main menu items
   const menuItems = [
     {
       name: "Панель управления",
@@ -58,7 +55,7 @@ export function CustomSidebar() {
     },
   ];
   
-  // Admin Tools & Features
+  // Focused admin tools
   const featureItems = [
     {
       name: "Телеграм-бот",
@@ -78,35 +75,7 @@ export function CustomSidebar() {
       path: "/notifications",
       description: "Уведомления клиентам",
       badge: "New"
-    },
-    {
-      name: "AI Ассистент",
-      icon: Bot,
-      path: "/biz-agent",
-      description: "Управление ИИ-функциями",
-    },
-  ];
-  
-  // Client Features (managed by admin)
-  const clientFeatures = [
-    {
-      name: "Питание",
-      icon: Utensils,
-      path: "/nutrition",
-      description: "Настройки трекера рациона",
-    },
-    {
-      name: "AI Сканер",
-      icon: Camera,
-      path: "/scanner",
-      description: "Распознавание еды",
-    },
-    {
-      name: "Здоровье",
-      icon: Heart,
-      path: "/health",
-      description: "Интеграция с устройствами",
-    },
+    }
   ];
   
   const bottomItems = [
@@ -166,39 +135,13 @@ export function CustomSidebar() {
                 isActive={isCurrentPath(item.path)}
                 tooltip={item.description}
               >
-                <Link to={item.path || "#"} className="flex items-center gap-2">
+                <Link to={item.path} className="flex items-center gap-2">
                   <item.icon className="h-4 w-4" />
                   <span>{item.name}</span>
                   {item.badge && (
                     <span className="ml-auto text-[10px] bg-emerald-500/20 text-emerald-400 px-1.5 py-0.5 rounded-full">
                       {item.badge}
                     </span>
-                  )}
-                  {!item.path && (
-                    <span className="ml-auto text-[10px] bg-primary/20 text-primary px-1.5 py-0.5 rounded-full">Скоро</span>
-                  )}
-                </Link>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-          ))}
-        </SidebarMenu>
-
-        <SidebarSeparator />
-        
-        <SidebarGroupLabel>Функции для клиентов</SidebarGroupLabel>
-        <SidebarMenu>
-          {clientFeatures.map((item) => (
-            <SidebarMenuItem key={item.name}>
-              <SidebarMenuButton 
-                asChild 
-                isActive={isCurrentPath(item.path)}
-                tooltip={item.description}
-              >
-                <Link to={item.path || "#"} className="flex items-center gap-2">
-                  <item.icon className="h-4 w-4" />
-                  <span>{item.name}</span>
-                  {!item.path && (
-                    <span className="ml-auto text-[10px] bg-primary/20 text-primary px-1.5 py-0.5 rounded-full">Скоро</span>
                   )}
                 </Link>
               </SidebarMenuButton>

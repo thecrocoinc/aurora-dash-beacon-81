@@ -38,13 +38,10 @@ const App = () => (
           <Route path="dialogs" element={<Dialogs />} />
           <Route path="settings" element={<Settings />} />
           <Route path="biz-agent" element={<BizAgent />} />
-          {/* Placeholder routes for admin-focused features */}
+          {/* Admin-focused feature routes */}
           <Route path="bot" element={<BizAgent />} />
           <Route path="subscription" element={<BizAgent />} />
           <Route path="notifications" element={<BizAgent />} />
-          <Route path="nutrition" element={<BizAgent />} />
-          <Route path="scanner" element={<BizAgent />} />
-          <Route path="health" element={<BizAgent />} />
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>

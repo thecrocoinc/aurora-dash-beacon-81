@@ -11,7 +11,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { Bell, MessageSquare, Search, BarChart2 } from "lucide-react"
+import { Bell, MessageSquare, BarChart2 } from "lucide-react"
 
 export function Header() {
   const location = useLocation()
@@ -24,6 +24,9 @@ export function Header() {
     "/dialogs": "Диалоги",
     "/settings": "Настройки",
     "/biz-agent": "AI Ассистент",
+    "/bot": "Телеграм-бот",
+    "/subscription": "Подписки",
+    "/notifications": "Рассылки",
   }
 
   // Get current page title

@@ -7,73 +7,57 @@ import { Drawer, DrawerContent, DrawerHeader, DrawerTitle } from "@/components/u
 import ChatInterface from "@/components/ChatInterface";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Skeleton } from "@/components/ui/skeleton";
-import { MessageCircle } from "lucide-react";
-import { useQuery } from "@tanstack/react-query";
-import { supabase } from "@/lib/supabase";
-import EmptyState from "@/components/EmptyState";
-import { DialogEmptyState } from "@/components/DialogEmptyState";
+import { MessageSquare } from "lucide-react";
 import { toast } from "@/components/ui/use-toast";
 
-type Dialog = {
-  id: string;
-  name: string;
-  avatar: string;
-  timestamp: Date;
-  lastMessage: string;
-  unread: number;
-};
-
-// Updated type to match what get_latest_messages_by_profile actually returns
-type DatabaseDialog = {
-  profile_id: string;
-  avatar_url: string;
-  name: string;
-  last_message: string;
-  ts: string;
-};
+// Mock data for dialog placeholders
+const mockDialogs = [
+  {
+    id: "1",
+    name: "Анна Смирнова",
+    avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=100&h=100&auto=format&fit=crop",
+    timestamp: new Date(2025, 4, 19, 9, 23),
+    lastMessage: "Спасибо за рекомендацию по ужину, я попробовала это блюдо!",
+    unread: 2
+  },
+  {
+    id: "2",
+    name: "Иван Петров",
+    avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=100&h=100&auto=format&fit=crop",
+    timestamp: new Date(2025, 4, 18, 14, 15),
+    lastMessage: "Я хочу скорректировать свой рацион на следующую неделю",
+    unread: 0
+  },
+  {
+    id: "3",
+    name: "Ольга Козлова",
+    avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=100&h=100&auto=format&fit=crop",
+    timestamp: new Date(2025, 4, 18, 10, 5),
+    lastMessage: "Бот предложил мне интересный план питания на основе моих тренировок",
+    unread: 1
+  },
+  {
+    id: "4",
+    name: "Дмитрий Сидоров",
+    avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=100&h=100&auto=format&fit=crop",
+    timestamp: new Date(2025, 4, 17, 20, 30),
+    lastMessage: "Я загрузил данные со своих Apple Watch, но не вижу их в приложении",
+    unread: 0
+  },
+  {
+    id: "5",
+    name: "Елена Иванова",
+    avatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=100&h=100&auto=format&fit=crop",
+    timestamp: new Date(2025, 4, 17, 18, 42),
+    lastMessage: "Как мне добавить в трекер блюда, которых нет в базе данных?",
+    unread: 0
+  }
+];
 
 const Dialogs = () => {
   const [openDrawer, setOpenDrawer] = useState(false);
   const [selectedDialog, setSelectedDialog] = useState<string | null>(null);
-
-  const { data: dialogs, isLoading } = useQuery({
-    queryKey: ['dialogs'],
-    queryFn: async () => {
-      // Query for the latest message from each profile
-      const { data: dialogsData, error: dialogsError } = await supabase
-        .rpc('get_latest_messages_by_profile');
-
-      if (dialogsError) {
-        throw dialogsError;
-      }
-
-      if (!dialogsData || dialogsData.length === 0) {
-        return [];
-      }
-
-      // Combine the dialog and profile data
-      return dialogsData.map((dialog: DatabaseDialog) => {
-        return {
-          id: dialog.profile_id,
-          name: dialog.name || "Unknown",
-          avatar: dialog.avatar_url || "",
-          timestamp: new Date(dialog.ts),
-          lastMessage: dialog.last_message,
-          unread: 0 // For now, we're not tracking unread messages
-        };
-      });
-    },
-    meta: {
-      onError: (error: Error) => {
-        console.error("Error fetching dialogs:", error);
-        return [];
-      }
-    }
-  });
-
-  const selectedDialogData = dialogs?.find(dialog => dialog.id === selectedDialog);
-
+  
   const handleDialogClick = (dialogId: string) => {
     setSelectedDialog(dialogId);
     setOpenDrawer(true);
@@ -81,92 +65,85 @@ const Dialogs = () => {
   
   const handlePingBot = () => {
     toast({
-      title: "Bot notification sent",
-      description: "The bot has been pinged. Check back soon for responses.",
+      title: "Бот активирован",
+      description: "Бот начал работу с новым клиентом.",
     });
   };
 
+  const selectedDialogData = mockDialogs.find(dialog => dialog.id === selectedDialog);
+
   return (
     <div className="space-y-6">
-      <h1 className="text-3xl font-bold tracking-tight">Dialogs</h1>
-      <p className="text-muted-foreground">
-        Manage conversations and message threads.
-      </p>
-      <Card>
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-3xl font-bold tracking-tight">Диалоги</h1>
+          <p className="text-muted-foreground mt-2">
+            Управляйте беседами между клиентами и ботом
+          </p>
+        </div>
+        <Button className="bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700">
+          Создать обращение
+        </Button>
+      </div>
+      
+      <Card className="glass-morphism border-white/5">
         <CardHeader>
-          <CardTitle>Recent Conversations</CardTitle>
-          <CardDescription>View and manage recent conversations.</CardDescription>
+          <CardTitle>Недавние беседы</CardTitle>
+          <CardDescription>Просмотр и управление диалогами клиентов с ботом</CardDescription>
         </CardHeader>
         <CardContent>
-          {isLoading ? (
-            <div className="space-y-4">
-              {[1, 2, 3].map((i) => (
-                <div key={i} className="flex items-center space-x-4">
-                  <Skeleton className="h-12 w-12 rounded-full" />
-                  <div className="space-y-2 flex-1">
-                    <Skeleton className="h-4 w-[200px]" />
-                    <Skeleton className="h-3 w-full" />
-                  </div>
-                  <Skeleton className="h-4 w-16" />
-                </div>
-              ))}
-            </div>
-          ) : dialogs && dialogs.length > 0 ? (
-            <div className="space-y-2 divide-y">
-              {dialogs.map((dialog) => {
-                const initials = dialog.name
-                  ? dialog.name
-                      .split(" ")
-                      .map((n) => n[0])
-                      .join("")
-                  : "?";
-                  
-                return (
-                  <div 
-                    key={dialog.id} 
-                    className="p-3 -mx-3 flex items-center gap-4 hover:bg-muted rounded-md cursor-pointer"
-                    onClick={() => handleDialogClick(dialog.id)}
-                  >
-                    <Avatar>
-                      <AvatarImage src={dialog.avatar ? `${dialog.avatar}?w=40&h=40&fit=crop&crop=faces` : undefined} alt={dialog.name} />
-                      <AvatarFallback>{initials}</AvatarFallback>
-                    </Avatar>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex justify-between items-center">
-                        <div className="font-medium">{dialog.name}</div>
-                        <div className="text-xs text-muted-foreground">
-                          {format(dialog.timestamp, "h:mm a")}
-                        </div>
-                      </div>
-                      <div className="text-sm text-muted-foreground truncate">
-                        {dialog.lastMessage}
+          <div className="space-y-2 divide-y divide-white/5">
+            {mockDialogs.map((dialog) => {
+              const initials = dialog.name
+                ? dialog.name
+                    .split(" ")
+                    .map((n) => n[0])
+                    .join("")
+                : "?";
+                
+              return (
+                <div 
+                  key={dialog.id} 
+                  className="p-3 -mx-3 flex items-center gap-4 hover:bg-muted rounded-md cursor-pointer transition-colors"
+                  onClick={() => handleDialogClick(dialog.id)}
+                >
+                  <Avatar>
+                    <AvatarImage src={dialog.avatar} alt={dialog.name} />
+                    <AvatarFallback>{initials}</AvatarFallback>
+                  </Avatar>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex justify-between items-center">
+                      <div className="font-medium">{dialog.name}</div>
+                      <div className="text-xs text-muted-foreground">
+                        {format(dialog.timestamp, "HH:mm")}
                       </div>
                     </div>
-                    {dialog.unread > 0 && (
-                      <Badge className="ml-2">{dialog.unread}</Badge>
-                    )}
+                    <div className="text-sm text-muted-foreground truncate">
+                      {dialog.lastMessage}
+                    </div>
                   </div>
-                );
-              })}
-            </div>
-          ) : (
-            <DialogEmptyState onAction={handlePingBot} />
-          )}
+                  {dialog.unread > 0 && (
+                    <Badge variant="default" className="ml-2 bg-primary text-white">{dialog.unread}</Badge>
+                  )}
+                </div>
+              );
+            })}
+          </div>
         </CardContent>
       </Card>
 
       <Drawer open={openDrawer} onOpenChange={setOpenDrawer}>
         <DrawerContent className="h-[85vh]">
           <DrawerHeader className="border-b">
-            <DrawerTitle>{selectedDialogData?.name || "Chat"}</DrawerTitle>
+            <DrawerTitle>{selectedDialogData?.name || "Чат"}</DrawerTitle>
           </DrawerHeader>
           <div className="p-0 h-[calc(100%-60px)] flex flex-col">
             <div className="flex-1">
               <ChatInterface profileId={selectedDialog || undefined} />
             </div>
             <div className="p-4 border-t">
-              <Button className="w-full opacity-60" disabled>
-                Write manual reply
+              <Button className="w-full bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700">
+                Написать ответ
               </Button>
             </div>
           </div>

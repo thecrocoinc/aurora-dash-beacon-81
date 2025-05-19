@@ -10,10 +10,8 @@ import {
   MessageSquare, 
   Users, 
   Bell,
-  Calendar,
-  Utensils,
+  Heart,
   Database,
-  Heart
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -47,7 +45,7 @@ const quickLinks = [
     title: "Телеграм-бот",
     description: "Настройки бота",
     icon: Bot,
-    path: "/biz-agent",
+    path: "/bot",
     color: "from-amber-500 to-amber-700",
     stats: "Онлайн"
   }
@@ -60,7 +58,6 @@ const featureSections = [
     icon: Database,
     description: "Мониторинг активности подписок клиентов и настройка тарифов",
     color: "from-blue-500/80 to-blue-700/80",
-    soon: false,
     content: (
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-4">
         <Card className="bg-card/70 backdrop-blur">
@@ -112,7 +109,6 @@ const featureSections = [
     icon: Heart,
     description: "Мониторинг данных о питании и активности ваших клиентов",
     color: "from-purple-500/80 to-purple-700/80",
-    soon: false,
     content: (
       <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-6">
         <Card className="card-gradient">
@@ -156,24 +152,20 @@ const featureSections = [
                 </div>
               </div>
             </div>
-            
-            <div className="mt-6">
-              <Button className="w-full" variant="outline">Подробная аналитика</Button>
-            </div>
           </CardContent>
         </Card>
         
         <Card className="card-gradient">
           <CardHeader>
             <CardTitle className="text-lg flex items-center gap-2">
-              <Utensils className="h-4 w-4 text-emerald-400" />
-              <span>Трекинг питания</span>
+              <BarChart2 className="h-4 w-4 text-emerald-400" />
+              <span>Прогресс целей</span>
             </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-3">
               <div className="flex justify-between items-center">
-                <span className="text-sm">Завтраки</span>
+                <span className="text-sm">Снижение веса</span>
                 <div className="w-36 h-2 bg-muted/50 rounded-full">
                   <div className="bg-emerald-500 h-full w-4/5 rounded-full"></div>
                 </div>
@@ -181,7 +173,7 @@ const featureSections = [
               </div>
               
               <div className="flex justify-between items-center">
-                <span className="text-sm">Обеды</span>
+                <span className="text-sm">Баланс БЖУ</span>
                 <div className="w-36 h-2 bg-muted/50 rounded-full">
                   <div className="bg-emerald-500 h-full w-3/4 rounded-full"></div>
                 </div>
@@ -189,7 +181,7 @@ const featureSections = [
               </div>
               
               <div className="flex justify-between items-center">
-                <span className="text-sm">Ужины</span>
+                <span className="text-sm">Витамины</span>
                 <div className="w-36 h-2 bg-muted/50 rounded-full">
                   <div className="bg-emerald-500 h-full w-5/6 rounded-full"></div>
                 </div>
@@ -197,24 +189,12 @@ const featureSections = [
               </div>
               
               <div className="flex justify-between items-center">
-                <span className="text-sm">Перекусы</span>
-                <div className="w-36 h-2 bg-muted/50 rounded-full">
-                  <div className="bg-emerald-500 h-full w-1/3 rounded-full"></div>
-                </div>
-                <span className="text-xs">33%</span>
-              </div>
-              
-              <div className="flex justify-between items-center">
-                <span className="text-sm">Вода</span>
+                <span className="text-sm">Гидратация</span>
                 <div className="w-36 h-2 bg-muted/50 rounded-full">
                   <div className="bg-blue-500 h-full w-2/3 rounded-full"></div>
                 </div>
                 <span className="text-xs">67%</span>
               </div>
-            </div>
-            
-            <div className="mt-6">
-              <Button className="w-full" variant="outline">Детальный отчет</Button>
             </div>
           </CardContent>
         </Card>
@@ -226,10 +206,9 @@ const featureSections = [
     icon: Bell,
     description: "Настройка уведомлений и рассылок для ваших клиентов",
     color: "from-amber-500/80 to-amber-700/80",
-    soon: false,
     content: (
-      <div className="mt-4 grid grid-cols-1 md:grid-cols-3 gap-6">
-        <Card className="bg-card/70 backdrop-blur col-span-1 md:col-span-2">
+      <div className="mt-4">
+        <Card className="bg-card/70 backdrop-blur">
           <CardHeader>
             <CardTitle>Запланированные рассылки</CardTitle>
           </CardHeader>
@@ -237,7 +216,7 @@ const featureSections = [
             <div className="space-y-4">
               <div className="flex items-center justify-between p-3 rounded-md bg-background/40">
                 <div className="flex items-center gap-3">
-                  <Calendar className="h-5 w-5 text-blue-400" />
+                  <Bell className="h-5 w-5 text-blue-400" />
                   <div>
                     <p className="font-medium">Новые рецепты недели</p>
                     <p className="text-xs text-muted-foreground">Запланировано на завтра, 9:00</p>
@@ -256,44 +235,9 @@ const featureSections = [
                 </div>
                 <span className="text-xs bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded-full">Всем</span>
               </div>
-              
-              <div className="flex items-center justify-between p-3 rounded-md bg-background/40">
-                <div className="flex items-center gap-3">
-                  <Bell className="h-5 w-5 text-amber-400" />
-                  <div>
-                    <p className="font-medium">Обновление функций AI</p>
-                    <p className="text-xs text-muted-foreground">Пятница, 12:00</p>
-                  </div>
-                </div>
-                <span className="text-xs bg-amber-500/20 text-amber-400 px-2 py-0.5 rounded-full">Premium и Pro</span>
-              </div>
             </div>
             
             <Button variant="outline" className="w-full mt-4">Создать рассылку</Button>
-          </CardContent>
-        </Card>
-        
-        <Card className="card-gradient">
-          <CardHeader>
-            <CardTitle className="text-lg">Эффективность</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-6">
-            <div className="text-center">
-              <div className="text-3xl font-bold mb-1">76%</div>
-              <p className="text-sm text-muted-foreground">Средний open rate</p>
-            </div>
-            
-            <div className="text-center">
-              <div className="text-3xl font-bold mb-1">42%</div>
-              <p className="text-sm text-muted-foreground">Средний click rate</p>
-            </div>
-            
-            <div className="text-center">
-              <div className="text-3xl font-bold mb-1">12%</div>
-              <p className="text-sm text-muted-foreground">Конверсия в покупку</p>
-            </div>
-            
-            <Button variant="outline" className="w-full">Аналитика</Button>
           </CardContent>
         </Card>
       </div>
@@ -349,9 +293,6 @@ export default function Home() {
               <section.icon className="h-5 w-5 text-white" />
             </div>
             <h2 className="text-xl font-semibold">{section.title}</h2>
-            {section.soon && (
-              <span className="px-2 py-0.5 text-xs rounded-full bg-primary/20 text-primary">Скоро</span>
-            )}
           </div>
           <p className="text-muted-foreground">{section.description}</p>
           {section.content}
