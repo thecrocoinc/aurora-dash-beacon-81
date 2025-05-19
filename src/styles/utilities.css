@@ -35,7 +35,7 @@
 }
 
 .hover-emerald:hover {
-  @apply border-[var(--color-emerald-start)]/30 shadow-[0_4px_12px_rgba(33,194,135,0.15)];
+  @apply border-[rgba(32,180,134,0.3)] shadow-[0_4px_12px_rgba(33,194,135,0.15)];
 }
 
 /* Image overlays */
@@ -84,7 +84,7 @@
 }
 
 .dashboard-card-emerald {
-  @apply border border-[var(--color-emerald-start)]/10 hover:border-[var(--color-emerald-start)]/20 transition-all duration-200;
+  @apply border border-[rgba(32,180,134,0.1)] hover:border-[rgba(32,180,134,0.2)] transition-all duration-200;
 }
 
 /* Animated gradient background */
