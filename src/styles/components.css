@@ -5,8 +5,8 @@
 .btn-primary {
   @apply bg-gradient-to-br from-[var(--color-primary-0)] to-[var(--color-primary-1)] 
          text-[var(--color-bg)] shadow 
-         hover:ring-2 hover:ring-[var(--color-primary-0)]/40
-         focus:ring-2 focus:ring-[var(--color-primary-0)]/40
+         hover:ring-2 hover:ring-primary/40
+         focus:ring-2 focus:ring-primary/40
          active:from-[var(--color-primary-1)] active:to-[var(--color-primary-3)]
          transition-all;
 }
@@ -14,7 +14,7 @@
 .btn-secondary {
   @apply border border-[var(--color-surface-muted)] text-[var(--color-text)] 
          bg-transparent hover:bg-[var(--color-surface-muted)]/50 
-         hover:border-[var(--color-primary-0)]/30
+         hover:border-primary/30
          transition-all;
 }
 
@@ -95,11 +95,11 @@
 
 /* Premium effects */
 .premium-border {
-  @apply border border-[var(--color-primary-1)]/30 shadow-sm;
+  @apply border border-primary/30 shadow-sm;
 }
 
 .premium-card {
-  @apply bg-[var(--color-surface)] backdrop-blur-lg border border-[var(--color-primary-1)]/20 shadow-[var(--shadow)];
+  @apply bg-[var(--color-surface)] backdrop-blur-lg border border-primary/20 shadow-[var(--shadow)];
 }
 
 .premium-button {
@@ -118,7 +118,7 @@
 }
 
 .badge, .counter {
-  @apply bg-[var(--color-primary-0)]/20 text-[var(--color-primary-0)];
+  @apply bg-primary/20 text-[var(--color-primary-0)];
 }
 
 /* Card and surface styles */
@@ -160,7 +160,7 @@
 
 /* Badges унифицированы */
 .badge-primary {
-  @apply bg-[var(--color-primary-0)]/20 text-[var(--color-primary-0)] rounded-full px-2 py-0.5;
+  @apply bg-primary/20 text-[var(--color-primary-0)] rounded-full px-2 py-0.5;
 }
 
 .badge-emerald {
@@ -202,7 +202,7 @@
 }
 
 .stat-card-icon {
-  @apply h-10 w-10 p-2 rounded-full bg-[var(--color-primary-0)]/10 flex items-center justify-center;
+  @apply h-10 w-10 p-2 rounded-full bg-primary/10 flex items-center justify-center;
 }
 
 .stat-card-icon svg {
