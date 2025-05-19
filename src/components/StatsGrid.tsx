@@ -19,7 +19,7 @@ export function StatsGrid() {
     label: "Avg. kcal tracked",
     value: 1780,
     trend: -5,
-    icon: <BarChart2 className="h-5 w-5 text-[var(--color-emerald-start)]" />
+    icon: <BarChart2 className="h-5 w-5 text-emerald-500" />
   }, {
     label: "Conversion",
     value: 12.4,
@@ -31,19 +31,14 @@ export function StatsGrid() {
     value: 1870,
     prefix: "$",
     trend: 15.2,
-    icon: <BarChart2 className="h-5 w-5 text-[var(--color-primary-start)]" />
+    icon: <BarChart2 className="h-5 w-5 text-amber-500" />
   }];
   return <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-      {stats.map((stat, index) => (
-        <Card 
-          key={stat.label} 
-          className={`overflow-hidden bg-zinc-900 ${index === 1 ? 'card-accent-emerald' : index === 3 ? 'card-accent-gold' : ''}`}
-        >
+      {stats.map(stat => <Card key={stat.label} className="overflow-hidden bg-zinc-900">
           <CardContent className="p-6">
             <CountUpStat stat={stat} />
           </CardContent>
-        </Card>
-      ))}
+        </Card>)}
     </div>;
 }
 function CountUpStat({
@@ -102,8 +97,8 @@ function CountUpStat({
         
         {stat.trend && <div className="flex items-center gap-1 mt-1.5">
             {isPositive && <>
-                <ArrowUp className="h-4 w-4 text-[var(--color-emerald-start)]" />
-                <span className="text-xs font-medium text-[var(--color-emerald-start)]">
+                <ArrowUp className="h-4 w-4 text-emerald-500" />
+                <span className="text-xs font-medium text-emerald-500">
                   {Math.abs(stat.trend)}%
                 </span>
               </>}
