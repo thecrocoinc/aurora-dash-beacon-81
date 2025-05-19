@@ -2,7 +2,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { EmptyBanner } from "@/components/EmptyBanner";
-import { UserPlus, Watch } from "lucide-react";
+import { UserPlus, Target, Utensils, Weight } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
@@ -52,23 +52,38 @@ const ProfilesList = ({ profiles }: ProfilesListProps) => {
   const getSubscriptionBadge = (status?: string) => {
     switch(status) {
       case 'active':
-        return <Badge className="bg-primary text-white">Premium</Badge>;
+        return <Badge className="bg-purple-600 hover:bg-purple-700 text-white">Premium</Badge>;
       default:
-        return <Badge className="bg-muted text-foreground">Basic</Badge>;
+        return <Badge className="bg-blue-600 hover:bg-blue-700 text-white">Basic</Badge>;
     }
   };
 
-  const getGoalBadge = (goalType?: string | null) => {
+  // Get goal icon and text
+  const getGoalInfo = (goalType?: string | null) => {
+    let Icon = Utensils;
+    let text = "Не указана";
+    
     switch(goalType) {
       case 'weight_loss':
-        return <Badge variant="outline" className="bg-blue-100/10 border-blue-300/20 text-blue-400">Снижение</Badge>;
+        Icon = Weight;
+        text = "Снижение";
+        break;
       case 'weight_gain':
-        return <Badge variant="outline" className="bg-amber-100/10 border-amber-300/20 text-amber-400">Набор</Badge>;
+        Icon = Weight;
+        text = "Набор";
+        break;
       case 'maintenance':
-        return <Badge variant="outline" className="bg-emerald-100/10 border-emerald-300/20 text-emerald-400">Поддержание</Badge>;
-      default:
-        return null;
+        Icon = Target;
+        text = "Поддержание";
+        break;
     }
+    
+    return (
+      <div className="flex items-center gap-1.5">
+        <Icon className="h-3.5 w-3.5 text-muted-foreground" />
+        <span className="text-sm text-muted-foreground">{text}</span>
+      </div>
+    );
   };
 
   return (
@@ -79,7 +94,6 @@ const ProfilesList = ({ profiles }: ProfilesListProps) => {
             <TableHead>Клиент</TableHead>
             <TableHead>Тариф</TableHead>
             <TableHead>Цель</TableHead>
-            <TableHead>Часы</TableHead>
             <TableHead className="text-right">Прогресс</TableHead>
           </TableRow>
         </TableHeader>
@@ -111,13 +125,7 @@ const ProfilesList = ({ profiles }: ProfilesListProps) => {
                 </TableCell>
                 
                 <TableCell>
-                  {getGoalBadge(profile.goal_type)}
-                </TableCell>
-                
-                <TableCell>
-                  {profile.watch_connected && (
-                    <Watch className="text-emerald-500 h-4 w-4" />
-                  )}
+                  {getGoalInfo(profile.goal_type)}
                 </TableCell>
                 
                 <TableCell>
@@ -128,8 +136,7 @@ const ProfilesList = ({ profiles }: ProfilesListProps) => {
                     <div className="w-full flex items-center gap-2">
                       <Progress 
                         value={progressPercentage} 
-                        className="h-2 flex-1 bg-muted/50" 
-                        // Make progress bar green
+                        className="h-2.5 flex-1 bg-muted/50" 
                         style={{ 
                           "--progress-background": "rgb(16, 185, 129)",
                         } as React.CSSProperties}

@@ -29,12 +29,35 @@ interface ProfilesGridProps {
 
 const ProfilesGrid = ({ profiles }: ProfilesGridProps) => {
   if (!profiles || profiles.length === 0) {
+    // Generate 6 placeholder profiles for demonstration
+    const placeholderProfiles = Array.from({ length: 9 }, (_, i) => ({
+      id: `placeholder-${i}`,
+      name: ["Анна Иванова", "Максим Петров", "Елена Сидорова", "Алексей Смирнов", 
+             "Ольга Козлова", "Дмитрий Попов", "Наталья Волкова", "Сергей Соколов", 
+             "Юлия Морозова"][i],
+      avatar: null,
+      watch_connected: i % 3 === 0,
+      kcalRatio: Math.random() * 0.9 + 0.1, // Random between 0.1 and 1.0
+      currentKcal: Math.floor(Math.random() * 1500) + 500,
+      dailyGoal: 2000,
+      prot: Math.floor(Math.random() * 60) + 40,
+      fat: Math.floor(Math.random() * 40) + 30,
+      carb: Math.floor(Math.random() * 150) + 100,
+      goal_type: ["weight_loss", "weight_gain", "maintenance"][i % 3],
+      created_at: new Date().toISOString(),
+      last_activity: new Date().toISOString(),
+      streak_days: Math.floor(Math.random() * 30),
+      subscription_status: i % 2 === 0 ? 'active' : 'basic'
+    }));
+
     return (
-      <EmptyBanner
-        icon={UserPlus}
-        title="Нет клиентов"
-        subtitle="Подключите ваш Telegram-бот чтобы видеть живые данные"
-      />
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        {placeholderProfiles.map((profile) => (
+          <div key={profile.id} className="block h-full">
+            <ProfileCard profile={profile} />
+          </div>
+        ))}
+      </div>
     );
   }
 

@@ -40,36 +40,36 @@ export function ProfilesStats({ profiles }: ProfilesStatsProps) {
     {
       label: "Клиенты",
       value: totalUsers,
-      icon: <Users className="h-4 w-4 text-primary" />
+      icon: <Users className="h-4 w-4" />
     },
     {
       label: "Premium",
       value: activeSubscriptions,
-      icon: <Crown className="h-4 w-4 text-primary" />
+      icon: <Crown className="h-4 w-4" />
     },
     {
       label: "Часы",
       value: `${watchConnectedPercentage}%`,
-      icon: <Watch className="h-4 w-4 text-primary" />
+      icon: <Watch className="h-4 w-4" />
     },
     {
       label: "Прогресс",
       value: `${avgKcalPercentage}%`,
-      icon: <TrendingUp className="h-4 w-4 text-primary" />
+      icon: <TrendingUp className="h-4 w-4" />
     }
   ];
   
   return (
     <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
       {stats.map((stat) => (
-        <Card key={stat.label} className="border border-white/5 hover:border-white/10">
-          <div className="flex items-center p-3 h-full">
-            <div className="rounded-full p-2 bg-primary/10 mr-3">
+        <Card key={stat.label} className="p-0 hover:shadow-md transition-all">
+          <div className="flex items-center h-14 px-4">
+            <div className="rounded-full p-1.5 bg-primary/10 mr-3">
               {stat.icon}
             </div>
-            <div>
+            <div className="flex flex-col justify-center">
               <p className="text-xs text-muted-foreground">{stat.label}</p>
-              <p className="text-xl font-semibold">{stat.value}</p>
+              <p className="text-lg font-semibold">{stat.value}</p>
             </div>
           </div>
         </Card>
