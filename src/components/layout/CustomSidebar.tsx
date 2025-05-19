@@ -73,23 +73,29 @@ export function CustomSidebar() {
       </SidebarHeader>
       
       <SidebarContent>
-        <SidebarMenu>
-          {menuItems.map(item => (
-            <SidebarMenuItem key={item.name}>
-              <SidebarMenuButton asChild isActive={isCurrentPath(item.path)} tooltip={item.description}>
-                <Link to={item.path} className="flex items-center gap-2">
-                  <item.icon className="h-4 w-4 stroke-primary" />
-                  <span className="text-white">{item.name}</span>
-                  {item.badge && (
-                    <span className="ml-auto text-[10px] bg-primary/20 text-primary rounded-full px-2 py-0.5">
-                      {item.badge}
-                    </span>
-                  )}
-                </Link>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-          ))}
-        </SidebarMenu>
+        {/* Основное меню - теперь в таком же блоке как и "Инструменты админа" */}
+        <div className="px-2 py-2.5 bg-muted/30 rounded-md mx-2 mb-2">
+          <SidebarGroupLabel className="text-primary text-[13px] font-medium mb-2 px-2">
+            Основное меню
+          </SidebarGroupLabel>
+          <SidebarMenu>
+            {menuItems.map(item => (
+              <SidebarMenuItem key={item.name}>
+                <SidebarMenuButton asChild isActive={isCurrentPath(item.path)} tooltip={item.description}>
+                  <Link to={item.path} className="flex items-center gap-2">
+                    <item.icon className="h-4 w-4 stroke-primary" />
+                    <span className="text-white">{item.name}</span>
+                    {item.badge && (
+                      <span className="ml-auto text-[10px] bg-primary/20 text-primary rounded-full px-2 py-0.5">
+                        {item.badge}
+                      </span>
+                    )}
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            ))}
+          </SidebarMenu>
+        </div>
 
         <SidebarSeparator className="my-3" />
         
