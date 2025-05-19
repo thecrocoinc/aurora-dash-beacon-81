@@ -34,7 +34,7 @@ export function Header() {
   const pageTitle = pathNames[currentPath as keyof typeof pathNames] || "AI-Nutrition Admin"
 
   return (
-    <header className="sticky top-0 z-10 border-b border-white/10 bg-background/80 backdrop-blur">
+    <header className="sticky top-0 z-10 border-b border-slate-200/20 bg-white/80 backdrop-blur dark:bg-slate-800/50 dark:border-slate-700/30">
       <div className="container flex h-16 items-center justify-between py-4">
         <div className="flex flex-1 items-center">
           <h1 className="ml-2 text-sm font-bold md:text-base bg-gradient-to-r from-blue-500 to-indigo-600 bg-clip-text text-transparent">
@@ -60,14 +60,14 @@ export function Header() {
 
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="relative h-9 w-9 rounded-full overflow-hidden glass-morphism">
+              <Button variant="ghost" className="relative h-9 w-9 rounded-full overflow-hidden bg-blue-500/10 hover:bg-blue-500/20 transition-colors">
                 <Avatar className="h-9 w-9 border-none">
                   <AvatarImage src="https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=100&h=100&auto=format&fit=crop" alt="Admin" />
-                  <AvatarFallback className="bg-transparent text-white">НП</AvatarFallback>
+                  <AvatarFallback className="bg-transparent text-blue-800 dark:text-blue-200">НП</AvatarFallback>
                 </Avatar>
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-56 bg-card/90 backdrop-blur-lg" align="end" forceMount>
+            <DropdownMenuContent className="w-56 bg-white/95 dark:bg-slate-800/95 backdrop-blur-lg" align="end" forceMount>
               <DropdownMenuItem className="flex flex-col gap-1.5">
                 <span className="text-sm font-medium leading-none">Наталья Петрова</span>
                 <span className="text-muted-foreground text-xs">
