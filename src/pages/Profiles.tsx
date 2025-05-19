@@ -1,9 +1,8 @@
-
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { UserPlus, Filter, Search, ArrowUpDown } from "lucide-react";
+import { Filter, Search, UserPlus } from "lucide-react";
 import ProfileCard from "@/components/ProfileCard";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/lib/supabase";
@@ -11,8 +10,6 @@ import { format } from "date-fns";
 import { EmptyBanner } from "@/components/EmptyBanner";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Badge } from "@/components/ui/badge";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -21,14 +18,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
 
 // Define a proper type for profile data
 interface ProfileData {
@@ -54,19 +43,6 @@ interface ProfileWithDetails {
   streak_days?: number;
   subscription_status?: 'active' | 'expired' | 'trial';
 }
-
-const goalTypeLabels: Record<string, string> = {
-  "weight_loss": "Снижение веса",
-  "weight_gain": "Набор массы",
-  "maintenance": "Поддержание формы",
-  "athlete": "Спорт",
-};
-
-const statusColors: Record<string, string> = {
-  "active": "bg-emerald-100 text-emerald-800",
-  "expired": "bg-red-100 text-red-800",
-  "trial": "bg-amber-100 text-amber-800",
-};
 
 const Profiles = () => {
   const [error, setError] = useState<string | null>(null);
@@ -111,6 +87,12 @@ const Profiles = () => {
                               profile.goal_type === 'weight_gain' ? 2600 : 
                               profile.goal_type === 'athlete' ? 2800 : 2000;
               
+              // For demo purposes, generate realistic macro values 
+              const currentKcal = Math.floor(dailyGoal * (0.6 + Math.random() * 0.3)); // 60%-90% of goal
+              const prot = Math.floor(currentKcal * 0.25 / 4); // ~25% from protein (4 kcal per gram)
+              const fat = Math.floor(currentKcal * 0.30 / 9); // ~30% from fat (9 kcal per gram)
+              const carb = Math.floor(currentKcal * 0.45 / 4); // ~45% from carbs (4 kcal per gram)
+              
               // Simulate some additional data
               const createdDate = profile.created_at ? new Date(profile.created_at) : new Date();
               const daysSinceCreation = Math.floor((new Date().getTime() - createdDate.getTime()) / (1000 * 3600 * 24));
@@ -128,12 +110,12 @@ const Profiles = () => {
                 name: profile.name || 'Unnamed User',
                 avatar: profile.avatar_url,
                 watch_connected: hasWatch,
-                kcalRatio: summary.kcal / dailyGoal,
-                currentKcal: summary.kcal,
+                kcalRatio: currentKcal / dailyGoal,
+                currentKcal,
                 dailyGoal,
-                prot: summary.prot,
-                fat: summary.fat,
-                carb: summary.carb,
+                prot,
+                fat,
+                carb,
                 goal_type: profile.goal_type,
                 created_at: profile.created_at,
                 last_activity: format(lastActivity, "yyyy-MM-dd HH:mm"),
@@ -200,18 +182,11 @@ const Profiles = () => {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight">Клиенты</h1>
-          <p className="text-muted-foreground mt-1">
-            Управление профилями пользователей и их питанием
-          </p>
-        </div>
-        
-        <Button>
-          <UserPlus className="mr-2 h-4 w-4" />
-          Добавить клиента
-        </Button>
+      <div>
+        <h1 className="text-3xl font-bold tracking-tight">Клиенты</h1>
+        <p className="text-muted-foreground mt-1">
+          Управление профилями пользователей и их питанием
+        </p>
       </div>
 
       {/* Search and filter row */}
@@ -245,161 +220,50 @@ const Profiles = () => {
             <DropdownMenuItem>Поддержание формы</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="outline">
-              <ArrowUpDown className="mr-2 h-4 w-4" />
-              Сортировка
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-56">
-            <DropdownMenuItem>По имени (А-Я)</DropdownMenuItem>
-            <DropdownMenuItem>По имени (Я-А)</DropdownMenuItem>
-            <DropdownMenuItem>По дате регистрации (новые)</DropdownMenuItem>
-            <DropdownMenuItem>По дате регистрации (старые)</DropdownMenuItem>
-            <DropdownMenuItem>По последней активности</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
       </div>
 
-      <Tabs defaultValue="cards">
-        <TabsList className="mb-4">
-          <TabsTrigger value="cards">Карточки</TabsTrigger>
-          <TabsTrigger value="table">Таблица</TabsTrigger>
-        </TabsList>
-        
-        <TabsContent value="cards">
-          <Card>
-            <CardContent className="pt-6">
-              {isLoading ? (
-                <div className="space-y-4">
-                  {[1, 2, 3].map((i) => (
-                    <div key={i} className="flex items-center space-x-4">
-                      <Skeleton className="h-12 w-12 rounded-full" />
-                      <div className="space-y-2">
-                        <Skeleton className="h-4 w-[250px]" />
-                        <Skeleton className="h-4 w-[200px]" />
-                      </div>
-                    </div>
-                  ))}
+      <Card>
+        <CardContent className="pt-6">
+          {isLoading ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {[1, 2, 3, 4, 5, 6].map((i) => (
+                <div key={i} className="flex items-center space-x-4 p-4 border rounded-lg">
+                  <Skeleton className="h-12 w-12 rounded-full" />
+                  <div className="space-y-2 flex-1">
+                    <Skeleton className="h-4 w-[70%]" />
+                    <Skeleton className="h-3 w-full" />
+                    <Skeleton className="h-3 w-[80%]" />
+                  </div>
                 </div>
-              ) : isError ? (
-                <div className="text-center text-red-500 py-8">
-                  <p>Не удалось загрузить данные профилей.</p>
-                  <button 
-                    className="mt-4 px-4 py-2 bg-primary text-white rounded" 
-                    onClick={() => window.location.reload()}
-                  >
-                    Попробовать снова
-                  </button>
-                </div>
-              ) : filteredProfiles && filteredProfiles.length > 0 ? (
-                <div className="space-y-4">
-                  {filteredProfiles.map((profile) => (
-                    <Link key={profile.id} to={`/profiles/${profile.id}`}>
-                      <ProfileCard profile={profile} />
-                    </Link>
-                  ))}
-                </div>
-              ) : (
-                <EmptyBanner
-                  icon={UserPlus}
-                  title="Нет клиентов"
-                  subtitle="Подключите ваш Telegram-бот чтобы видеть живые данные"
-                />
-              )}
-            </CardContent>
-          </Card>
-        </TabsContent>
-        
-        <TabsContent value="table">
-          <Card>
-            <CardContent className="pt-6">
-              {isLoading ? (
-                <div className="w-full">
-                  <Skeleton className="h-8 w-full mb-4" />
-                  <Skeleton className="h-8 w-full mb-4" />
-                  <Skeleton className="h-8 w-full mb-4" />
-                </div>
-              ) : isError ? (
-                <div className="text-center text-red-500 py-8">
-                  <p>Не удалось загрузить данные профилей.</p>
-                  <button 
-                    className="mt-4 px-4 py-2 bg-primary text-white rounded" 
-                    onClick={() => window.location.reload()}
-                  >
-                    Попробовать снова
-                  </button>
-                </div>
-              ) : filteredProfiles && filteredProfiles.length > 0 ? (
-                <div className="rounded-md border">
-                  <Table>
-                    <TableHeader>
-                      <TableRow>
-                        <TableHead>Имя</TableHead>
-                        <TableHead>Цель</TableHead>
-                        <TableHead>Прогресс</TableHead>
-                        <TableHead>Серия дней</TableHead>
-                        <TableHead>Последняя активность</TableHead>
-                        <TableHead>Статус</TableHead>
-                      </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                      {filteredProfiles.map((profile) => (
-                        <TableRow key={profile.id}>
-                          <TableCell>
-                            <Link to={`/profiles/${profile.id}`} className="flex items-center gap-2 hover:underline">
-                              {profile.name}
-                            </Link>
-                          </TableCell>
-                          <TableCell>
-                            {profile.goal_type ? goalTypeLabels[profile.goal_type] : "Не указана"}
-                          </TableCell>
-                          <TableCell>
-                            <div className="w-full max-w-[100px]">
-                              <div className="h-2 w-full bg-gray-200 rounded-full">
-                                <div 
-                                  className="h-2 bg-green-500 rounded-full" 
-                                  style={{width: `${Math.min(100, Math.round(profile.kcalRatio * 100))}%`}}
-                                />
-                              </div>
-                              <div className="text-xs text-muted-foreground mt-1">
-                                {Math.round(profile.kcalRatio * 100)}% дневной нормы
-                              </div>
-                            </div>
-                          </TableCell>
-                          <TableCell>
-                            <Badge variant="outline" className="bg-blue-50">
-                              {profile.streak_days} дней
-                            </Badge>
-                          </TableCell>
-                          <TableCell>
-                            <span className="text-sm text-muted-foreground">
-                              {profile.last_activity}
-                            </span>
-                          </TableCell>
-                          <TableCell>
-                            <Badge className={statusColors[profile.subscription_status]}>
-                              {profile.subscription_status === 'active' ? 'Активна' : 
-                              profile.subscription_status === 'trial' ? 'Пробная' : 'Истекла'}
-                            </Badge>
-                          </TableCell>
-                        </TableRow>
-                      ))}
-                    </TableBody>
-                  </Table>
-                </div>
-              ) : (
-                <EmptyBanner
-                  icon={UserPlus}
-                  title="Нет клиентов"
-                  subtitle="Подключите ваш Telegram-бот чтобы видеть живые данные"
-                />
-              )}
-            </CardContent>
-          </Card>
-        </TabsContent>
-      </Tabs>
+              ))}
+            </div>
+          ) : isError ? (
+            <div className="text-center text-red-500 py-8">
+              <p>Не удалось загрузить данные профилей.</p>
+              <button 
+                className="mt-4 px-4 py-2 bg-primary text-white rounded" 
+                onClick={() => window.location.reload()}
+              >
+                Попробовать снова
+              </button>
+            </div>
+          ) : filteredProfiles && filteredProfiles.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {filteredProfiles.map((profile) => (
+                <Link key={profile.id} to={`/profiles/${profile.id}`} className="block h-full">
+                  <ProfileCard profile={profile} />
+                </Link>
+              ))}
+            </div>
+          ) : (
+            <EmptyBanner
+              icon={UserPlus}
+              title="Нет клиентов"
+              subtitle="Подключите ваш Telegram-бот чтобы видеть живые данные"
+            />
+          )}
+        </CardContent>
+      </Card>
     </div>
   );
 };
