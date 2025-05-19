@@ -70,6 +70,14 @@ export default {
 					accent: 'hsl(var(--gold-accent))',
 					dim: '#C9A86C', // Using color_gold_dim directly
 				},
+				emerald: {
+					'950': '#01261F',
+					'900': '#024134',
+					'800': '#035D4A',
+					'700': '#046E58',
+					'600': '#05866D',
+					'500': '#059682'
+				},
 			},
 			width: {
 				'44': '11rem',
