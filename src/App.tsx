@@ -37,12 +37,14 @@ const App = () => (
           <Route path="profiles" element={<Profiles />} />
           <Route path="profiles/:id" element={<ProfileDetail />} />
           <Route path="dialogs" element={<Dialogs />} />
-          <Route path="settings" element={<Settings />} />
           <Route path="biz-agent" element={<BizAgent />} />
-          {/* Admin-focused feature routes */}
-          <Route path="bot" element={<BizAgent />} />
-          <Route path="subscription" element={<BizAgent />} />
           <Route path="notifications" element={<Notifications />} />
+          
+          {/* Новые маршруты для добавленных пунктов меню */}
+          <Route path="bugs" element={<NotFound />} />
+          <Route path="reviews" element={<NotFound />} />
+          
+          <Route path="settings" element={<Settings />} />
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>
