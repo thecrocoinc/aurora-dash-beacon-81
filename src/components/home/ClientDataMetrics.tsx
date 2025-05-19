@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -126,16 +127,6 @@ export function ClientDataMetrics() {
                   }}></div>
                     </div>
                   </div>)}
-                
-                <div className="pt-4 border-t border-border/40">
-                  <div className="flex justify-between items-center text-sm mb-2">
-                    <span>Общее выполнение целей</span>
-                    <span className="font-medium">76%</span>
-                  </div>
-                  <div className="w-full h-3 bg-muted/50 rounded-full overflow-hidden">
-                    <div className="h-full bg-gradient-to-r from-emerald-500 to-emerald-400 w-3/4 rounded-full"></div>
-                  </div>
-                </div>
               </div>
             </CardContent>
           </Card>

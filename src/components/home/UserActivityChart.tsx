@@ -90,7 +90,7 @@ export function UserActivityChart() {
                 <Line
                   type="monotone"
                   dataKey="active"
-                  stroke="var(--color-active)"
+                  stroke="#059682" // Emerald color
                   strokeWidth={2.5}
                   activeDot={{ r: 6 }}
                   dot={{ r: 3 }}

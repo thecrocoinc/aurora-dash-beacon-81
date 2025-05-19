@@ -1,4 +1,3 @@
-
 import { Card } from "@/components/ui/card";
 import { useEffect, useState } from "react";
 import { BarChart2, Users, ArrowUp, ArrowDown, TrendingUp } from "lucide-react";
@@ -15,28 +14,28 @@ interface StatItem {
 export function StatsGrid() {
   const stats: StatItem[] = [
     {
-      label: "Active clients",
+      label: "Активные клиенты",
       value: 42,
       trend: 12,
       icon: <Users className="h-5 w-5 stroke-[var(--color-primary-0)]" />
     }, 
     {
-      label: "Avg. kcal tracked",
+      label: "Средн. ккал",
       value: 1780,
       trend: -5,
       icon: <BarChart2 className="h-5 w-5 stroke-[var(--color-primary-0)]" />
     }, 
     {
-      label: "Conversion",
+      label: "Конверсия",
       value: 12.4,
       suffix: "%",
       trend: 2.4,
       icon: <TrendingUp className="h-5 w-5 stroke-[var(--color-primary-0)]" />
     }, 
     {
-      label: "MRR",
+      label: "Доход ежемес.",
       value: 1870,
-      prefix: "$",
+      prefix: "₽",
       trend: 15.2,
       icon: <BarChart2 className="h-5 w-5 stroke-[var(--color-primary-0)]" />
     }
@@ -133,7 +132,7 @@ function CountUpStat({
             </>
           )}
           
-          <span className="text-xs text-muted-foreground ml-0.5">vs last week</span>
+          <span className="text-xs text-muted-foreground ml-0.5">от прошлой недели</span>
         </div>
       )}
     </div>

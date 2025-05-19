@@ -11,6 +11,7 @@ import Dialogs from "./pages/Dialogs";
 import Settings from "./pages/Settings";
 import BizAgent from "./pages/BizAgent";
 import NotFound from "./pages/NotFound";
+import Notifications from "./pages/Notifications";
 
 // Create a client with improved settings for admin panel
 const queryClient = new QueryClient({
@@ -41,7 +42,7 @@ const App = () => (
           {/* Admin-focused feature routes */}
           <Route path="bot" element={<BizAgent />} />
           <Route path="subscription" element={<BizAgent />} />
-          <Route path="notifications" element={<BizAgent />} />
+          <Route path="notifications" element={<Notifications />} />
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>

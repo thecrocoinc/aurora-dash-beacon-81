@@ -17,7 +17,7 @@ export function HeroBanner() {
           <Button className="btn-primary rounded-[var(--radius)]">
             Обзор возможностей
           </Button>
-          <Button variant="ghost" className="btn-secondary rounded-[var(--radius)]">
+          <Button variant="outline" className="border-primary/30 hover:bg-primary/10 hover:border-primary text-foreground rounded-[var(--radius)]">
             Техподдержка
           </Button>
         </div>
