@@ -95,7 +95,7 @@ export function CustomSidebar() {
     <Sidebar className="w-56 border-r border-white/10 bg-sidebar backdrop-blur">
       <SidebarHeader className="py-6">
         <div className="px-4">
-          <h2 className="text-lg font-semibold text-center bg-gradient-to-r from-white to-white/80 bg-clip-text text-transparent">
+          <h2 className="text-lg font-semibold text-center bg-gradient-to-r from-blue-500 to-indigo-600 bg-clip-text text-transparent">
             AI-Nutrition Admin
           </h2>
         </div>
@@ -114,7 +114,7 @@ export function CustomSidebar() {
                   <item.icon className="h-4 w-4" />
                   <span>{item.name}</span>
                   {item.badge && (
-                    <span className="ml-auto text-[10px] bg-white/20 text-white px-1.5 py-0.5 rounded-full">
+                    <span className="ml-auto text-[10px] bg-primary/20 text-primary px-1.5 py-0.5 rounded-full">
                       {item.badge}
                     </span>
                   )}
@@ -169,13 +169,13 @@ export function CustomSidebar() {
         </SidebarMenu>
         
         <div className="p-4 mt-4">
-          <div className="rounded-lg p-3 bg-gradient-to-r from-white/10 to-white/5 text-xs">
+          <div className="rounded-lg p-3 bg-gradient-to-r from-blue-500/10 to-indigo-600/10 text-xs">
             <div className="flex justify-between items-center">
-              <p className="font-medium text-white">Pro План</p>
-              <p className="text-white/70">30 дней</p>
+              <p className="font-medium text-primary">Pro План</p>
+              <p className="text-primary/70">30 дней</p>
             </div>
             <div className="mt-2 w-full bg-white/10 h-1.5 rounded-full overflow-hidden">
-              <div className="bg-gradient-to-r from-white/80 to-white/60 h-full w-[70%]"></div>
+              <div className="bg-gradient-to-r from-blue-500 to-indigo-500 h-full w-[70%]"></div>
             </div>
           </div>
         </div>
