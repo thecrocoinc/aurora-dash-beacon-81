@@ -8,7 +8,7 @@ export const ChartLegend: React.FC = () => {
   return (
     <div className="flex items-center text-sm gap-4 mb-4">
       <span className="flex items-center">
-        <span className="h-3 w-3 rounded-full bg-primary mr-2"></span>
+        <span className="h-3 w-3 rounded-full bg-gold mr-2"></span>
         Скоро заплатят
       </span>
       <span className="flex items-center">
@@ -25,7 +25,7 @@ export const ActivitySummary: React.FC<{ period: PeriodType }> = ({ period }) =>
   
   return (
     <div className="mt-6 grid grid-cols-2 gap-6">
-      <div className="bg-[var(--color-surface)] p-4 rounded-[var(--radius)] shadow border border-primary">
+      <div className="bg-[var(--color-surface)] p-4 rounded-[var(--radius)] shadow border border-gold/50">
         <p className="text-sm text-[var(--color-text-muted)] mb-1">Скоро заплатят</p>
         <div className="flex items-baseline">
           <p className="text-2xl font-medium">{summaryData.users}</p>

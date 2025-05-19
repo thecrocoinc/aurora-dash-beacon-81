@@ -37,15 +37,15 @@ export function Header() {
           {/* App actions */}
           <div className="flex items-center gap-2">
             <Button variant="ghost" size="icon" className="relative text-emerald-600 hover:bg-emerald-600/10 transition-all group">
-              <DollarSign className="h-6 w-6 group-hover:text-emerald-500" />
+              <DollarSign className="h-7 w-7 group-hover:text-emerald-500" />
               <span className="absolute -top-1 -right-1 h-4 w-4 rounded-full bg-gold flex items-center justify-center text-[10px] text-black font-medium">+8%</span>
             </Button>
             <Button variant="ghost" size="icon" className="relative text-emerald-600 hover:bg-emerald-600/10 transition-all group">
-              <Bell className="h-6 w-6 group-hover:text-emerald-500" />
+              <Bell className="h-7 w-7 group-hover:text-emerald-500" />
               <span className="absolute top-0.5 right-0.5 h-2 w-2 rounded-full bg-gold" />
             </Button>
             <Button variant="ghost" size="icon" className="relative text-emerald-600 hover:bg-emerald-600/10 transition-all group">
-              <MessageSquare className="h-6 w-6 group-hover:text-emerald-500" />
+              <MessageSquare className="h-7 w-7 group-hover:text-emerald-500" />
               <span className="absolute top-0.5 right-0.5 h-2 w-2 rounded-full bg-gold" />
             </Button>
           </div>

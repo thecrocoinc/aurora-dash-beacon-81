@@ -1,7 +1,7 @@
 
 import React from "react";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Bot, ArrowRight, CheckIcon, XIcon } from "lucide-react";
+import { MessageSquare, ArrowRight, CheckIcon, XIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export function BasicPlanCard() {
@@ -13,11 +13,11 @@ export function BasicPlanCard() {
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div className="bg-blue-500/20 p-2.5 rounded-full">
-                <Bot className="h-5 w-5 text-blue-400" />
+                <MessageSquare className="h-5 w-5 text-blue-400" />
               </div>
               <CardTitle>Basic</CardTitle>
             </div>
-            <div className="text-xs text-blue-400 px-2.5 py-1 rounded-full bg-blue-500/10">
+            <div className="text-xs text-blue-400 px-2.5 py-1 rounded-full bg-blue-500/10 ml-4">
               Эконом
             </div>
           </div>

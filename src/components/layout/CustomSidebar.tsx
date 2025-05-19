@@ -1,37 +1,50 @@
 
+import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Home, Users, MessageSquare, Settings, Bot, BarChart2, Database, Bell } from "lucide-react";
+import { Home, Users, MessageSquare, Settings, Bot, BarChart2, Database, Bell, ChevronDown, ChevronRight } from "lucide-react";
 import { Sidebar, SidebarContent, SidebarFooter, SidebarGroupLabel, SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarSeparator, SidebarHeader } from "@/components/ui/sidebar";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 
 export function CustomSidebar() {
   const location = useLocation();
+  const [openItems, setOpenItems] = useState<string[]>(["dashboard"]);
 
-  // Streamlined admin dashboard main menu items
-  const menuItems = [{
-    name: "Панель управления",
-    icon: Home,
-    path: "/",
-    description: "Общая статистика и данные"
-  }, {
-    name: "Клиенты",
-    icon: Users,
-    path: "/profiles",
-    description: "Управление пользователями бота",
-    badge: "32"
-  }, {
-    name: "Диалоги",
-    icon: MessageSquare,
-    path: "/dialogs",
-    description: "Чаты между клиентами и ботом",
-    badge: "5"
-  }, {
-    name: "Аналитика",
-    icon: BarChart2,
-    path: "/biz-agent",
-    description: "Статистика и отчеты бизнеса"
-  }];
+  const toggleCollapsible = (id: string) => {
+    setOpenItems(prev => 
+      prev.includes(id) 
+        ? prev.filter(item => item !== id) 
+        : [...prev, id]
+    );
+  };
 
-  // Focused admin tools
+  // Nested menu structure
+  const dashboardSubItems = [
+    {
+      name: "Клиенты",
+      icon: Users,
+      path: "/profiles",
+      badge: "32"
+    },
+    {
+      name: "Диалоги",
+      icon: MessageSquare,
+      path: "/dialogs",
+      badge: "5"
+    },
+    {
+      name: "Аналитика",
+      icon: BarChart2,
+      path: "/biz-agent"
+    },
+    {
+      name: "Рассылки",
+      icon: Bell,
+      path: "/notifications",
+      badge: "New"
+    }
+  ];
+
+  // Admin tools
   const featureItems = [{
     name: "Телеграм-бот",
     icon: Bot,
@@ -43,12 +56,6 @@ export function CustomSidebar() {
     path: "/subscription",
     description: "API и внешние сервисы",
     badge: "Pro"
-  }, {
-    name: "Рассылки",
-    icon: Bell,
-    path: "/notifications",
-    description: "Уведомления клиентам",
-    badge: "New"
   }];
 
   const bottomItems = [{
@@ -73,24 +80,50 @@ export function CustomSidebar() {
       </SidebarHeader>
       
       <SidebarContent>
-        {/* Основное меню - без заголовка */}
+        {/* Collapsible Dashboard Menu */}
         <div className="px-2 py-2.5 bg-muted/30 rounded-md mx-2 mb-2">
           <SidebarMenu>
-            {menuItems.map(item => (
-              <SidebarMenuItem key={item.name}>
-                <SidebarMenuButton asChild isActive={isCurrentPath(item.path)} tooltip={item.description}>
-                  <Link to={item.path} className="flex items-center gap-2">
-                    <item.icon className="h-4 w-4 stroke-primary" />
-                    <span className="text-white">{item.name}</span>
-                    {item.badge && (
-                      <span className="ml-auto text-[10px] bg-primary/20 text-primary rounded-full px-2 py-0.5">
-                        {item.badge}
-                      </span>
-                    )}
-                  </Link>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-            ))}
+            <SidebarMenuItem>
+              <Collapsible 
+                open={openItems.includes("dashboard")} 
+                className="w-full"
+              >
+                <CollapsibleTrigger 
+                  onClick={() => toggleCollapsible("dashboard")}
+                  className="flex w-full items-center justify-between p-2 rounded-md text-sm hover:bg-accent/50 transition-colors"
+                >
+                  <div className="flex items-center gap-2">
+                    <Home className="h-4 w-4 stroke-primary" />
+                    <span className="text-white">Панель управления</span>
+                  </div>
+                  {openItems.includes("dashboard") ? 
+                    <ChevronDown className="h-4 w-4" /> : 
+                    <ChevronRight className="h-4 w-4" />
+                  }
+                </CollapsibleTrigger>
+                
+                <CollapsibleContent className="ml-5 mt-1 space-y-1">
+                  {dashboardSubItems.map(item => (
+                    <SidebarMenuButton 
+                      key={item.name} 
+                      asChild 
+                      isActive={isCurrentPath(item.path)} 
+                      size="sm"
+                    >
+                      <Link to={item.path} className="flex items-center gap-2">
+                        <item.icon className="h-4 w-4 stroke-primary" />
+                        <span className="text-white">{item.name}</span>
+                        {item.badge && (
+                          <span className="ml-auto text-[10px] bg-primary/20 text-primary rounded-full px-2 py-0.5">
+                            {item.badge}
+                          </span>
+                        )}
+                      </Link>
+                    </SidebarMenuButton>
+                  ))}
+                </CollapsibleContent>
+              </Collapsible>
+            </SidebarMenuItem>
           </SidebarMenu>
         </div>
 
