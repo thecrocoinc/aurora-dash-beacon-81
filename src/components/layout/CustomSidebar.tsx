@@ -6,11 +6,12 @@ import {
   MessageSquare, 
   Settings, 
   Bot, 
-  BarChart2, 
-  Apple,
+  BarChart2,
   Utensils,
   Camera,
-  Heart
+  Heart,
+  Database,
+  Bell
 } from "lucide-react";
 import {
   Sidebar,
@@ -27,51 +28,72 @@ import {
 export function CustomSidebar() {
   const location = useLocation();
   
-  // These menu items match the quickLinks from Home.tsx
+  // Admin dashboard main menu items
   const menuItems = [
     {
-      name: "Главная",
+      name: "Панель управления",
       icon: Home,
       path: "/",
+      description: "Общая статистика и данные",
     },
     {
       name: "Клиенты",
       icon: Users,
       path: "/profiles",
-      description: "Управление профилями и прогрессом",
+      description: "Управление пользователями бота",
+      badge: "32"
     },
     {
       name: "Диалоги",
       icon: MessageSquare,
       path: "/dialogs",
-      description: "Просмотр и ответы на сообщения",
+      description: "Чаты между клиентами и ботом",
+      badge: "5"
     },
     {
       name: "Аналитика",
       icon: BarChart2,
       path: "/biz-agent",
-      description: "Метрики конверсии и доходности",
+      description: "Статистика и отчеты бизнеса",
     },
   ];
   
+  // Admin Tools & Features
   const featureItems = [
     {
-      name: "Здоровье",
-      icon: Heart,
-      path: "/health",
-      description: "Статистика здоровья",
+      name: "Телеграм-бот",
+      icon: Bot,
+      path: "/bot",
+      description: "Настройки и шаблоны бота",
     },
     {
-      name: "Интеграции",
-      icon: Apple,
-      path: "/integrations",
-      description: "Подключение устройств",
+      name: "Подписки",
+      icon: Database,
+      path: "/subscription",
+      description: "Тарифы и управление",
     },
+    {
+      name: "Рассылки",
+      icon: Bell,
+      path: "/notifications",
+      description: "Уведомления клиентам",
+      badge: "New"
+    },
+    {
+      name: "AI Ассистент",
+      icon: Bot,
+      path: "/biz-agent",
+      description: "Управление ИИ-функциями",
+    },
+  ];
+  
+  // Client Features (managed by admin)
+  const clientFeatures = [
     {
       name: "Питание",
       icon: Utensils,
       path: "/nutrition",
-      description: "Анализ питания",
+      description: "Настройки трекера рациона",
     },
     {
       name: "AI Сканер",
@@ -79,15 +101,15 @@ export function CustomSidebar() {
       path: "/scanner",
       description: "Распознавание еды",
     },
+    {
+      name: "Здоровье",
+      icon: Heart,
+      path: "/health",
+      description: "Интеграция с устройствами",
+    },
   ];
   
   const bottomItems = [
-    {
-      name: "AI Ассистент",
-      icon: Bot,
-      path: "/biz-agent",
-      description: "Автоматизация бизнес-задач",
-    },
     {
       name: "Настройки",
       icon: Settings,
@@ -104,8 +126,8 @@ export function CustomSidebar() {
     <Sidebar className="w-56 border-r border-white/10 bg-sidebar backdrop-blur">
       <SidebarHeader className="py-6">
         <div className="px-4">
-          <h2 className="text-lg font-semibold text-center bg-gradient-to-r from-blue-400 to-indigo-500 bg-clip-text text-transparent">
-            AI-Nutrition
+          <h2 className="text-lg font-semibold text-center bg-gradient-to-r from-blue-500 to-indigo-600 bg-clip-text text-transparent">
+            AI-Nutrition Admin
           </h2>
         </div>
       </SidebarHeader>
@@ -122,6 +144,11 @@ export function CustomSidebar() {
                 <Link to={item.path} className="flex items-center gap-2">
                   <item.icon className="h-4 w-4" />
                   <span>{item.name}</span>
+                  {item.badge && (
+                    <span className="ml-auto text-[10px] bg-primary/20 text-primary px-1.5 py-0.5 rounded-full">
+                      {item.badge}
+                    </span>
+                  )}
                 </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
@@ -130,7 +157,7 @@ export function CustomSidebar() {
 
         <SidebarSeparator />
         
-        <SidebarGroupLabel>Функции</SidebarGroupLabel>
+        <SidebarGroupLabel>Инструменты админа</SidebarGroupLabel>
         <SidebarMenu>
           {featureItems.map((item) => (
             <SidebarMenuItem key={item.name}>
@@ -142,7 +169,37 @@ export function CustomSidebar() {
                 <Link to={item.path || "#"} className="flex items-center gap-2">
                   <item.icon className="h-4 w-4" />
                   <span>{item.name}</span>
-                  {!item.path && <span className="ml-auto text-[10px] bg-primary/20 text-primary px-1.5 py-0.5 rounded-full">Скоро</span>}
+                  {item.badge && (
+                    <span className="ml-auto text-[10px] bg-emerald-500/20 text-emerald-400 px-1.5 py-0.5 rounded-full">
+                      {item.badge}
+                    </span>
+                  )}
+                  {!item.path && (
+                    <span className="ml-auto text-[10px] bg-primary/20 text-primary px-1.5 py-0.5 rounded-full">Скоро</span>
+                  )}
+                </Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+          ))}
+        </SidebarMenu>
+
+        <SidebarSeparator />
+        
+        <SidebarGroupLabel>Функции для клиентов</SidebarGroupLabel>
+        <SidebarMenu>
+          {clientFeatures.map((item) => (
+            <SidebarMenuItem key={item.name}>
+              <SidebarMenuButton 
+                asChild 
+                isActive={isCurrentPath(item.path)}
+                tooltip={item.description}
+              >
+                <Link to={item.path || "#"} className="flex items-center gap-2">
+                  <item.icon className="h-4 w-4" />
+                  <span>{item.name}</span>
+                  {!item.path && (
+                    <span className="ml-auto text-[10px] bg-primary/20 text-primary px-1.5 py-0.5 rounded-full">Скоро</span>
+                  )}
                 </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
@@ -151,7 +208,6 @@ export function CustomSidebar() {
       </SidebarContent>
       
       <SidebarFooter>
-        <SidebarGroupLabel>Система</SidebarGroupLabel>
         <SidebarMenu>
           {bottomItems.map((item) => (
             <SidebarMenuItem key={item.name}>
@@ -170,9 +226,14 @@ export function CustomSidebar() {
         </SidebarMenu>
         
         <div className="p-4 mt-4">
-          <div className="rounded-lg p-3 bg-primary/10 text-primary text-xs text-center">
-            <p className="font-medium">Версия 0.9.2</p>
-            <p className="text-primary/70 mt-1">Бета-тестирование</p>
+          <div className="rounded-lg p-3 bg-gradient-to-r from-blue-500/10 to-indigo-600/10 text-xs">
+            <div className="flex justify-between items-center">
+              <p className="font-medium text-primary">Pro План</p>
+              <p className="text-primary/70">30 дней</p>
+            </div>
+            <div className="mt-2 w-full bg-white/10 h-1.5 rounded-full overflow-hidden">
+              <div className="bg-gradient-to-r from-blue-500 to-indigo-500 h-full w-[70%]"></div>
+            </div>
           </div>
         </div>
       </SidebarFooter>

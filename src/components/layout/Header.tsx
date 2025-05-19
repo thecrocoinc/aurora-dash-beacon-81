@@ -11,7 +11,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { Bell, MessageSquare, Search } from "lucide-react"
+import { Bell, MessageSquare, Search, BarChart2 } from "lucide-react"
 
 export function Header() {
   const location = useLocation()
@@ -19,7 +19,7 @@ export function Header() {
 
   // Mapping paths to display names
   const pathNames = {
-    "/": "Главная",
+    "/": "Панель управления",
     "/profiles": "Клиенты",
     "/dialogs": "Диалоги",
     "/settings": "Настройки",
@@ -28,13 +28,13 @@ export function Header() {
 
   // Get current page title
   const currentPath = location.pathname
-  const pageTitle = pathNames[currentPath as keyof typeof pathNames] || "AI-Nutrition"
+  const pageTitle = pathNames[currentPath as keyof typeof pathNames] || "AI-Nutrition Admin"
 
   return (
     <header className="sticky top-0 z-10 border-b border-white/10 bg-background/80 backdrop-blur">
       <div className="container flex h-16 items-center justify-between py-4">
         <div className="flex flex-1 items-center">
-          <h1 className="ml-2 text-sm font-bold md:text-base bg-gradient-to-r from-blue-400 to-indigo-500 bg-clip-text text-transparent">
+          <h1 className="ml-2 text-sm font-bold md:text-base bg-gradient-to-r from-blue-500 to-indigo-600 bg-clip-text text-transparent">
             {pageTitle}
           </h1>
         </div>
@@ -42,7 +42,8 @@ export function Header() {
           {/* App actions */}
           <div className="hidden md:flex items-center gap-2">
             <Button variant="ghost" size="icon" className="relative text-muted-foreground hover:text-foreground">
-              <Search className="h-5 w-5" />
+              <BarChart2 className="h-5 w-5" />
+              <span className="absolute -top-1 -right-1 h-4 w-4 rounded-full bg-emerald-500 flex items-center justify-center text-[10px] text-white font-medium">+8%</span>
             </Button>
             <Button variant="ghost" size="icon" className="relative text-muted-foreground hover:text-foreground">
               <Bell className="h-5 w-5" />
@@ -58,21 +59,22 @@ export function Header() {
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" className="relative h-9 w-9 rounded-full overflow-hidden glass-morphism">
                 <Avatar className="h-9 w-9 border-none">
-                  <AvatarImage src="https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=100&h=100&auto=format&fit=crop" alt="User" />
-                  <AvatarFallback className="bg-transparent text-white">ИM</AvatarFallback>
+                  <AvatarImage src="https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=100&h=100&auto=format&fit=crop" alt="Admin" />
+                  <AvatarFallback className="bg-transparent text-white">НП</AvatarFallback>
                 </Avatar>
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-56 bg-card/90 backdrop-blur-lg" align="end" forceMount>
               <DropdownMenuItem className="flex flex-col gap-1.5">
-                <span className="text-sm font-medium leading-none">Ирина Михайлова</span>
+                <span className="text-sm font-medium leading-none">Наталья Петрова</span>
                 <span className="text-muted-foreground text-xs">
-                  irina@example.com
+                  admin@ai-nutrition.com
                 </span>
               </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem>Профиль</DropdownMenuItem>
-              <DropdownMenuItem>Настройки</DropdownMenuItem>
+              <DropdownMenuItem>Подписка</DropdownMenuItem>
+              <DropdownMenuItem>Настройки бота</DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem>
                 Выйти
