@@ -63,12 +63,12 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				},
-				// Добавляем новые акцентные цвета
-				warm: {
-					DEFAULT: 'hsl(var(--warm))',
-					foreground: 'hsl(var(--warm-foreground))',
-					muted: 'hsl(var(--warm-muted))',
-					accent: 'hsl(var(--warm-accent))',
+				// Заменяем теплые акценты на золотые
+				gold: {
+					DEFAULT: 'hsl(var(--gold))',
+					foreground: 'hsl(var(--gold-foreground))',
+					muted: 'hsl(var(--gold-muted))',
+					accent: 'hsl(var(--gold-accent))',
 				}
 			},
 			width: {
@@ -104,8 +104,8 @@ export default {
 					'50%': { transform: 'translateY(-5px)' }
 				},
 				'glow': {
-					'0%, 100%': { boxShadow: '0 0 10px rgba(59, 130, 246, 0.2)' },
-					'50%': { boxShadow: '0 0 20px rgba(59, 130, 246, 0.4)' }
+					'0%, 100%': { boxShadow: '0 0 10px rgba(212, 175, 55, 0.2)' },
+					'50%': { boxShadow: '0 0 20px rgba(212, 175, 55, 0.4)' }
 				}
 			},
 			animation: {
@@ -115,8 +115,8 @@ export default {
 				'glow': 'glow 3s ease-in-out infinite'
 			},
 			boxShadow: {
-				'soft': '0 4px 20px -2px rgba(0, 0, 0, 0.1)',
-				'glow': '0 0 25px rgba(59, 130, 246, 0.15)'
+				'soft': '0 4px 20px -2px rgba(0, 0, 0, 0.2)',
+				'glow': '0 0 25px rgba(212, 175, 55, 0.15)'
 			}
 		}
 	},

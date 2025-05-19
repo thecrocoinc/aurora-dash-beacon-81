@@ -34,10 +34,10 @@ export function Header() {
   const pageTitle = pathNames[currentPath as keyof typeof pathNames] || "AI-Nutrition Admin"
 
   return (
-    <header className="sticky top-0 z-10 border-b border-white/10 bg-background/80 backdrop-blur">
+    <header className="sticky top-0 z-10 border-b border-gold/10 bg-background/80 backdrop-blur">
       <div className="container flex h-16 items-center justify-between py-4">
         <div className="flex flex-1 items-center">
-          <h1 className="ml-2 text-sm font-bold md:text-base bg-gradient-to-r from-blue-500 to-indigo-600 bg-clip-text text-transparent">
+          <h1 className="ml-2 text-sm font-bold md:text-base premium-text">
             {pageTitle}
           </h1>
         </div>
@@ -46,28 +46,28 @@ export function Header() {
           <div className="hidden md:flex items-center gap-2">
             <Button variant="ghost" size="icon" className="relative text-muted-foreground hover:text-foreground">
               <BarChart2 className="h-5 w-5" />
-              <span className="absolute -top-1 -right-1 h-4 w-4 rounded-full bg-emerald-500 flex items-center justify-center text-[10px] text-white font-medium">+8%</span>
+              <span className="absolute -top-1 -right-1 h-4 w-4 rounded-full bg-gold flex items-center justify-center text-[10px] text-black font-medium">+8%</span>
             </Button>
             <Button variant="ghost" size="icon" className="relative text-muted-foreground hover:text-foreground">
               <Bell className="h-5 w-5" />
-              <span className="absolute top-0.5 right-0.5 h-2 w-2 rounded-full bg-primary" />
+              <span className="absolute top-0.5 right-0.5 h-2 w-2 rounded-full bg-gold" />
             </Button>
             <Button variant="ghost" size="icon" className="relative text-muted-foreground hover:text-foreground">
               <MessageSquare className="h-5 w-5" />
-              <span className="absolute top-0.5 right-0.5 h-2 w-2 rounded-full bg-primary" />
+              <span className="absolute top-0.5 right-0.5 h-2 w-2 rounded-full bg-gold" />
             </Button>
           </div>
 
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="relative h-9 w-9 rounded-full overflow-hidden glass-morphism">
+              <Button variant="ghost" className="relative h-9 w-9 rounded-full overflow-hidden glass-morphism border border-gold/20">
                 <Avatar className="h-9 w-9 border-none">
                   <AvatarImage src="https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=100&h=100&auto=format&fit=crop" alt="Admin" />
                   <AvatarFallback className="bg-transparent text-white">НП</AvatarFallback>
                 </Avatar>
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-56 bg-card/90 backdrop-blur-lg" align="end" forceMount>
+            <DropdownMenuContent className="w-56 bg-card/90 backdrop-blur-lg border border-gold/10" align="end" forceMount>
               <DropdownMenuItem className="flex flex-col gap-1.5">
                 <span className="text-sm font-medium leading-none">Наталья Петрова</span>
                 <span className="text-muted-foreground text-xs">
