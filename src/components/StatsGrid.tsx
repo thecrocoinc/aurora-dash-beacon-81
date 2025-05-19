@@ -15,7 +15,7 @@ interface StatItem {
 export function StatsGrid() {
   const stats: StatItem[] = [
     {
-      label: "Всего клиентов",
+      label: "Пользователей",
       value: 8640,
       trend: 14,
       icon: <Users className="h-5 w-5 stroke-[var(--color-primary-0)]" />

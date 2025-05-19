@@ -4,7 +4,6 @@ import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/componen
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { StatusBadge } from "./StatusBadge";
 import { PlanBadge } from "./PlanBadge";
 
 // Data type for subscribers
@@ -14,7 +13,6 @@ interface Subscriber {
   avatar: string;
   plan: string;
   date: string;
-  status: "active" | "trial" | "pending" | string;
 }
 
 export function SubscribersTable() {
@@ -25,32 +23,28 @@ export function SubscribersTable() {
       name: "Анна М.", 
       avatar: "A",
       plan: "Premium", 
-      date: "20 Мая", 
-      status: "active"
+      date: "20 Мая"
     },
     { 
       id: 2, 
       name: "Сергей К.", 
       avatar: "С",
       plan: "Basic", 
-      date: "20 Мая", 
-      status: "active"
+      date: "20 Мая"
     },
     { 
       id: 3, 
       name: "Ирина Л.", 
       avatar: "И",
       plan: "Premium", 
-      date: "20 Мая", 
-      status: "trial"
+      date: "20 Мая"
     },
     { 
       id: 4, 
       name: "Павел В.", 
       avatar: "П",
       plan: "Basic", 
-      date: "20 Мая", 
-      status: "pending"
+      date: "20 Мая"
     },
   ];
 
@@ -67,7 +61,6 @@ export function SubscribersTable() {
               <TableHead className="text-zinc-400 font-medium">Клиент</TableHead>
               <TableHead className="text-zinc-400 font-medium">План</TableHead>
               <TableHead className="text-zinc-400 font-medium">Дата</TableHead>
-              <TableHead className="text-zinc-400 font-medium">Статус</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -88,9 +81,6 @@ export function SubscribersTable() {
                   <PlanBadge plan={subscriber.plan} />
                 </TableCell>
                 <TableCell className="text-zinc-400">{subscriber.date}</TableCell>
-                <TableCell>
-                  <StatusBadge status={subscriber.status} />
-                </TableCell>
               </TableRow>
             ))}
           </TableBody>

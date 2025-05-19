@@ -3,7 +3,6 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { Rocket, AlertTriangle, FileText, Newspaper } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
 
 // Quick links for admin functions
 const quickLinks = [
@@ -12,32 +11,28 @@ const quickLinks = [
     description: "Начать генерацию идей",
     icon: Rocket,
     path: "/brainstorm",
-    color: "from-blue-500 to-blue-700",
-    stats: "Инновации"
+    color: "from-blue-500 to-blue-700"
   },
   {
     title: "Решить проблему",
     description: "Обсудить сложную ситуацию",
     icon: AlertTriangle,
     path: "/problem-solving",
-    color: "from-red-500 to-red-700",
-    stats: "Поддержка"
+    color: "from-red-500 to-red-700"
   },
   {
     title: "Запросить отчет",
     description: "Сводка данных по запросу",
     icon: FileText,
     path: "/reports",
-    color: "from-violet-500 to-violet-700",
-    stats: "Аналитика"
+    color: "from-violet-500 to-violet-700"
   },
   {
     title: "Новости и события",
     description: "Главное в нише на сегодня",
     icon: Newspaper,
     path: "/news",
-    color: "from-amber-500 to-amber-700",
-    stats: "Инсайты"
+    color: "from-amber-500 to-amber-700"
   }
 ];
 
@@ -77,15 +72,6 @@ export function QuickLinks() {
                   </div>
                   <h3 className="font-medium text-foreground">{link.title}</h3>
                   <p className="text-sm text-muted-foreground">{link.description}</p>
-                  {link.stats && (
-                    <Badge variant="outline" className={`${
-                      link.title === "Решить проблему"
-                        ? "bg-red-500/20 text-red-400 border-none"
-                        : "bg-primary/20 text-primary border-none"
-                    }`}>
-                      {link.stats}
-                    </Badge>
-                  )}
                 </div>
               </CardContent>
             </Card>
