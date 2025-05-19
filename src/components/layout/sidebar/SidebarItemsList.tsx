@@ -15,6 +15,9 @@ export function SidebarItemsList({ items, isCurrentPath }: SidebarItemsListProps
       <SidebarMenu>
         {items.map(item => {
           const IconComponent = item.icon;
+          // Удаляем плашку "New" из пункта "Рассылки"
+          const displayBadge = item.name === "Рассылки" ? undefined : item.badge;
+          
           return (
             <SidebarMenuItem key={item.name}>
               <SidebarMenuButton 
@@ -27,12 +30,12 @@ export function SidebarItemsList({ items, isCurrentPath }: SidebarItemsListProps
                   className="flex items-center gap-2"
                 >
                   <IconComponent className="h-4 w-4 stroke-primary" />
-                  <span>
+                  <span className="text-white">
                     {item.name}
                   </span>
-                  {item.badge && (
+                  {displayBadge && (
                     <span className="ml-auto text-[10px] bg-primary/20 text-primary rounded-full px-2 py-0.5">
-                      {item.badge}
+                      {displayBadge}
                     </span>
                   )}
                 </Link>

@@ -83,22 +83,16 @@ const ProfileCard = ({ profile }: ProfileCardProps) => {
             
             <div className="mt-3">
               <div className="flex justify-between items-center text-xs mb-1.5">
-                <span className="text-muted-foreground">Дневной прогресс</span>
+                <span className="text-muted-foreground">Прогресс</span>
                 <span className="font-semibold text-foreground">{kcalPercentage}%</span>
               </div>
               <Progress value={kcalPercentage} className="h-1.5" />
             </div>
-            
-            {profile.currentKcal && profile.dailyGoal && (
-              <div className="mt-2 flex justify-end text-xs text-muted-foreground">
-                <span className="font-mono">{profile.currentKcal} / {profile.dailyGoal} ккал</span>
-              </div>
-            )}
           </div>
         </div>
       </CardContent>
     </Card>
   );
-};
+}
 
 export default ProfileCard;

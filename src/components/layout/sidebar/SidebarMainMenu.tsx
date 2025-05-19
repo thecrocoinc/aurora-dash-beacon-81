@@ -20,14 +20,14 @@ export function SidebarMainMenu({ item, isActive }: SidebarMainMenuProps) {
             asChild 
             isActive={isActive} 
             tooltip={item.description}
-            className="h-10"
+            className="h-20"
           >
             <Link 
               to={item.path} 
               className="flex items-center gap-2 emerald-gradient rounded-lg py-2 px-3"
             >
-              <IconComponent className="h-5 w-5 stroke-primary" />
-              <span className="text-primary font-medium">
+              <IconComponent className="h-6 w-6 stroke-primary" />
+              <span className="text-primary text-lg font-medium">
                 {item.name}
               </span>
             </Link>

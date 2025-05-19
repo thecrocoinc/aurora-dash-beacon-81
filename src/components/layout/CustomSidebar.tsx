@@ -16,7 +16,7 @@ export function CustomSidebar() {
       <SidebarHeader className="py-6">
         <div className="px-4">
           <h2 className="text-lg font-semibold text-center text-primary">
-            AI-Nutrition Admin
+            AI-Nutrition
           </h2>
         </div>
       </SidebarHeader>
