@@ -55,29 +55,29 @@ export function SubscribersTable() {
   ];
 
   return (
-    <Card className="shadow-md">
-      <CardHeader className="pb-2">
+    <Card className="shadow-md border border-zinc-800 bg-zinc-900/80 backdrop-blur-sm">
+      <CardHeader className="pb-2 border-b border-zinc-800">
         <CardTitle className="text-lg">Активные подписки</CardTitle>
         <p className="text-sm text-muted-foreground">Информация о клиентах с активными подписками</p>
       </CardHeader>
-      <CardContent>
+      <CardContent className="p-0">
         <Table>
           <TableHeader>
-            <TableRow>
-              <TableHead>Клиент</TableHead>
-              <TableHead>План</TableHead>
-              <TableHead>Дата</TableHead>
-              <TableHead>Статус</TableHead>
+            <TableRow className="hover:bg-zinc-800/50">
+              <TableHead className="text-zinc-400 font-medium">Клиент</TableHead>
+              <TableHead className="text-zinc-400 font-medium">План</TableHead>
+              <TableHead className="text-zinc-400 font-medium">Дата</TableHead>
+              <TableHead className="text-zinc-400 font-medium">Статус</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {recentSubscribers.map((subscriber) => (
-              <TableRow key={subscriber.id}>
+              <TableRow key={subscriber.id} className="hover:bg-zinc-800/30 border-b border-zinc-800">
                 <TableCell>
                   <div className="flex items-center gap-2">
-                    <Avatar className="h-8 w-8">
+                    <Avatar className="h-8 w-8 border border-zinc-700">
                       <AvatarImage src={`/avatars/${subscriber.id}.png`} alt={subscriber.name} />
-                      <AvatarFallback className="bg-primary/10 text-primary">{subscriber.avatar}</AvatarFallback>
+                      <AvatarFallback className="bg-zinc-800 text-zinc-300">{subscriber.avatar}</AvatarFallback>
                     </Avatar>
                     <div>
                       <p className="font-medium leading-none mb-0.5">{subscriber.name}</p>
@@ -87,7 +87,7 @@ export function SubscribersTable() {
                 <TableCell>
                   <PlanBadge plan={subscriber.plan} />
                 </TableCell>
-                <TableCell>{subscriber.date}</TableCell>
+                <TableCell className="text-zinc-400">{subscriber.date}</TableCell>
                 <TableCell>
                   <StatusBadge status={subscriber.status} />
                 </TableCell>
@@ -96,8 +96,8 @@ export function SubscribersTable() {
           </TableBody>
         </Table>
       </CardContent>
-      <CardFooter className="flex justify-end border-t pt-4">
-        <Button size="sm" className="btn-primary">
+      <CardFooter className="flex justify-end border-t border-zinc-800 py-3">
+        <Button size="sm" className="bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-700 hover:to-emerald-600">
           Управление подписками
         </Button>
       </CardFooter>

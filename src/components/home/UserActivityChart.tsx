@@ -12,7 +12,7 @@ import {
 } from "recharts";
 import { ChartContainer, ChartTooltipContent } from "@/components/ui/chart";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { BarChart2 } from "lucide-react";
+import { Activity } from "lucide-react";
 
 // Import refactored modules
 import { activityData } from "./chart/activityData";
@@ -31,7 +31,7 @@ export function UserActivityChart() {
       <CardHeader className="flex flex-row items-center justify-between">
         <div className="flex items-center gap-3">
           <div className="p-2 rounded-lg bg-gradient-to-r from-emerald-600/80 to-emerald-700/80">
-            <BarChart2 className="h-5 w-5 text-white" />
+            <Activity className="h-5 w-5 text-white" />
           </div>
           <CardTitle className="text-xl">Активность пользователей</CardTitle>
         </div>

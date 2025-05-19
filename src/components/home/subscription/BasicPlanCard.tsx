@@ -26,17 +26,7 @@ export function BasicPlanCard() {
             <span className="text-sm font-normal text-muted-foreground ml-1.5">/мес</span>
           </div>
         </CardHeader>
-        <CardContent className="space-y-5">
-          <div className="space-y-1">
-            <div className="flex items-center justify-between text-sm mb-1">
-              <span className="text-muted-foreground">Клиенты</span>
-              <span className="font-medium">2450 из 5000</span>
-            </div>
-            <div className="w-full h-1.5 bg-blue-900/30 rounded-full overflow-hidden">
-              <div className="bg-gradient-to-r from-blue-600 to-blue-400 h-full rounded-full" style={{ width: '49%' }}></div>
-            </div>
-          </div>
-          
+        <CardContent className="space-y-5">          
           <ul className="space-y-3 py-2">
             <li className="flex items-start gap-2.5">
               <div className="rounded-full p-0.5 bg-blue-500/20 text-blue-400 mt-0.5">
@@ -62,10 +52,16 @@ export function BasicPlanCard() {
               </div>
               <span className="text-sm text-muted-foreground">Программы тренировок</span>
             </li>
+            <li className="flex items-start gap-2.5">
+              <div className="rounded-full p-0.5 bg-zinc-700/50 text-zinc-500 mt-0.5">
+                <XIcon className="h-3.5 w-3.5" />
+              </div>
+              <span className="text-sm text-muted-foreground">Добавление умных устройств</span>
+            </li>
           </ul>
         </CardContent>
         <CardFooter className="pt-2 pb-4">
-          <Button variant="outline" className="w-full gap-1.5 border-blue-800/50 hover:bg-blue-800/20 group">
+          <Button variant="outline" className="w-full gap-1.5 border-blue-800/50 bg-transparent hover:bg-blue-800/20 hover:text-white group">
             Редактировать <ArrowRight className="h-3.5 w-3.5 transform group-hover:translate-x-0.5 transition-transform" />
           </Button>
         </CardFooter>

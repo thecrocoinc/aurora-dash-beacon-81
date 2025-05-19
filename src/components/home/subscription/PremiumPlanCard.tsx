@@ -27,16 +27,6 @@ export function PremiumPlanCard() {
           </div>
         </CardHeader>
         <CardContent className="space-y-5">
-          <div className="space-y-1">
-            <div className="flex items-center justify-between text-sm mb-1">
-              <span className="text-muted-foreground">Клиенты</span>
-              <span className="font-medium">1300 из 3000</span>
-            </div>
-            <div className="w-full h-1.5 bg-emerald-900/30 rounded-full overflow-hidden">
-              <div className="bg-gradient-to-r from-emerald-600 to-emerald-400 h-full rounded-full" style={{ width: '43%' }}></div>
-            </div>
-          </div>
-          
           <ul className="space-y-3 py-2">
             <li className="flex items-start gap-2.5">
               <div className="rounded-full p-0.5 bg-emerald-500/20 text-emerald-400 mt-0.5">
@@ -61,6 +51,12 @@ export function PremiumPlanCard() {
                 <CheckIcon className="h-3.5 w-3.5" />
               </div>
               <span className="text-sm">Программы тренировок</span>
+            </li>
+            <li className="flex items-start gap-2.5">
+              <div className="rounded-full p-0.5 bg-emerald-500/20 text-emerald-400 mt-0.5">
+                <CheckIcon className="h-3.5 w-3.5" />
+              </div>
+              <span className="text-sm">Добавление умных устройств</span>
             </li>
           </ul>
         </CardContent>
