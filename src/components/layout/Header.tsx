@@ -27,9 +27,7 @@ export function Header() {
   return <header className="sticky top-0 z-10 border-b border-gold/10 bg-background/80 backdrop-blur">
       <div className="container flex h-16 items-center justify-between py-4">
         <div className="flex flex-1 items-center">
-          <h1 className="ml-2 text-sm font-bold premium-text text-emerald-900 md:text-lg">
-            {pageTitle}
-          </h1>
+          
         </div>
         <div className="flex items-center gap-4">
           {/* App actions */}
