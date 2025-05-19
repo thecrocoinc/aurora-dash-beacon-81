@@ -1,98 +1,62 @@
-
 import { Link, useLocation } from "react-router-dom";
-import { 
-  Home, 
-  Users, 
-  MessageSquare, 
-  Settings, 
-  Bot, 
-  BarChart2,
-  Database,
-  Bell
-} from "lucide-react";
-import {
-  Sidebar,
-  SidebarContent,
-  SidebarFooter,
-  SidebarGroupLabel,
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
-  SidebarSeparator,
-  SidebarHeader,
-} from "@/components/ui/sidebar";
-
+import { Home, Users, MessageSquare, Settings, Bot, BarChart2, Database, Bell } from "lucide-react";
+import { Sidebar, SidebarContent, SidebarFooter, SidebarGroupLabel, SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarSeparator, SidebarHeader } from "@/components/ui/sidebar";
 export function CustomSidebar() {
   const location = useLocation();
-  
-  // Streamlined admin dashboard main menu items
-  const menuItems = [
-    {
-      name: "Панель управления",
-      icon: Home,
-      path: "/",
-      description: "Общая статистика и данные",
-    },
-    {
-      name: "Клиенты",
-      icon: Users,
-      path: "/profiles",
-      description: "Управление пользователями бота",
-      badge: "32"
-    },
-    {
-      name: "Диалоги",
-      icon: MessageSquare,
-      path: "/dialogs",
-      description: "Чаты между клиентами и ботом",
-      badge: "5"
-    },
-    {
-      name: "Аналитика",
-      icon: BarChart2,
-      path: "/biz-agent",
-      description: "Статистика и отчеты бизнеса",
-    },
-  ];
-  
-  // Focused admin tools
-  const featureItems = [
-    {
-      name: "Телеграм-бот",
-      icon: Bot,
-      path: "/bot",
-      description: "Настройки и шаблоны бота",
-    },
-    {
-      name: "Подписки",
-      icon: Database,
-      path: "/subscription",
-      description: "Тарифы и управление",
-    },
-    {
-      name: "Рассылки",
-      icon: Bell,
-      path: "/notifications",
-      description: "Уведомления клиентам",
-      badge: "New"
-    }
-  ];
-  
-  const bottomItems = [
-    {
-      name: "Настройки",
-      icon: Settings,
-      path: "/settings",
-      description: "Параметры системы",
-    },
-  ];
 
+  // Streamlined admin dashboard main menu items
+  const menuItems = [{
+    name: "Панель управления",
+    icon: Home,
+    path: "/",
+    description: "Общая статистика и данные"
+  }, {
+    name: "Клиенты",
+    icon: Users,
+    path: "/profiles",
+    description: "Управление пользователями бота",
+    badge: "32"
+  }, {
+    name: "Диалоги",
+    icon: MessageSquare,
+    path: "/dialogs",
+    description: "Чаты между клиентами и ботом",
+    badge: "5"
+  }, {
+    name: "Аналитика",
+    icon: BarChart2,
+    path: "/biz-agent",
+    description: "Статистика и отчеты бизнеса"
+  }];
+
+  // Focused admin tools
+  const featureItems = [{
+    name: "Телеграм-бот",
+    icon: Bot,
+    path: "/bot",
+    description: "Настройки и шаблоны бота"
+  }, {
+    name: "Подписки",
+    icon: Database,
+    path: "/subscription",
+    description: "Тарифы и управление"
+  }, {
+    name: "Рассылки",
+    icon: Bell,
+    path: "/notifications",
+    description: "Уведомления клиентам",
+    badge: "New"
+  }];
+  const bottomItems = [{
+    name: "Настройки",
+    icon: Settings,
+    path: "/settings",
+    description: "Параметры системы"
+  }];
   const isCurrentPath = (path: string) => {
     return location.pathname === path;
   };
-  
-  return (
-    <Sidebar className="w-56 border-r border-white/10 bg-sidebar backdrop-blur">
+  return <Sidebar className="w-56 border-r border-white/10 bg-sidebar backdrop-blur">
       <SidebarHeader className="py-6">
         <div className="px-4">
           <h2 className="text-lg font-semibold text-center bg-gradient-to-r from-blue-500 to-indigo-600 bg-clip-text text-transparent">
@@ -103,69 +67,47 @@ export function CustomSidebar() {
       
       <SidebarContent>
         <SidebarMenu>
-          {menuItems.map((item) => (
-            <SidebarMenuItem key={item.name}>
-              <SidebarMenuButton 
-                asChild 
-                isActive={isCurrentPath(item.path)}
-                tooltip={item.description}
-              >
+          {menuItems.map(item => <SidebarMenuItem key={item.name}>
+              <SidebarMenuButton asChild isActive={isCurrentPath(item.path)} tooltip={item.description}>
                 <Link to={item.path} className="flex items-center gap-2">
                   <item.icon className="h-4 w-4" />
-                  <span>{item.name}</span>
-                  {item.badge && (
-                    <span className="ml-auto text-[10px] bg-primary/20 text-primary px-1.5 py-0.5 rounded-full">
+                  <span className="text-white">{item.name}</span>
+                  {item.badge && <span className="ml-auto text-[10px] bg-primary/20 text-primary px-1.5 py-0.5 rounded-full">
                       {item.badge}
-                    </span>
-                  )}
+                    </span>}
                 </Link>
               </SidebarMenuButton>
-            </SidebarMenuItem>
-          ))}
+            </SidebarMenuItem>)}
         </SidebarMenu>
 
         <SidebarSeparator />
         
-        <SidebarGroupLabel>Инструменты админа</SidebarGroupLabel>
+        <SidebarGroupLabel className="bg-inherit">Инструменты админа</SidebarGroupLabel>
         <SidebarMenu>
-          {featureItems.map((item) => (
-            <SidebarMenuItem key={item.name}>
-              <SidebarMenuButton 
-                asChild 
-                isActive={isCurrentPath(item.path)}
-                tooltip={item.description}
-              >
+          {featureItems.map(item => <SidebarMenuItem key={item.name}>
+              <SidebarMenuButton asChild isActive={isCurrentPath(item.path)} tooltip={item.description}>
                 <Link to={item.path} className="flex items-center gap-2">
                   <item.icon className="h-4 w-4" />
-                  <span>{item.name}</span>
-                  {item.badge && (
-                    <span className="ml-auto text-[10px] bg-emerald-500/20 text-emerald-400 px-1.5 py-0.5 rounded-full">
+                  <span className="text-white">{item.name}</span>
+                  {item.badge && <span className="ml-auto text-[10px] bg-emerald-500/20 px-1.5 py-0.5 rounded-full text-gold-dim">
                       {item.badge}
-                    </span>
-                  )}
+                    </span>}
                 </Link>
               </SidebarMenuButton>
-            </SidebarMenuItem>
-          ))}
+            </SidebarMenuItem>)}
         </SidebarMenu>
       </SidebarContent>
       
       <SidebarFooter>
         <SidebarMenu>
-          {bottomItems.map((item) => (
-            <SidebarMenuItem key={item.name}>
-              <SidebarMenuButton 
-                asChild 
-                isActive={isCurrentPath(item.path)}
-                tooltip={item.description}
-              >
+          {bottomItems.map(item => <SidebarMenuItem key={item.name}>
+              <SidebarMenuButton asChild isActive={isCurrentPath(item.path)} tooltip={item.description}>
                 <Link to={item.path} className="flex items-center gap-2">
                   <item.icon className="h-4 w-4" />
-                  <span>{item.name}</span>
+                  <span className="text-white">{item.name}</span>
                 </Link>
               </SidebarMenuButton>
-            </SidebarMenuItem>
-          ))}
+            </SidebarMenuItem>)}
         </SidebarMenu>
         
         <div className="p-4 mt-4">
@@ -180,8 +122,6 @@ export function CustomSidebar() {
           </div>
         </div>
       </SidebarFooter>
-    </Sidebar>
-  );
+    </Sidebar>;
 }
-
 export default CustomSidebar;
