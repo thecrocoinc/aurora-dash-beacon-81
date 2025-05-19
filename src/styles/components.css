@@ -3,15 +3,15 @@
 
 /* Button Styles */
 .btn-primary {
-  @apply bg-gradient-to-br from-[var(--color-primary-0)] to-[var(--color-primary-1)] 
+  @apply bg-gradient-to-br from-[var(--color-primary-start)] to-[var(--color-primary-end)] 
          text-[var(--color-bg)] shadow 
-         hover:ring-2 hover:ring-[var(--color-accent)/40] 
-         focus:ring-2 focus:ring-[var(--color-accent)/40] 
+         hover:ring-2 hover:ring-[rgba(255,176,67,0.4)]
+         focus:ring-2 focus:ring-[rgba(255,176,67,0.4)]
          transition-all;
 }
 
 .btn-secondary {
-  @apply border border-[var(--color-surface-muted)] text-[var(--color-text)] bg-transparent hover:bg-[var(--color-surface-muted)/50] transition-all;
+  @apply border border-[var(--color-surface-muted)] text-[var(--color-text)] bg-transparent hover:bg-[rgba(38,40,46,0.5)] transition-all;
 }
 
 /* Base component styles */
@@ -46,7 +46,7 @@
 
 /* Gold gradient classes */
 .gold-gradient {
-  @apply bg-gradient-to-r from-[var(--color-primary-0)] to-[var(--color-primary-1)];
+  @apply bg-gradient-to-r from-[var(--color-primary-start)] to-[var(--color-primary-end)];
 }
 
 /* Premium gradient */
@@ -70,30 +70,30 @@
 
 /* Premium effects */
 .premium-border {
-  @apply border border-[var(--color-primary-1)/30] shadow-sm;
+  @apply border border-[rgba(206,159,73,0.3)] shadow-sm;
 }
 
 .premium-card {
-  @apply bg-[var(--color-surface)] backdrop-blur-lg border border-[var(--color-primary-1)/20] shadow-[var(--shadow)];
+  @apply bg-[var(--color-surface)] backdrop-blur-lg border border-[rgba(206,159,73,0.2)] shadow-[var(--shadow)];
 }
 
 .premium-button {
-  @apply bg-[var(--color-primary-1)] text-[var(--color-bg)] font-medium hover:bg-[var(--color-primary-0)] transition-colors;
+  @apply bg-[var(--color-primary-end)] text-[var(--color-bg)] font-medium hover:bg-[var(--color-primary-start)] transition-colors;
 }
 
 .premium-text {
-  @apply text-transparent bg-clip-text bg-gradient-to-r from-[var(--color-primary-0)] to-[var(--color-primary-1)];
+  @apply text-transparent bg-clip-text bg-gradient-to-r from-[var(--color-primary-start)] to-[var(--color-primary-end)];
 }
 
 /* Sidebar specific styles */
 .sidebar-nav .logo,
 [class*="sidebar-accent"],
 .sidebar-accent {
-  @apply text-[var(--color-primary-0)];
+  @apply text-[var(--color-primary-start)];
 }
 
 .badge, .counter {
-  @apply bg-[var(--color-primary-0)/20] text-[var(--color-primary-0)];
+  @apply bg-[rgba(244,201,120,0.2)] text-[var(--color-primary-start)];
 }
 
 /* Card and surface styles */
@@ -107,7 +107,7 @@
 
 /* Progress rings */
 .progress-ring path.active {
-  @apply stroke-[var(--color-primary-1)];
+  @apply stroke-[var(--color-primary-end)];
 }
 
 .progress-ring path.bg {
@@ -116,7 +116,7 @@
 
 /* Chart styles */
 .chart-primary {
-  @apply stroke-[var(--color-primary-0)] fill-none;
+  @apply stroke-[var(--color-primary-start)] fill-none;
 }
 
 .chart-secondary {
@@ -126,4 +126,3 @@
 .chart-grid {
   @apply stroke-[#30333A];
 }
-

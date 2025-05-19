@@ -12,6 +12,7 @@ import {
 } from "recharts";
 import { ChartContainer, ChartTooltipContent } from "@/components/ui/chart";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { BarChart2 } from "lucide-react";
 
 // Import refactored modules
 import { activityData } from "./chart/activityData";

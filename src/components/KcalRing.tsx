@@ -30,7 +30,7 @@ const KcalRing = ({ value, target }: KcalRingProps) => {
           cy="50"
           r="40"
           fill="transparent"
-          stroke="var(--color-primary-0)"
+          stroke="var(--color-primary-start)"
           strokeWidth="8"
           strokeLinecap="round"
           strokeDasharray={`${2 * Math.PI * 40}`}

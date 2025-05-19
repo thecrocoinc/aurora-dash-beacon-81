@@ -32,7 +32,7 @@ export const ActivitySummary: React.FC<{ period: PeriodType }> = ({ period }) =>
           <span className="ml-2 text-sm font-medium text-[var(--color-text-muted)]">{summaryData.growth}</span>
         </div>
       </div>
-      <div className="bg-[var(--color-surface)] p-4 rounded-[var(--radius)] shadow border border-[var(--color-primary-end)]/20">
+      <div className="bg-[var(--color-surface)] p-4 rounded-[var(--radius)] shadow border border-[rgba(206,159,73,0.2)]">
         <p className="text-sm text-[var(--color-text-muted)] mb-1">Активных пользователей</p>
         <div className="flex items-baseline">
           <p className="text-2xl font-medium">{summaryData.active}</p>

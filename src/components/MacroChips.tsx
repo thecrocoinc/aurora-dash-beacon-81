@@ -11,13 +11,13 @@ type MacroChipsProps = {
 const MacroChips = ({ protein, fat, carbs, className }: MacroChipsProps) => {
   return (
     <div className={`flex gap-2 ${className || ""}`}>
-      <span className="text-xs bg-[var(--color-primary-1)]/15 text-[var(--color-primary-0)] px-2 py-1 rounded">
+      <span className="text-xs bg-[rgba(244,201,120,0.15)] text-[var(--color-primary-start)] px-2 py-1 rounded">
         P {protein ?? "—"} g
       </span>
-      <span className="text-xs bg-[var(--color-primary-1)]/20 text-[var(--color-primary-0)] px-2 py-1 rounded">
+      <span className="text-xs bg-[rgba(244,201,120,0.2)] text-[var(--color-primary-start)] px-2 py-1 rounded">
         F {fat ?? "—"} g
       </span>
-      <span className="text-xs bg-[var(--color-primary-1)]/25 text-[var(--color-primary-0)] px-2 py-1 rounded">
+      <span className="text-xs bg-[rgba(244,201,120,0.25)] text-[var(--color-primary-start)] px-2 py-1 rounded">
         C {carbs ?? "—"} g
       </span>
     </div>

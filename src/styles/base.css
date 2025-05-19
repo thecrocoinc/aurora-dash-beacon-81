@@ -5,12 +5,12 @@
   :root {
     /* Core palette */
     --color-bg: #121316;
-    --color-surface: #1B1C21;
-    --color-surface-muted: #23252B;
-    --color-text: #E8EAEE;
-    --color-text-muted: #9AA0AC;
-    --color-primary-0: #F5CE83;
-    --color-primary-1: #CFA34D;
+    --color-surface: #1E1F24;
+    --color-surface-muted: #26282E;
+    --color-text: #E6E8EC;
+    --color-text-muted: #8C9099;
+    --color-primary-start: #F4C978;
+    --color-primary-end: #CE9F49;
     --color-accent: #FFB043;
     --color-success: #21C287;
     --color-danger: #EF5E5E;
@@ -25,7 +25,7 @@
     --popover: 240 10% 3.9%;
     --popover-foreground: 0 0% 98%;
     
-    --primary: 41 90% 73%; /* Updated to match --color-primary-0 */
+    --primary: 41 90% 73%; /* Updated to match --color-primary-start */
     --primary-foreground: 240 5.9% 10%;
     
     --secondary: 240 3.7% 15.9%;
@@ -45,7 +45,7 @@
     --ring: 41 73% 63%;
     
     /* Chart colors */
-    --color-users: var(--color-primary-0);
+    --color-users: var(--color-primary-start);
     --color-active: #E0E3E9;
     
     --radius: 12px;
@@ -75,7 +75,7 @@
   
   /* Status and Badge Styles */
   [data-status="vip"], .badge-pro {
-    @apply text-[var(--color-accent)] bg-[var(--color-accent)/10] rounded-[var(--radius)] px-2 py-0.5;
+    @apply text-[var(--color-accent)] bg-[rgba(255,176,67,0.1)] rounded-[var(--radius)] px-2 py-0.5;
   }
   
   /* Layout Utilities */
@@ -93,12 +93,12 @@
   }
   
   .section-header .icon {
-    @apply h-10 w-10 flex items-center justify-center rounded-full bg-[var(--color-primary-0)]/15 text-[var(--color-primary-0)];
+    @apply h-10 w-10 flex items-center justify-center rounded-full bg-[rgba(244,201,120,0.15)] text-[var(--color-primary-start)];
   }
   
   .section-header::after {
     content: '';
-    @apply w-px h-6 bg-[var(--color-primary-1)] opacity-70;
+    @apply w-px h-6 bg-[var(--color-primary-end)] opacity-70;
   }
   
   .section-header h2 {
@@ -110,4 +110,3 @@
     @apply border-t border-white/5 my-12 md:my-20;
   }
 }
-
