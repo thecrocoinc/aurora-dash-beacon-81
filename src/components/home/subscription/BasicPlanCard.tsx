@@ -1,7 +1,7 @@
 
 import React from "react";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { MessageSquare, ArrowRight, CheckIcon, XIcon } from "lucide-react";
+import { Utensils, ArrowRight, CheckIcon, XIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export function BasicPlanCard() {
@@ -13,7 +13,7 @@ export function BasicPlanCard() {
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div className="bg-blue-500/20 p-2.5 rounded-full">
-                <MessageSquare className="h-5 w-5 text-blue-400" />
+                <Utensils className="h-5 w-5 text-blue-400" />
               </div>
               <CardTitle>Basic</CardTitle>
             </div>
@@ -61,8 +61,8 @@ export function BasicPlanCard() {
           </ul>
         </CardContent>
         <CardFooter className="pt-2 pb-4">
-          <Button className="w-full gap-1.5 bg-blue-600 hover:bg-blue-700 text-white group">
-            Редактировать <ArrowRight className="h-3.5 w-3.5 transform group-hover:translate-x-0.5 transition-transform" />
+          <Button className="w-full gap-1.5 bg-blue-600 hover:bg-blue-700 group">
+            <span className="text-white">Редактировать</span> <ArrowRight className="h-3.5 w-3.5 text-white transform group-hover:translate-x-0.5 transition-transform" />
           </Button>
         </CardFooter>
       </div>
