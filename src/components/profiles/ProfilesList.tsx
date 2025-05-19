@@ -85,12 +85,12 @@ const ProfilesList = ({ profiles }: ProfilesListProps) => {
     const color = percentage >= 90 ? 'text-orange-500' : 
                  percentage >= 70 ? 'text-emerald-500' : 
                  'text-blue-400';
-    const icon = percentage >= 70 ? ArrowUp : ArrowDown;
+    const Icon = percentage >= 70 ? ArrowUp : ArrowDown;
     
     return (
       <div className="flex items-center gap-1">
         <span className={color}>{percentage}%</span>
-        <icon className={`h-4 w-4 ${color}`} />
+        <Icon className={`h-4 w-4 ${color}`} />
       </div>
     );
   };
