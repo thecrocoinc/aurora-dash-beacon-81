@@ -61,7 +61,7 @@ export function BasicPlanCard() {
           </ul>
         </CardContent>
         <CardFooter className="pt-2 pb-4">
-          <Button className="w-full gap-1.5 bg-blue-600 hover:bg-blue-700 text-black group">
+          <Button className="w-full gap-1.5 bg-blue-600 hover:bg-blue-700 text-white group">
             Редактировать <ArrowRight className="h-3.5 w-3.5 transform group-hover:translate-x-0.5 transition-transform" />
           </Button>
         </CardFooter>
