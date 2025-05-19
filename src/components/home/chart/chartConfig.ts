@@ -1,4 +1,5 @@
 
+
 // Configuration for chart lines
 export const chartConfig = {
   users: {
@@ -23,3 +24,4 @@ export const periodLabels = {
 };
 
 export type PeriodType = keyof typeof periodLabels;
+
