@@ -13,6 +13,8 @@ export default function Home() {
     <section className="space-y-10">
       <HeroBanner />
       
+      <hr className="border-t border-white/5 mt-12 mb-8" />
+      
       {/* Бизнес-метрики */}
       <StatsGrid />
       

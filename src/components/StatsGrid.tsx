@@ -14,27 +14,27 @@ export function StatsGrid() {
     label: "Active clients",
     value: 42,
     trend: 12,
-    icon: <Users className="h-5 w-5 text-blue-500" />
+    icon: <Users className="h-5 w-5 stroke-[var(--color-primary-0)]/70" />
   }, {
     label: "Avg. kcal tracked",
     value: 1780,
     trend: -5,
-    icon: <BarChart2 className="h-5 w-5 text-emerald-500" />
+    icon: <BarChart2 className="h-5 w-5 stroke-[var(--color-primary-0)]/70" />
   }, {
     label: "Conversion",
     value: 12.4,
     suffix: "%",
     trend: 2.4,
-    icon: <TrendingUp className="h-5 w-5 text-violet-500" />
+    icon: <TrendingUp className="h-5 w-5 stroke-[var(--color-primary-0)]/70" />
   }, {
     label: "MRR",
     value: 1870,
     prefix: "$",
     trend: 15.2,
-    icon: <BarChart2 className="h-5 w-5 text-amber-500" />
+    icon: <BarChart2 className="h-5 w-5 stroke-[var(--color-primary-0)]/70" />
   }];
   return <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-      {stats.map(stat => <Card key={stat.label} className="overflow-hidden bg-zinc-900">
+      {stats.map(stat => <Card key={stat.label} className="overflow-hidden bg-[var(--color-surface)] ring-1 ring-white/5 rounded-[12px] p-6">
           <CardContent className="p-6">
             <CountUpStat stat={stat} />
           </CardContent>
@@ -87,7 +87,7 @@ function CountUpStat({
   const isNegative = stat.trend && stat.trend < 0;
   return <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <p className="text-sm text-muted-foreground">{stat.label}</p>
+        <p className="text-sm font-medium text-[var(--color-text-muted)]">{stat.label}</p>
         {stat.icon}
       </div>
       <div>

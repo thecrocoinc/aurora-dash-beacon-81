@@ -1,3 +1,4 @@
+
 import { Link, useLocation } from "react-router-dom";
 import { Home, Users, MessageSquare, Settings, Bot, BarChart2, Database, Bell } from "lucide-react";
 import { Sidebar, SidebarContent, SidebarFooter, SidebarGroupLabel, SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarSeparator, SidebarHeader } from "@/components/ui/sidebar";
@@ -59,7 +60,7 @@ export function CustomSidebar() {
   return <Sidebar className="w-56 border-r border-white/10 bg-sidebar backdrop-blur">
       <SidebarHeader className="py-6">
         <div className="px-4">
-          <h2 className="text-lg font-semibold text-center bg-gradient-to-r from-blue-500 to-indigo-600 bg-clip-text text-transparent">
+          <h2 className="text-lg font-semibold text-center text-[var(--color-primary-0)]">
             AI-Nutrition Admin
           </h2>
         </div>
@@ -70,9 +71,9 @@ export function CustomSidebar() {
           {menuItems.map(item => <SidebarMenuItem key={item.name}>
               <SidebarMenuButton asChild isActive={isCurrentPath(item.path)} tooltip={item.description}>
                 <Link to={item.path} className="flex items-center gap-2">
-                  <item.icon className="h-4 w-4" />
+                  <item.icon className="h-4 w-4 stroke-[var(--color-primary-0)]" />
                   <span className="text-white">{item.name}</span>
-                  {item.badge && <span className="ml-auto text-[10px] bg-primary/20 text-primary px-1.5 py-0.5 rounded-full">
+                  {item.badge && <span className="ml-auto text-[10px] bg-[var(--color-primary-0)]/20 text-[var(--color-primary-0)] rounded-full px-2 py-0.5">
                       {item.badge}
                     </span>}
                 </Link>
@@ -87,9 +88,9 @@ export function CustomSidebar() {
           {featureItems.map(item => <SidebarMenuItem key={item.name}>
               <SidebarMenuButton asChild isActive={isCurrentPath(item.path)} tooltip={item.description}>
                 <Link to={item.path} className="flex items-center gap-2">
-                  <item.icon className="h-4 w-4" />
+                  <item.icon className="h-4 w-4 stroke-[var(--color-primary-0)]" />
                   <span className="text-white">{item.name}</span>
-                  {item.badge && <span className="ml-auto text-[10px] bg-emerald-500/20 px-1.5 py-0.5 rounded-full text-gold-dim">
+                  {item.badge && <span className="ml-auto text-[10px] bg-[var(--color-primary-0)]/20 text-[var(--color-primary-0)] px-2 py-0.5 rounded-full">
                       {item.badge}
                     </span>}
                 </Link>
@@ -103,7 +104,7 @@ export function CustomSidebar() {
           {bottomItems.map(item => <SidebarMenuItem key={item.name}>
               <SidebarMenuButton asChild isActive={isCurrentPath(item.path)} tooltip={item.description}>
                 <Link to={item.path} className="flex items-center gap-2">
-                  <item.icon className="h-4 w-4" />
+                  <item.icon className="h-4 w-4 stroke-[var(--color-primary-0)]" />
                   <span className="text-white">{item.name}</span>
                 </Link>
               </SidebarMenuButton>
@@ -111,13 +112,13 @@ export function CustomSidebar() {
         </SidebarMenu>
         
         <div className="p-4 mt-4">
-          <div className="rounded-lg p-3 bg-gradient-to-r from-blue-500/10 to-indigo-600/10 text-xs">
+          <div className="rounded-lg p-3 bg-[var(--color-surface-muted)]/50 text-xs">
             <div className="flex justify-between items-center">
-              <p className="font-medium text-primary">Pro План</p>
-              <p className="text-primary/70">30 дней</p>
+              <p className="font-medium text-[var(--color-primary-0)]">Pro План</p>
+              <p className="text-[var(--color-primary-0)]/70">30 дней</p>
             </div>
             <div className="mt-2 w-full bg-white/10 h-1.5 rounded-full overflow-hidden">
-              <div className="bg-gradient-to-r from-blue-500 to-indigo-500 h-full w-[70%]"></div>
+              <div className="bg-gradient-to-r from-[var(--color-primary-0)] to-[var(--color-primary-1)] h-full w-[70%]"></div>
             </div>
           </div>
         </div>

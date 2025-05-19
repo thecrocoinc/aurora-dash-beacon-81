@@ -42,7 +42,7 @@ const quickLinks = [
 
 export function QuickLinks() {
   return (
-    <div className="section">
+    <div className="section my-12 md:my-20 grid gap-6 md:gap-8">
       <div className="section-header">
         <div className="icon">
           <Users className="h-5 w-5" />
@@ -52,16 +52,16 @@ export function QuickLinks() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {quickLinks.map((link) => (
           <NavLink key={link.title} to={link.path} className="block hover-lift">
-            <Card className="h-full overflow-hidden border-t-4 border-t-primary/60">
+            <Card className="h-full overflow-hidden border-t-4 border-t-[var(--color-primary-0)]/60">
               <CardContent className="pt-6">
                 <div className="flex flex-col items-center text-center space-y-3">
                   <div className="p-3 rounded-full glass-morphism">
-                    <link.icon className="h-5 w-5 text-[var(--color-primary-0)]" />
+                    <link.icon className="h-5 w-5 stroke-[var(--color-primary-0)]/70" />
                   </div>
-                  <h3 className="font-medium">{link.title}</h3>
+                  <h3 className="font-medium text-[var(--color-text-muted)]">{link.title}</h3>
                   <p className="text-sm text-muted-foreground">{link.description}</p>
                   {link.stats && (
-                    <span className="text-xs py-1 px-3 bg-[var(--color-primary-0)]/10 text-[var(--color-primary-0)] rounded-full">
+                    <span className="text-xs py-1 px-3 bg-[var(--color-primary-0)]/20 text-[var(--color-primary-0)] rounded-full">
                       {link.stats}
                     </span>
                   )}
