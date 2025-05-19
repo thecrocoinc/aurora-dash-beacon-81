@@ -27,10 +27,10 @@ const ProfilesLoading = () => {
                     <Skeleton className="h-3 w-24" />
                     <Skeleton className="h-3 w-16" />
                   </div>
-                  <div className="flex gap-1 mt-2">
-                    <Skeleton className="h-6 w-full" />
-                    <Skeleton className="h-6 w-full" />
-                    <Skeleton className="h-6 w-full" />
+                  <div className="flex gap-2 mt-2">
+                    <Skeleton className="h-6 rounded-sm w-14" />
+                    <Skeleton className="h-6 rounded-sm w-14" />
+                    <Skeleton className="h-6 rounded-sm w-14" />
                   </div>
                 </div>
               </div>

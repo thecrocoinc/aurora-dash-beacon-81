@@ -6,7 +6,7 @@ import { format } from "date-fns";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { supabase } from "@/lib/supabase";
 import KcalRing from "@/components/KcalRing";
@@ -31,7 +31,7 @@ const ProfileDetail = () => {
     queryFn: async () => {
       const { data, error } = await supabase
         .from('profiles')
-        .select('id, name, avatar_url, goal_type')
+        .select('id, name, avatar_url, goal_type, subscription_status')
         .eq('id', id)
         .single();
       
@@ -101,9 +101,9 @@ const ProfileDetail = () => {
   if (!profile) {
     return (
       <div className="space-y-6">
-        <h1 className="text-3xl font-bold tracking-tight">User Profile</h1>
+        <h1 className="text-3xl font-bold tracking-tight">Профиль пользователя</h1>
         <p className="text-muted-foreground">
-          Profile not found for ID: {id}
+          Профиль не найден
         </p>
       </div>
     );
@@ -113,6 +113,20 @@ const ProfileDetail = () => {
     ?.split(" ")
     .map((n) => n[0])
     .join("") || "";
+    
+  // Determine subscription type for badge
+  const getPlanBadge = () => {
+    if (!profile.subscription_status) return null;
+    
+    switch(profile.subscription_status) {
+      case 'active':
+        return <Badge className="bg-purple-600/90 text-white">Premium</Badge>;
+      case 'trial':
+      case 'expired':
+      default:
+        return <Badge className="bg-blue-600/90 text-white">Basic</Badge>;
+    }
+  };
     
   // Create placeholder meals for empty state
   const placeholderMeals = Array.from({ length: 6 }).map((_, i) => (
@@ -128,50 +142,50 @@ const ProfileDetail = () => {
             <AvatarFallback className="text-2xl">{initials}</AvatarFallback>
           </Avatar>
           <div>
-            <h1 className="text-3xl font-bold tracking-tight">{profile?.name}</h1>
-            <p className="text-muted-foreground">ID: {profile?.id}</p>
+            <div className="flex items-center gap-2">
+              <h1 className="text-3xl font-bold tracking-tight">{profile?.name}</h1>
+              {getPlanBadge()}
+            </div>
           </div>
         </div>
-        <Select defaultValue={profile?.goal_type || "Maintain"}>
-          <SelectTrigger className="w-[180px]">
-            <SelectValue placeholder="Goal type" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="Lose">Lose Weight</SelectItem>
-            <SelectItem value="Gain">Gain Weight</SelectItem>
-            <SelectItem value="Maintain">Maintain Weight</SelectItem>
-          </SelectContent>
-        </Select>
       </div>
 
       <Tabs defaultValue="overview">
         <TabsList>
-          <TabsTrigger value="overview">Overview</TabsTrigger>
-          <TabsTrigger value="insights">Insights</TabsTrigger>
-          <TabsTrigger value="chat">Chat</TabsTrigger>
+          <TabsTrigger value="overview">Обзор</TabsTrigger>
+          <TabsTrigger value="insights">Анализ</TabsTrigger>
+          <TabsTrigger value="chat">Чат</TabsTrigger>
         </TabsList>
         <TabsContent value="overview" className="mt-6">
           <div className="grid gap-6 md:grid-cols-2">
             <Card>
               <CardHeader>
-                <CardTitle>Daily Nutrition</CardTitle>
-                <CardDescription>Calorie intake progress</CardDescription>
+                <CardTitle>Питание за день</CardTitle>
+                <CardDescription>Калории и нутриенты</CardDescription>
               </CardHeader>
               <CardContent className="flex flex-col items-center">
                 <KcalRing value={summary?.kcal || 0} target={dailyGoal} />
-                <MacroChips 
-                  protein={summary?.prot} 
-                  fat={summary?.fat} 
-                  carbs={summary?.carb}
-                  className="mt-4" 
-                />
+                <div className="flex gap-4 mt-6">
+                  <div className="flex flex-col items-center">
+                    <div className="text-sm text-muted-foreground mb-1">Белки</div>
+                    <div className="text-xl font-semibold">{summary?.prot || 0} г</div>
+                  </div>
+                  <div className="flex flex-col items-center">
+                    <div className="text-sm text-muted-foreground mb-1">Жиры</div>
+                    <div className="text-xl font-semibold">{summary?.fat || 0} г</div>
+                  </div>
+                  <div className="flex flex-col items-center">
+                    <div className="text-sm text-muted-foreground mb-1">Углеводы</div>
+                    <div className="text-xl font-semibold">{summary?.carb || 0} г</div>
+                  </div>
+                </div>
               </CardContent>
             </Card>
             
             <Card>
               <CardHeader>
-                <CardTitle>Today's Meals</CardTitle>
-                <CardDescription>Logged food items</CardDescription>
+                <CardTitle>Приемы пищи</CardTitle>
+                <CardDescription>Съеденные продукты</CardDescription>
               </CardHeader>
               <CardContent>
                 {mealsLoading ? (
@@ -190,16 +204,32 @@ const ProfileDetail = () => {
 
         <TabsContent value="insights" className="mt-6">
           <div className="grid gap-6 md:grid-cols-2">
-            <RadarChart />
-            <WaterRing />
+            <Card>
+              <CardHeader>
+                <CardTitle>Баланс питания</CardTitle>
+                <CardDescription>Анализ нутриентов</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <RadarChart />
+              </CardContent>
+            </Card>
+            <Card>
+              <CardHeader>
+                <CardTitle>Водный баланс</CardTitle>
+                <CardDescription>Потребление воды</CardDescription>
+              </CardHeader>
+              <CardContent className="flex justify-center">
+                <WaterRing />
+              </CardContent>
+            </Card>
           </div>
         </TabsContent>
 
         <TabsContent value="chat" className="mt-6">
           <Card className="h-[600px]">
             <CardHeader>
-              <CardTitle>Nutrition Coaching</CardTitle>
-              <CardDescription>Chat with your nutrition coach</CardDescription>
+              <CardTitle>Коучинг по питанию</CardTitle>
+              <CardDescription>Общение с тренером</CardDescription>
             </CardHeader>
             <CardContent className="h-[calc(100%-96px)]">
               <ChatInterface profileId={id} />
