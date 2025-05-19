@@ -42,21 +42,26 @@ const quickLinks = [
 
 export function QuickLinks() {
   return (
-    <div className="pt-6">
-      <h2 className="text-xl font-semibold mb-6">Быстрые действия</h2>
+    <div className="section">
+      <div className="section-header">
+        <div className="icon">
+          <Users className="h-5 w-5" />
+        </div>
+        <h2>Быстрые действия</h2>
+      </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {quickLinks.map((link) => (
           <NavLink key={link.title} to={link.path} className="block hover-lift">
-            <Card className="h-full overflow-hidden card-gradient border-t-4 border-t-primary/60">
+            <Card className="h-full overflow-hidden border-t-4 border-t-primary/60">
               <CardContent className="pt-6">
                 <div className="flex flex-col items-center text-center space-y-3">
                   <div className="p-3 rounded-full glass-morphism">
-                    <link.icon className="h-5 w-5 text-white" />
+                    <link.icon className="h-5 w-5 text-[var(--color-primary-0)]" />
                   </div>
                   <h3 className="font-medium">{link.title}</h3>
                   <p className="text-sm text-muted-foreground">{link.description}</p>
                   {link.stats && (
-                    <span className="text-xs py-1 px-3 bg-primary/10 text-primary rounded-full">
+                    <span className="text-xs py-1 px-3 bg-[var(--color-primary-0)]/10 text-[var(--color-primary-0)] rounded-full">
                       {link.stats}
                     </span>
                   )}

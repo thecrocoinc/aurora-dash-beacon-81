@@ -23,8 +23,21 @@
   @apply backdrop-blur-xl bg-white/10 border border-white/20 shadow;
 }
 
+/* Elevation Styles */
+.card {
+  @apply bg-[var(--color-surface)] ring-1 ring-white/5 rounded-[12px] p-6;
+}
+
+.card:hover {
+  @apply translate-y-[-2px] duration-200;
+}
+
+.hero, .modal {
+  @apply bg-[var(--color-surface)] shadow-xl rounded-[12px] p-8;
+}
+
 .card-gradient {
-  @apply bg-[var(--color-surface)] backdrop-blur-sm shadow-[var(--shadow)] rounded-[var(--radius)];
+  @apply bg-[var(--color-surface)] ring-1 ring-white/5 rounded-[12px];
 }
 
 .admin-panel-gradient {
@@ -85,7 +98,7 @@
 
 /* Card and surface styles */
 .card, .modal, .panel {
-  @apply bg-[var(--color-surface)] rounded-[var(--radius)] shadow-[var(--shadow)];
+  @apply bg-[var(--color-surface)] rounded-[var(--radius)] ring-1 ring-white/5;
 }
 
 [aria-role="secondary"] {
@@ -113,3 +126,4 @@
 .chart-grid {
   @apply stroke-[#30333A];
 }
+

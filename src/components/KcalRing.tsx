@@ -21,7 +21,7 @@ const KcalRing = ({ value, target }: KcalRingProps) => {
           cy="50"
           r="40"
           fill="transparent"
-          stroke="#e5e7eb"
+          stroke="var(--color-surface-muted)"
           strokeWidth="8"
         />
         {/* Progress circle */}
@@ -30,7 +30,7 @@ const KcalRing = ({ value, target }: KcalRingProps) => {
           cy="50"
           r="40"
           fill="transparent"
-          stroke="#10b981"
+          stroke="var(--color-primary-0)"
           strokeWidth="8"
           strokeLinecap="round"
           strokeDasharray={`${2 * Math.PI * 40}`}
@@ -39,7 +39,7 @@ const KcalRing = ({ value, target }: KcalRingProps) => {
         />
       </svg>
       <div className="absolute flex flex-col items-center">
-        <span className="text-3xl font-bold">{safeValue}</span>
+        <span className="text-3xl font-bold stat-number">{safeValue}</span>
         <span className="text-sm text-muted-foreground">/ {safeTarget} kcal</span>
       </div>
     </div>

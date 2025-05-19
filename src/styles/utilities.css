@@ -13,7 +13,7 @@
 
 /* Modern hover effects */
 .hover-lift {
-  @apply transition-all duration-300;
+  @apply transition-all duration-200;
 }
 
 .hover-lift:hover {
@@ -58,7 +58,7 @@
 
 /* Modern card effects */
 .dashboard-card {
-  @apply border border-[var(--color-primary-1)/10] hover:border-[var(--color-primary-1)/20] transition-all duration-300;
+  @apply border border-[var(--color-primary-1)/10] hover:border-[var(--color-primary-1)/20] transition-all duration-200;
 }
 
 /* Animated gradient background */
@@ -104,3 +104,4 @@
 .text-pretty {
   text-wrap: pretty;
 }
+
