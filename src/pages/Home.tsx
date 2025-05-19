@@ -11,12 +11,21 @@ import { QuickLinks } from "@/components/home/QuickLinks";
 export default function Home() {
   return (
     <section className="space-y-10">
+      {/* Hero Banner */}
       <HeroBanner />
       
       <hr className="border-t border-white/5 mt-12 mb-8" />
       
       {/* Бизнес-метрики */}
-      <StatsGrid />
+      <div className="section">
+        <div className="section-header">
+          <div className="icon">
+            <BarChart className="h-5 w-5" />
+          </div>
+          <h2>Ключевые показатели</h2>
+        </div>
+        <StatsGrid />
+      </div>
       
       {/* График активности */}
       <UserActivityChart />
@@ -31,3 +40,6 @@ export default function Home() {
     </section>
   );
 }
+
+// Импортируем BarChart для заголовка секции метрик
+import { BarChart } from "lucide-react";

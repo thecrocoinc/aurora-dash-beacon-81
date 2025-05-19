@@ -3,6 +3,7 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { BarChart2, Bot, MessageSquare, Users } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 
 // Quick links for admin functions
 const quickLinks = [
@@ -55,15 +56,15 @@ export function QuickLinks() {
             <Card className="h-full overflow-hidden border-t-4 border-t-[var(--color-primary-0)]/60">
               <CardContent className="pt-6">
                 <div className="flex flex-col items-center text-center space-y-3">
-                  <div className="p-3 rounded-full glass-morphism">
-                    <link.icon className="h-5 w-5 stroke-[var(--color-primary-0)]/70" />
+                  <div className="p-3 rounded-full bg-[var(--color-primary-0)]/15">
+                    <link.icon className="h-5 w-5 stroke-[var(--color-primary-0)]" />
                   </div>
-                  <h3 className="font-medium text-[var(--color-text-muted)]">{link.title}</h3>
-                  <p className="text-sm text-muted-foreground">{link.description}</p>
+                  <h3 className="font-medium text-[var(--color-text)]">{link.title}</h3>
+                  <p className="text-sm text-[var(--color-text-muted)]">{link.description}</p>
                   {link.stats && (
-                    <span className="text-xs py-1 px-3 bg-[var(--color-primary-0)]/20 text-[var(--color-primary-0)] rounded-full">
+                    <Badge variant="outline" className="bg-[var(--color-primary-0)]/20 text-[var(--color-primary-0)] border-none">
                       {link.stats}
-                    </span>
+                    </Badge>
                   )}
                 </div>
               </CardContent>

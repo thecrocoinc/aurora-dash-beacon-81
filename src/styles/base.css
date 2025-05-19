@@ -3,17 +3,33 @@
 
 @layer base {
   :root {
-    /* Core palette */
+    /* Core palette - уточненная и расширенная */
     --color-bg: #121316;
     --color-surface: #1E1F24;
     --color-surface-muted: #26282E;
     --color-text: #E6E8EC;
     --color-text-muted: #8C9099;
-    --color-primary-start: #F4C978;
-    --color-primary-end: #CE9F49;
+    
+    /* Золотая палитра */
+    --color-primary-0: #F4C978; /* основной золотой */
+    --color-primary-1: #CE9F49; /* темный золотой */
+    --color-primary-2: #FFD689; /* светлый золотой */
+    --color-primary-3: #AB8439; /* очень темный золотой */
+    --color-primary-4: #FFF1DB; /* нежный золотой */
+    
+    /* Изумрудная палитра */
+    --color-emerald-0: #01261F; /* основной изумрудный */
+    --color-emerald-1: #024134; /* светлее */
+    --color-emerald-2: #035D4A; /* еще светлее */
+    --color-emerald-3: #004D3D; /* для нажатия */
+    --color-emerald-4: #00150F; /* темнее */
+    
+    /* Акценты */
     --color-accent: #FFB043;
     --color-success: #21C287;
     --color-danger: #EF5E5E;
+    --color-warning: #F9A03F;
+    --color-info: #5BA6FF;
     
     /* ShadCN variables */
     --background: 240 10% 3.9%;
@@ -25,16 +41,16 @@
     --popover: 240 10% 3.9%;
     --popover-foreground: 0 0% 98%;
     
-    --primary: 41 90% 73%; /* Updated to match --color-primary-start */
+    --primary: 41 90% 73%; /* золотой */
     --primary-foreground: 240 5.9% 10%;
     
     --secondary: 240 3.7% 15.9%;
     --secondary-foreground: 0 0% 98%;
     
     --muted: 240 3.7% 15.9%;
-    --muted-foreground: 220 8% 64%; /* Adjusted for better readability */
+    --muted-foreground: 220 8% 64%; /* для лучшей читаемости */
     
-    --accent: 36 100% 63%; /* Updated to match --color-accent */
+    --accent: 36 100% 63%;
     --accent-foreground: 240 5.9% 10%;
     
     --destructive: 0 84% 65%;
@@ -45,11 +61,13 @@
     --ring: 41 73% 63%;
     
     /* Chart colors */
-    --color-users: var(--color-primary-start);
+    --color-users: var(--color-primary-0);
     --color-active: #E0E3E9;
     
     --radius: 12px;
     --shadow: 0 2px 6px rgba(0,0,0,.40);
+    --shadow-lg: 0 10px 25px -5px rgba(0,0,0,0.3);
+    --shadow-inner: inset 0 2px 4px 0 rgba(0,0,0,0.06);
   }
 }
 
@@ -75,7 +93,7 @@
   
   /* Status and Badge Styles */
   [data-status="vip"], .badge-pro {
-    @apply text-[var(--color-accent)] bg-[rgba(255,176,67,0.1)] rounded-[var(--radius)] px-2 py-0.5;
+    @apply text-[var(--color-primary-0)] bg-[var(--color-primary-0)]/10 rounded-[var(--radius)] px-2 py-0.5;
   }
   
   /* Layout Utilities */
@@ -87,18 +105,18 @@
     @apply my-12 md:my-20 grid gap-6 md:gap-8;
   }
   
-  /* Section Header */
+  /* Section Header - унифицировано */
   .section-header {
     @apply flex items-center gap-3 mb-6;
   }
   
   .section-header .icon {
-    @apply h-10 w-10 flex items-center justify-center rounded-full bg-[rgba(244,201,120,0.15)] text-[var(--color-primary-start)];
+    @apply h-10 w-10 flex items-center justify-center rounded-full bg-[var(--color-primary-0)]/15 text-[var(--color-primary-0)];
   }
   
   .section-header::after {
     content: '';
-    @apply w-px h-6 bg-[var(--color-primary-end)] opacity-70;
+    @apply w-px h-6 bg-[var(--color-primary-1)] opacity-70;
   }
   
   .section-header h2 {
@@ -108,5 +126,31 @@
   /* Dividers */
   hr {
     @apply border-t border-white/5 my-12 md:my-20;
+  }
+  
+  /* Типография заголовков - унифицировано */
+  h1 {
+    @apply text-3xl md:text-4xl font-bold;
+  }
+  
+  h2 {
+    @apply text-2xl md:text-3xl font-semibold;
+  }
+  
+  h3 {
+    @apply text-xl md:text-2xl font-medium;
+  }
+  
+  h4 {
+    @apply text-lg md:text-xl font-medium;
+  }
+  
+  /* Карточки - основной элемент интерфейса */
+  .card {
+    @apply bg-[var(--color-surface)] ring-1 ring-white/5 rounded-[var(--radius)] p-6 transition-all duration-300;
+  }
+  
+  .card:hover {
+    @apply ring-[var(--color-primary-0)]/20 shadow-[var(--shadow)];
   }
 }

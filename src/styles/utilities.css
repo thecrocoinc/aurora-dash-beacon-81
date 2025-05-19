@@ -42,6 +42,16 @@
   @apply text-[var(--color-danger)];
 }
 
+/* Emerald overlay - исправлена проблема */
+.emerald-overlay {
+  @apply absolute inset-0 bg-gradient-to-t;
+  background-image: linear-gradient(to top, 
+    rgba(1, 38, 31, 0.7), 
+    rgba(2, 65, 52, 0.3), 
+    transparent
+  );
+}
+
 /* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
@@ -53,12 +63,12 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-[var(--color-primary-1)/30] hover:bg-[var(--color-primary-1)/40] rounded-full;
+  @apply bg-[var(--color-primary-1)]/30 hover:bg-[var(--color-primary-1)]/40 rounded-full;
 }
 
 /* Modern card effects */
 .dashboard-card {
-  @apply border border-[var(--color-primary-1)/10] hover:border-[var(--color-primary-1)/20] transition-all duration-200;
+  @apply border border-[var(--color-primary-1)]/10 hover:border-[var(--color-primary-1)]/20 transition-all duration-200;
 }
 
 /* Animated gradient background */
@@ -76,7 +86,7 @@
 
 /* Improved charts */
 .chart-container {
-  @apply rounded-[var(--radius)] overflow-hidden border border-[var(--color-primary-1)/10] p-6;
+  @apply rounded-[var(--radius)] overflow-hidden border border-[var(--color-primary-1)]/10 p-6;
 }
 
 .chart-legend {
@@ -93,7 +103,7 @@
 
 /* Summary cards */
 .summary-card {
-  @apply bg-[var(--color-surface-muted)] backdrop-blur-sm border border-[var(--color-primary-1)/10] p-4 rounded-[var(--radius)];
+  @apply bg-[var(--color-surface-muted)] backdrop-blur-sm border border-[var(--color-primary-1)]/10 p-4 rounded-[var(--radius)];
 }
 
 /* Typography utilities */
@@ -105,3 +115,52 @@
   text-wrap: pretty;
 }
 
+/* Polaroid effects */
+.polaroid {
+  @apply p-2 bg-white shadow-md rotate-1;
+}
+
+/* Glass card with emerald tint */
+.emerald-glass-card {
+  @apply backdrop-blur-md bg-[var(--color-emerald-0)]/70 
+         border border-[var(--color-emerald-1)]/30 
+         shadow-[var(--shadow)] rounded-[var(--radius)];
+}
+
+/* Gold accent borders */
+.gold-accent-border {
+  @apply border-b-2 border-[var(--color-primary-0)] pb-1;
+}
+
+/* Gold border glow effect */
+.gold-border-glow {
+  @apply border border-[var(--color-primary-0)]/50 shadow-[0_0_15px_rgba(244,201,120,0.3)];
+}
+
+/* Focused input highlight */
+.input-gold-focus {
+  @apply focus:ring-2 focus:ring-[var(--color-primary-0)]/40 focus:border-[var(--color-primary-0)];
+}
+
+/* Data badges for stats */
+.data-badge {
+  @apply absolute -top-2 -right-2 w-6 h-6 flex items-center justify-center 
+         rounded-full bg-[var(--color-primary-0)] text-[var(--color-bg)] text-xs font-bold;
+}
+
+/* Pill tabs */
+.pill-tabs {
+  @apply flex p-1 gap-1 bg-[var(--color-surface-muted)] rounded-full;
+}
+
+.pill-tab {
+  @apply px-4 py-1.5 rounded-full transition-colors text-sm;
+}
+
+.pill-tab-active {
+  @apply bg-[var(--color-primary-0)] text-[var(--color-bg)];
+}
+
+.pill-tab-inactive {
+  @apply text-[var(--color-text-muted)] hover:text-[var(--color-text)];
+}
