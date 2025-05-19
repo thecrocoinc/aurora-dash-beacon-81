@@ -8,7 +8,7 @@ export function HeroBanner() {
       <div className="emerald-overlay"></div>
       <div className="relative z-10 max-w-3xl">
         <h1 className="text-3xl md:text-4xl font-bold mb-4 text-primary">
-          Панель управления AI-Nutrition
+          Панель управления
         </h1>
         <p className="text-lg md:text-xl mb-6 text-foreground">
           Управляйте AI-ботом для трекинга питания и здоровья, анализируйте данные клиентов и развивайте свой бизнес

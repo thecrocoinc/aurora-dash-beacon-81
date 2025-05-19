@@ -25,7 +25,7 @@ export const ActivitySummary: React.FC<{ period: PeriodType }> = ({ period }) =>
   
   return (
     <div className="mt-6 grid grid-cols-2 gap-6">
-      <div className="bg-[var(--color-surface)] p-4 rounded-[var(--radius)] shadow border border-primary">
+      <div className="bg-[var(--color-surface)] p-4 rounded-[var(--radius)] shadow border border-primary/10">
         <p className="text-sm text-[var(--color-text-muted)] mb-1">Скоро заплатят</p>
         <div className="flex items-baseline">
           <p className="text-2xl font-medium">{summaryData.users}</p>

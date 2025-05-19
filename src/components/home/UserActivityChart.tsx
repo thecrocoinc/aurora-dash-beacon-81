@@ -27,7 +27,7 @@ export function UserActivityChart() {
   const currentData = activityData[period];
   
   return (
-    <Card className="overflow-hidden bg-card dark:bg-card/5 backdrop-blur-sm border dark:border-[var(--color-primary-1)]/10">
+    <Card className="overflow-hidden bg-card dark:bg-card/5 backdrop-blur-sm border border-primary/5">
       <CardHeader className="flex flex-row items-center justify-between">
         <div className="flex items-center gap-3">
           <div className="p-2 rounded-lg bg-gradient-to-r from-emerald-600/80 to-emerald-700/80">
