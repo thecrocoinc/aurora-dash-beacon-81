@@ -3,21 +3,13 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { format } from "date-fns";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Badge } from "@/components/ui/badge";
-import { Skeleton } from "@/components/ui/skeleton";
 import { supabase } from "@/lib/supabase";
-import KcalRing from "@/components/KcalRing";
-import MealTile from "@/components/MealTile";
-import ChatInterface from "@/components/ChatInterface";
-import MasonryGrid from "@/components/MasonryGrid";
-import MealGridSkeleton from "@/components/MealGridSkeleton";
-import MacroChips from "@/components/MacroChips";
-import MealTilePlaceholder from "@/components/MealTilePlaceholder";
-import { RadarChart } from "@/components/RadarChart";
-import { WaterRing } from "@/components/WaterRing";
+import ProfileHeader from "@/components/profile/ProfileHeader";
+import ProfileLoading from "@/components/profile/ProfileLoading";
+import OverviewTab from "@/components/profile/OverviewTab";
+import InsightsTab from "@/components/profile/InsightsTab";
+import ChatTab from "@/components/profile/ChatTab";
 
 const ProfileDetail = () => {
   const { id } = useParams<{ id: string }>();
@@ -84,18 +76,7 @@ const ProfileDetail = () => {
   const loading = profileLoading || summaryLoading || mealsLoading;
 
   if (loading && !meals) {
-    return (
-      <div className="space-y-6">
-        <div className="flex items-center gap-4">
-          <Skeleton className="h-20 w-20 rounded-full" />
-          <div className="space-y-2">
-            <Skeleton className="h-6 w-[200px]" />
-            <Skeleton className="h-4 w-[150px]" />
-          </div>
-        </div>
-        <Skeleton className="h-[400px] w-full" />
-      </div>
-    );
+    return <ProfileLoading />;
   }
 
   if (!profile) {
@@ -109,48 +90,9 @@ const ProfileDetail = () => {
     );
   }
 
-  const initials = profile.name
-    ?.split(" ")
-    .map((n) => n[0])
-    .join("") || "";
-    
-  // Determine plan type based on user ID (since subscription_status doesn't exist in the table)
-  const getPlanBadge = () => {
-    // Using a hash of the ID to deterministically assign a plan type
-    const isPremium = profile.id.charCodeAt(0) % 2 === 0; 
-    
-    if (isPremium) {
-      return <Badge className="bg-purple-600/90 text-white">Premium</Badge>;
-    } else {
-      return <Badge className="bg-blue-600/90 text-white">Basic</Badge>;
-    }
-  };
-    
-  // Create placeholder meals for empty state
-  const placeholderMeals = Array.from({ length: 6 }).map((_, i) => (
-    <MealTilePlaceholder key={`placeholder-${i}`} />
-  ));
-
   return (
     <div className="space-y-6">
-      <div className="flex items-start justify-between">
-        <div className="flex items-center gap-4">
-          <Avatar className="h-20 w-20 border-2 border-white/10">
-            <AvatarImage 
-              src={profile?.avatar_url} 
-              alt={profile?.name} 
-              className="object-cover"
-            />
-            <AvatarFallback className="text-2xl bg-purple-800/30 text-purple-200">{initials}</AvatarFallback>
-          </Avatar>
-          <div>
-            <div className="flex items-center gap-2">
-              <h1 className="text-3xl font-bold tracking-tight">{profile?.name}</h1>
-              {getPlanBadge()}
-            </div>
-          </div>
-        </div>
-      </div>
+      <ProfileHeader profile={profile} />
 
       <Tabs defaultValue="overview">
         <TabsList>
@@ -158,95 +100,22 @@ const ProfileDetail = () => {
           <TabsTrigger value="insights">Анализ</TabsTrigger>
           <TabsTrigger value="chat">Чат</TabsTrigger>
         </TabsList>
+        
         <TabsContent value="overview" className="mt-6">
-          <div className="grid gap-6 md:grid-cols-2">
-            <Card>
-              <CardHeader>
-                <CardTitle>Питание за день</CardTitle>
-                <CardDescription>Калории и нутриенты</CardDescription>
-              </CardHeader>
-              <CardContent className="flex flex-col items-center">
-                <KcalRing value={summary?.kcal || 0} target={dailyGoal} />
-                <div className="flex gap-8 mt-6">
-                  <div className="flex flex-col items-center">
-                    <div className="text-sm text-muted-foreground mb-1">Белки</div>
-                    <div className="text-xl font-semibold">{summary?.prot || 0} г</div>
-                    <div className="text-xs text-muted-foreground mt-1">25% от нормы</div>
-                  </div>
-                  <div className="flex flex-col items-center">
-                    <div className="text-sm text-muted-foreground mb-1">Жиры</div>
-                    <div className="text-xl font-semibold">{summary?.fat || 0} г</div>
-                    <div className="text-xs text-muted-foreground mt-1">30% от нормы</div>
-                  </div>
-                  <div className="flex flex-col items-center">
-                    <div className="text-sm text-muted-foreground mb-1">Углеводы</div>
-                    <div className="text-xl font-semibold">{summary?.carb || 0} г</div>
-                    <div className="text-xs text-muted-foreground mt-1">45% от нормы</div>
-                  </div>
-                </div>
-                <div className="w-full mt-6">
-                  <MacroChips 
-                    protein={summary?.prot} 
-                    fat={summary?.fat} 
-                    carbs={summary?.carb} 
-                  />
-                </div>
-              </CardContent>
-            </Card>
-            
-            <Card>
-              <CardHeader>
-                <CardTitle>Приемы пищи</CardTitle>
-                <CardDescription>Съеденные продукты</CardDescription>
-              </CardHeader>
-              <CardContent>
-                {mealsLoading ? (
-                  <MealGridSkeleton />
-                ) : meals && meals.length > 0 ? (
-                  <MasonryGrid meals={meals} />
-                ) : (
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {placeholderMeals}
-                  </div>
-                )}
-              </CardContent>
-            </Card>
-          </div>
+          <OverviewTab 
+            summary={summary} 
+            dailyGoal={dailyGoal} 
+            meals={meals} 
+            mealsLoading={mealsLoading} 
+          />
         </TabsContent>
 
         <TabsContent value="insights" className="mt-6">
-          <div className="grid gap-6 md:grid-cols-2">
-            <Card>
-              <CardHeader>
-                <CardTitle>Баланс питания</CardTitle>
-                <CardDescription>Анализ нутриентов</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <RadarChart />
-              </CardContent>
-            </Card>
-            <Card>
-              <CardHeader>
-                <CardTitle>Водный баланс</CardTitle>
-                <CardDescription>Потребление воды</CardDescription>
-              </CardHeader>
-              <CardContent className="flex justify-center">
-                <WaterRing />
-              </CardContent>
-            </Card>
-          </div>
+          <InsightsTab />
         </TabsContent>
 
         <TabsContent value="chat" className="mt-6">
-          <Card className="h-[600px]">
-            <CardHeader>
-              <CardTitle>Коучинг по питанию</CardTitle>
-              <CardDescription>Общение с тренером</CardDescription>
-            </CardHeader>
-            <CardContent className="h-[calc(100%-96px)]">
-              <ChatInterface profileId={id} />
-            </CardContent>
-          </Card>
+          <ChatTab profileId={id} />
         </TabsContent>
       </Tabs>
     </div>
