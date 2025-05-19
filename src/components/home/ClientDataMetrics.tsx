@@ -2,7 +2,7 @@
 import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Users, AlertTriangle, X, Calendar } from "lucide-react";
+import { Users, AlertTriangle, Calendar } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 
@@ -51,8 +51,10 @@ const progressMetrics = [{
   value: 9,
   color: "red"
 }];
+
 export function ClientDataMetrics() {
-  return <div className="space-y-4">
+  return (
+    <div className="space-y-4">
       <div className="flex flex-wrap items-center gap-3">
         <div className="p-2 rounded-lg bg-gradient-to-r from-purple-500/80 to-purple-700/80">
           <Users className="h-5 w-5 text-white" />
@@ -72,7 +74,11 @@ export function ClientDataMetrics() {
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                {clientsNeedingAttention.map(client => <div key={client.id} className="flex items-center justify-between p-3 rounded-md bg-background/40 border border-muted hover:bg-background/70 transition-colors">
+                {clientsNeedingAttention.map(client => (
+                  <div 
+                    key={client.id} 
+                    className="flex items-center justify-between p-3 rounded-md bg-background/40 border border-muted hover:bg-background/70 transition-colors"
+                  >
                     <div className="flex items-center gap-3">
                       <Avatar className="h-9 w-9">
                         <AvatarImage src={client.avatar || undefined} alt={client.name} />
@@ -94,7 +100,8 @@ export function ClientDataMetrics() {
                         Детали
                       </Button>
                     </Link>
-                  </div>)}
+                  </div>
+                ))}
 
                 <Link to="/profiles" className="block w-full">
                   <Button variant="outline" className="w-full">
@@ -116,21 +123,25 @@ export function ClientDataMetrics() {
             </CardHeader>
             <CardContent>
               <div className="space-y-6 mt-2">
-                {progressMetrics.map(metric => <div key={metric.label} className="space-y-2">
+                {progressMetrics.map(metric => (
+                  <div key={metric.label} className="space-y-2">
                     <div className="flex justify-between items-center">
                       <span className="text-sm">{metric.label}</span>
                       <span className={`text-sm font-medium text-${metric.color}-500`}>{metric.value}%</span>
                     </div>
                     <div className="w-full h-2 bg-muted/50 rounded-full">
-                      <div className={`h-full rounded-full bg-${metric.color}-500`} style={{
-                    width: `${metric.value}%`
-                  }}></div>
+                      <div 
+                        className={`h-full rounded-full bg-${metric.color}-500`} 
+                        style={{width: `${metric.value}%`}}
+                      ></div>
                     </div>
-                  </div>)}
+                  </div>
+                ))}
               </div>
             </CardContent>
           </Card>
         </div>
       </div>
-    </div>;
+    </div>
+  );
 }
