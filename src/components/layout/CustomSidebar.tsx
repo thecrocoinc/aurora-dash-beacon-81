@@ -73,11 +73,8 @@ export function CustomSidebar() {
       </SidebarHeader>
       
       <SidebarContent>
-        {/* Основное меню - теперь в таком же блоке как и "Инструменты админа" */}
+        {/* Основное меню - без заголовка */}
         <div className="px-2 py-2.5 bg-muted/30 rounded-md mx-2 mb-2">
-          <SidebarGroupLabel className="text-primary text-[13px] font-medium mb-2 px-2">
-            Основное меню
-          </SidebarGroupLabel>
           <SidebarMenu>
             {menuItems.map(item => (
               <SidebarMenuItem key={item.name}>
