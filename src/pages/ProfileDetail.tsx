@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
@@ -20,6 +19,7 @@ import { RadarChart } from "@/components/RadarChart";
 import { WaterRing } from "@/components/WaterRing";
 import { WeightHistoryChart } from "@/components/WeightHistoryChart";
 import { MeasurementsTable } from "@/components/MeasurementsTable";
+import { GoalStatusBadge } from "@/components/GoalStatusBadge";
 import ChatInterface from "@/components/ChatInterface";
 
 const ProfileDetail = () => {
@@ -298,9 +298,7 @@ const ProfileDetail = () => {
                       <div key={goal.id} className="border p-3 rounded-md">
                         <div className="flex justify-between items-start">
                           <div className="font-medium">{goal.description}</div>
-                          <Badge variant={goal.achieved ? "success" : "outline"}>
-                            {goal.achieved ? "Достигнуто" : "В процессе"}
-                          </Badge>
+                          <GoalStatusBadge achieved={goal.achieved} />
                         </div>
                         {goal.target_date && (
                           <p className="text-sm text-muted-foreground mt-1">
