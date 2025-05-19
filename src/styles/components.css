@@ -10,6 +10,14 @@
          transition-all;
 }
 
+.btn-emerald {
+  @apply bg-gradient-to-br from-[var(--color-emerald-start)] to-[var(--color-emerald-end)] 
+         text-[var(--color-bg)] shadow 
+         hover:ring-2 hover:ring-[rgba(33,194,135,0.4)]
+         focus:ring-2 focus:ring-[rgba(33,194,135,0.4)]
+         transition-all;
+}
+
 .btn-secondary {
   @apply border border-[var(--color-surface-muted)] text-[var(--color-text)] bg-transparent hover:bg-[rgba(38,40,46,0.5)] transition-all;
 }
@@ -49,6 +57,16 @@
   @apply bg-gradient-to-r from-[var(--color-primary-start)] to-[var(--color-primary-end)];
 }
 
+/* Emerald gradient classes */
+.emerald-gradient {
+  @apply bg-gradient-to-r from-[var(--color-emerald-start)] to-[var(--color-emerald-end)];
+}
+
+/* Dual-tone gradient (gold to emerald) */
+.premium-dual-gradient {
+  @apply bg-gradient-to-r from-[var(--color-primary-start)] via-[var(--color-primary-end)] to-[var(--color-emerald-start)];
+}
+
 /* Premium gradient */
 .premium-gradient {
   @apply bg-gradient-to-r from-[var(--color-surface)] to-[var(--color-surface-muted)];
@@ -73,16 +91,32 @@
   @apply border border-[rgba(206,159,73,0.3)] shadow-sm;
 }
 
+.emerald-border {
+  @apply border border-[rgba(33,194,135,0.3)] shadow-sm;
+}
+
 .premium-card {
   @apply bg-[var(--color-surface)] backdrop-blur-lg border border-[rgba(206,159,73,0.2)] shadow-[var(--shadow)];
+}
+
+.emerald-card {
+  @apply bg-[var(--color-surface)] backdrop-blur-lg border border-[rgba(33,194,135,0.2)] shadow-[var(--shadow)];
 }
 
 .premium-button {
   @apply bg-[var(--color-primary-end)] text-[var(--color-bg)] font-medium hover:bg-[var(--color-primary-start)] transition-colors;
 }
 
+.emerald-button {
+  @apply bg-[var(--color-emerald-end)] text-[var(--color-bg)] font-medium hover:bg-[var(--color-emerald-start)] transition-colors;
+}
+
 .premium-text {
   @apply text-transparent bg-clip-text bg-gradient-to-r from-[var(--color-primary-start)] to-[var(--color-primary-end)];
+}
+
+.emerald-text {
+  @apply text-transparent bg-clip-text bg-gradient-to-r from-[var(--color-emerald-start)] to-[var(--color-emerald-end)];
 }
 
 /* Sidebar specific styles */
@@ -96,9 +130,21 @@
   @apply bg-[rgba(244,201,120,0.2)] text-[var(--color-primary-start)];
 }
 
+.badge-emerald {
+  @apply bg-[var(--color-emerald-muted)] text-[var(--color-emerald-start)];
+}
+
 /* Card and surface styles */
 .card, .modal, .panel {
   @apply bg-[var(--color-surface)] rounded-[var(--radius)] ring-1 ring-white/5;
+}
+
+.card-accent-emerald {
+  @apply border-t-4 border-t-[var(--color-emerald-start)]/60;
+}
+
+.card-accent-gold {
+  @apply border-t-4 border-t-[var(--color-primary-start)]/60;
 }
 
 [aria-role="secondary"] {
@@ -121,6 +167,10 @@
 
 .chart-secondary {
   @apply stroke-[#E0E3E9] fill-none;
+}
+
+.chart-emerald {
+  @apply stroke-[var(--color-emerald-start)] fill-none;
 }
 
 .chart-grid {

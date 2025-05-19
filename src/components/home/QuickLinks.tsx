@@ -11,7 +11,7 @@ const quickLinks = [
     description: "Управление пользователями",
     icon: Users,
     path: "/profiles",
-    color: "from-blue-500 to-blue-700",
+    color: "gold",
     stats: "32 активных"
   },
   {
@@ -19,7 +19,7 @@ const quickLinks = [
     description: "Чаты и сообщения",
     icon: MessageSquare,
     path: "/dialogs",
-    color: "from-emerald-500 to-emerald-700",
+    color: "emerald",
     stats: "5 непрочитанных"
   },
   {
@@ -27,7 +27,7 @@ const quickLinks = [
     description: "Метрики и отчеты",
     icon: BarChart2,
     path: "/biz-agent",
-    color: "from-violet-500 to-violet-700",
+    color: "gold",
     stats: "+12% к конверсии"
   },
   {
@@ -35,7 +35,7 @@ const quickLinks = [
     description: "Настройки бота",
     icon: Bot,
     path: "/bot",
-    color: "from-amber-500 to-amber-700",
+    color: "emerald",
     stats: "Онлайн"
   }
 ];
@@ -52,16 +52,18 @@ export function QuickLinks() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {quickLinks.map((link) => (
           <NavLink key={link.title} to={link.path} className="block hover-lift">
-            <Card className="h-full overflow-hidden border-t-4 border-t-primary/60">
+            <Card className={`h-full overflow-hidden ${link.color === 'emerald' ? 'card-accent-emerald' : 'card-accent-gold'}`}>
               <CardContent className="pt-6">
                 <div className="flex flex-col items-center text-center space-y-3">
-                  <div className="p-3 rounded-full glass-morphism">
-                    <link.icon className="h-5 w-5 text-[var(--color-primary-0)]" />
+                  <div className={`p-3 rounded-full glass-morphism ${link.color === 'emerald' ? 'border-[var(--color-emerald-start)]/20' : 'border-[var(--color-primary-start)]/20'}`}>
+                    <link.icon className={`h-5 w-5 ${link.color === 'emerald' ? 'text-[var(--color-emerald-start)]' : 'text-[var(--color-primary-start)]'}`} />
                   </div>
                   <h3 className="font-medium">{link.title}</h3>
                   <p className="text-sm text-muted-foreground">{link.description}</p>
                   {link.stats && (
-                    <span className="text-xs py-1 px-3 bg-[var(--color-primary-0)]/10 text-[var(--color-primary-0)] rounded-full">
+                    <span className={`text-xs py-1 px-3 ${link.color === 'emerald' 
+                      ? 'bg-[var(--color-emerald-start)]/10 text-[var(--color-emerald-start)]' 
+                      : 'bg-[var(--color-primary-start)]/10 text-[var(--color-primary-start)]'} rounded-full`}>
                       {link.stats}
                     </span>
                   )}

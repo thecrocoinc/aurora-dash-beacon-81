@@ -15,6 +15,11 @@
     --color-success: #21C287;
     --color-danger: #EF5E5E;
     
+    /* Emerald palette */
+    --color-emerald-start: #20B486;
+    --color-emerald-end: #128462;
+    --color-emerald-muted: rgba(33, 194, 135, 0.15);
+    
     /* ShadCN variables */
     --background: 240 10% 3.9%;
     --foreground: 0 0% 98%;
@@ -76,6 +81,10 @@
   /* Status and Badge Styles */
   [data-status="vip"], .badge-pro {
     @apply text-[var(--color-accent)] bg-[rgba(255,176,67,0.1)] rounded-[var(--radius)] px-2 py-0.5;
+  }
+
+  [data-status="success"], .badge-success {
+    @apply text-[var(--color-emerald-start)] bg-[var(--color-emerald-muted)] rounded-[var(--radius)] px-2 py-0.5;
   }
   
   /* Layout Utilities */

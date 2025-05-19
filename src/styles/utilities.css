@@ -7,8 +7,17 @@
   50% { box-shadow: 0 0 20px rgba(206, 159, 73, 0.4); }
 }
 
+@keyframes pulse-glow-emerald {
+  0%, 100% { box-shadow: 0 0 0 rgba(33, 194, 135, 0.2); }
+  50% { box-shadow: 0 0 20px rgba(33, 194, 135, 0.4); }
+}
+
 .animate-pulse-glow {
   animation: pulse-glow 3s ease-in-out infinite;
+}
+
+.animate-pulse-glow-emerald {
+  animation: pulse-glow-emerald 3s ease-in-out infinite;
 }
 
 /* Modern hover effects */
@@ -20,14 +29,27 @@
   @apply -translate-y-1 shadow-[var(--shadow)];
 }
 
+/* Emerald hover effects */
+.hover-emerald {
+  @apply transition-all duration-200;
+}
+
+.hover-emerald:hover {
+  @apply border-[var(--color-emerald-start)]/30 shadow-[0_4px_12px_rgba(33,194,135,0.15)];
+}
+
 /* Image overlays */
 .image-overlay {
   @apply absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent;
 }
 
+.emerald-overlay {
+  @apply absolute inset-0 bg-gradient-to-t from-[var(--color-emerald-end)]/70 via-[var(--color-emerald-start)]/30 to-transparent;
+}
+
 /* Health metric colors */
 .health-excellent {
-  @apply text-[var(--color-success)];
+  @apply text-[var(--color-emerald-start)];
 }
 
 .health-good {
@@ -59,6 +81,10 @@
 /* Modern card effects */
 .dashboard-card {
   @apply border border-[var(--color-primary-1)/10] hover:border-[var(--color-primary-1)/20] transition-all duration-200;
+}
+
+.dashboard-card-emerald {
+  @apply border border-[var(--color-emerald-start)]/10 hover:border-[var(--color-emerald-start)]/20 transition-all duration-200;
 }
 
 /* Animated gradient background */
