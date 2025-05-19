@@ -16,11 +16,11 @@ export default function Home() {
       
       {/* Бизнес-метрики */}
       <div className="section">
-        <div className="section-header">
-          <div className="icon">
-            <BarChart className="h-5 w-5" />
+        <div className="flex items-center gap-3">
+          <div className="p-2 rounded-lg bg-gradient-to-r from-emerald-600/80 to-emerald-700/80">
+            <BarChart className="h-5 w-5 text-white" />
           </div>
-          <h2>Ключевые показатели</h2>
+          <h2 className="text-xl font-semibold">Ключевые показатели</h2>
         </div>
         <StatsGrid />
       </div>

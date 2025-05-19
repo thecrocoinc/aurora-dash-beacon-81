@@ -16,36 +16,32 @@ export function SubscriptionManagement() {
       name: "Анна М.", 
       avatar: "A",
       plan: "Premium", 
-      date: "15 Мая", 
-      status: "active",
-      email: "anna@example.com" 
+      date: "20 Мая", 
+      status: "active"
     },
     { 
       id: 2, 
       name: "Сергей К.", 
       avatar: "С",
       plan: "Basic", 
-      date: "13 Мая", 
-      status: "active",
-      email: "sergey@example.com"
+      date: "20 Мая", 
+      status: "active"
     },
     { 
       id: 3, 
       name: "Ирина Л.", 
       avatar: "И",
       plan: "Premium", 
-      date: "10 Мая", 
-      status: "trial",
-      email: "irina@example.com"
+      date: "20 Мая", 
+      status: "trial"
     },
     { 
       id: 4, 
       name: "Павел В.", 
       avatar: "П",
       plan: "Basic", 
-      date: "8 Мая", 
-      status: "pending",
-      email: "pavel@example.com"
+      date: "20 Мая", 
+      status: "pending"
     },
   ];
 
@@ -82,10 +78,23 @@ export function SubscriptionManagement() {
     }
   };
 
+  // Plan badge component
+  const PlanBadge = ({ plan }: { plan: string }) => {
+    return (
+      <Badge variant="outline" className={`border-0 ${
+        plan === 'Premium' 
+          ? 'bg-emerald-500/10 text-emerald-500' 
+          : 'bg-primary/10 text-primary'
+      }`}>
+        {plan}
+      </Badge>
+    );
+  };
+
   return (
     <div className="space-y-4">
-      <div className="flex flex-wrap items-center gap-3">
-        <div className="p-2 rounded-lg bg-gradient-to-r from-blue-500/80 to-blue-700/80">
+      <div className="flex items-center gap-3">
+        <div className="p-2 rounded-lg bg-gradient-to-r from-emerald-600/80 to-emerald-700/80">
           <Database className="h-5 w-5 text-white" />
         </div>
         <h2 className="text-xl font-semibold">Управление подписками</h2>
@@ -125,10 +134,10 @@ export function SubscriptionManagement() {
                   <div className="space-y-1">
                     <div className="flex items-center justify-between text-sm mb-1">
                       <span className="text-muted-foreground">Клиенты</span>
-                      <span className="font-medium">15 из 30</span>
+                      <span className="font-medium">2450 из 5000</span>
                     </div>
                     <div className="w-full h-1.5 bg-blue-900/30 rounded-full overflow-hidden">
-                      <div className="bg-gradient-to-r from-blue-600 to-blue-400 h-full rounded-full" style={{ width: '50%' }}></div>
+                      <div className="bg-gradient-to-r from-blue-600 to-blue-400 h-full rounded-full" style={{ width: '49%' }}></div>
                     </div>
                   </div>
                   
@@ -143,25 +152,25 @@ export function SubscriptionManagement() {
                       <div className="rounded-full p-0.5 bg-blue-500/20 text-blue-400 mt-0.5">
                         <CheckIcon className="h-3.5 w-3.5" />
                       </div>
-                      <span className="text-sm">Базовая аналитика</span>
-                    </li>
-                    <li className="flex items-start gap-2.5">
-                      <div className="rounded-full p-0.5 bg-blue-500/20 text-blue-400 mt-0.5">
-                        <CheckIcon className="h-3.5 w-3.5" />
-                      </div>
-                      <span className="text-sm">Email рассылки</span>
+                      <span className="text-sm">Персональные советы</span>
                     </li>
                     <li className="flex items-start gap-2.5">
                       <div className="rounded-full p-0.5 bg-zinc-700/50 text-zinc-500 mt-0.5">
                         <XIcon className="h-3.5 w-3.5" />
                       </div>
-                      <span className="text-sm text-muted-foreground">AI рекомендации</span>
+                      <span className="text-sm text-muted-foreground">Рецепты любых блюд</span>
+                    </li>
+                    <li className="flex items-start gap-2.5">
+                      <div className="rounded-full p-0.5 bg-zinc-700/50 text-zinc-500 mt-0.5">
+                        <XIcon className="h-3.5 w-3.5" />
+                      </div>
+                      <span className="text-sm text-muted-foreground">Программы тренировок</span>
                     </li>
                   </ul>
                 </CardContent>
                 <CardFooter className="pt-2 pb-4">
                   <Button variant="outline" className="w-full gap-1.5 border-blue-800/50 hover:bg-blue-800/20 group">
-                    Подробнее <ArrowRight className="h-3.5 w-3.5 transform group-hover:translate-x-0.5 transition-transform" />
+                    Редактировать <ArrowRight className="h-3.5 w-3.5 transform group-hover:translate-x-0.5 transition-transform" />
                   </Button>
                 </CardFooter>
               </div>
@@ -192,10 +201,10 @@ export function SubscriptionManagement() {
                   <div className="space-y-1">
                     <div className="flex items-center justify-between text-sm mb-1">
                       <span className="text-muted-foreground">Клиенты</span>
-                      <span className="font-medium">12 из 16</span>
+                      <span className="font-medium">1300 из 3000</span>
                     </div>
                     <div className="w-full h-1.5 bg-emerald-900/30 rounded-full overflow-hidden">
-                      <div className="bg-gradient-to-r from-emerald-600 to-emerald-400 h-full rounded-full" style={{ width: '75%' }}></div>
+                      <div className="bg-gradient-to-r from-emerald-600 to-emerald-400 h-full rounded-full" style={{ width: '43%' }}></div>
                     </div>
                   </div>
                   
@@ -210,25 +219,25 @@ export function SubscriptionManagement() {
                       <div className="rounded-full p-0.5 bg-emerald-500/20 text-emerald-400 mt-0.5">
                         <CheckIcon className="h-3.5 w-3.5" />
                       </div>
-                      <span className="text-sm">Расширенная аналитика</span>
+                      <span className="text-sm">Персональные советы</span>
                     </li>
                     <li className="flex items-start gap-2.5">
                       <div className="rounded-full p-0.5 bg-emerald-500/20 text-emerald-400 mt-0.5">
                         <CheckIcon className="h-3.5 w-3.5" />
                       </div>
-                      <span className="text-sm">Email и Telegram рассылки</span>
+                      <span className="text-sm">Рецепты любых блюд</span>
                     </li>
                     <li className="flex items-start gap-2.5">
                       <div className="rounded-full p-0.5 bg-emerald-500/20 text-emerald-400 mt-0.5">
                         <CheckIcon className="h-3.5 w-3.5" />
                       </div>
-                      <span className="text-sm">AI рекомендации</span>
+                      <span className="text-sm">Программы тренировок</span>
                     </li>
                   </ul>
                 </CardContent>
                 <CardFooter className="pt-2 pb-4">
                   <Button className="w-full gap-1.5 bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-700 hover:to-emerald-600 group">
-                    Подробнее <ArrowRight className="h-3.5 w-3.5 transform group-hover:translate-x-0.5 transition-transform" />
+                    Редактировать <ArrowRight className="h-3.5 w-3.5 transform group-hover:translate-x-0.5 transition-transform" />
                   </Button>
                 </CardFooter>
               </div>
@@ -248,7 +257,7 @@ export function SubscriptionManagement() {
                   <TableRow>
                     <TableHead>Клиент</TableHead>
                     <TableHead>План</TableHead>
-                    <TableHead className="hidden sm:table-cell">Дата</TableHead>
+                    <TableHead>Дата</TableHead>
                     <TableHead>Статус</TableHead>
                   </TableRow>
                 </TableHeader>
@@ -263,20 +272,13 @@ export function SubscriptionManagement() {
                           </Avatar>
                           <div>
                             <p className="font-medium leading-none mb-0.5">{subscriber.name}</p>
-                            <p className="text-xs text-muted-foreground hidden sm:block">{subscriber.email}</p>
                           </div>
                         </div>
                       </TableCell>
                       <TableCell>
-                        <Badge variant="outline" className={`border-0 ${
-                          subscriber.plan === 'Premium' 
-                            ? 'bg-emerald-500/10 text-emerald-500' 
-                            : 'bg-blue-500/10 text-blue-500'
-                        }`}>
-                          {subscriber.plan}
-                        </Badge>
+                        <PlanBadge plan={subscriber.plan} />
                       </TableCell>
-                      <TableCell className="hidden sm:table-cell">{subscriber.date}</TableCell>
+                      <TableCell>{subscriber.date}</TableCell>
                       <TableCell>
                         <StatusBadge status={subscriber.status} />
                       </TableCell>

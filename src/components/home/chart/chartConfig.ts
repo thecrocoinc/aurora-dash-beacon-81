@@ -1,14 +1,13 @@
 
-
 // Configuration for chart lines
 export const chartConfig = {
   users: {
-    label: "Пользователи",
+    label: "Скоро заплатят",
     theme: { light: "#26282E", dark: "#26282E" }, // Using color_surface_muted from design tokens
   },
   active: {
-    label: "Активные пользователи",
-    theme: { light: "#CE9F49", dark: "#F4C978" }, // Using primary start and end from design tokens
+    label: "Платящие клиенты",
+    theme: { light: "#05866D", dark: "#059682" }, // Using emerald colors
   }
 };
 
@@ -24,4 +23,3 @@ export const periodLabels = {
 };
 
 export type PeriodType = keyof typeof periodLabels;
-

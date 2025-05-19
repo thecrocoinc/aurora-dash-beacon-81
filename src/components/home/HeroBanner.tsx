@@ -14,7 +14,7 @@ export function HeroBanner() {
           Управляйте вашим AI-ботом для трекинга питания и здоровья, анализируйте данные клиентов и развивайте свой бизнес
         </p>
         <div className="flex flex-wrap gap-4">
-          <Button className="btn-primary rounded-[var(--radius)] bg-primary hover:bg-primary/90 transition-all hover:scale-105">
+          <Button className="btn-primary rounded-[var(--radius)] bg-primary hover:bg-primary/90 hover:scale-105 transition-all">
             Обзор возможностей
           </Button>
           <Button 

@@ -5,7 +5,7 @@ import { useIsMobile } from "@/hooks/use-mobile";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { Bell, BarChart2, MessageSquare } from "lucide-react";
+import { BarChart2, Bell, MessageSquare } from "lucide-react";
 
 export function Header() {
   const location = useLocation();
@@ -27,7 +27,8 @@ export function Header() {
   const currentPath = location.pathname;
   const pageTitle = pathNames[currentPath as keyof typeof pathNames] || "AI-Nutrition Admin";
   
-  return <header className="sticky top-0 z-10 border-b border-gold/10 bg-background/80 backdrop-blur">
+  return (
+    <header className="sticky top-0 z-10 border-b border-emerald-800/20 bg-background/80 backdrop-blur">
       <div className="container flex h-16 items-center justify-between py-4">
         <div className="flex flex-1 items-center">
           
@@ -77,5 +78,6 @@ export function Header() {
           </DropdownMenu>
         </div>
       </div>
-    </header>;
+    </header>
+  );
 }

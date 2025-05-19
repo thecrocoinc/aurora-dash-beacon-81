@@ -29,9 +29,9 @@ export function UserActivityChart() {
   return (
     <Card className="overflow-hidden bg-card dark:bg-card/5 backdrop-blur-sm border dark:border-[var(--color-primary-1)]/10">
       <CardHeader className="flex flex-row items-center justify-between">
-        <div className="section-header mb-0">
-          <div className="icon">
-            <BarChart2 className="h-5 w-5" />
+        <div className="flex items-center gap-3">
+          <div className="p-2 rounded-lg bg-gradient-to-r from-emerald-600/80 to-emerald-700/80">
+            <BarChart2 className="h-5 w-5 text-white" />
           </div>
           <CardTitle className="text-xl">Активность пользователей</CardTitle>
         </div>
@@ -90,7 +90,7 @@ export function UserActivityChart() {
                 <Line
                   type="monotone"
                   dataKey="active"
-                  stroke="#10B981" // Brighter emerald color for better visibility
+                  stroke="#05866D" // Emerald color for better visibility
                   strokeWidth={2.5}
                   activeDot={{ r: 6 }}
                   dot={{ r: 3 }}

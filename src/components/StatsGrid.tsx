@@ -16,26 +16,26 @@ export function StatsGrid() {
   const stats: StatItem[] = [
     {
       label: "Всего клиентов",
-      value: 3680,
+      value: 8640,
       trend: 14,
       icon: <Users className="h-5 w-5 stroke-[var(--color-primary-0)]" />
     }, 
     {
-      label: "Premium клиентов",
-      value: 1620,
+      label: "Платящих",
+      value: 3750,
       trend: 12,
       icon: <BarChart2 className="h-5 w-5 stroke-[var(--color-primary-0)]" />
     }, 
     {
       label: "Конверсия",
-      value: 12.4,
+      value: 43.4,
       suffix: "%",
-      trend: 2.4,
+      trend: 5.2,
       icon: <TrendingUp className="h-5 w-5 stroke-[var(--color-primary-0)]" />
     }, 
     {
       label: "Доход ежемес.",
-      value: 486000,
+      value: 4680000,
       prefix: "₽",
       trend: 15.2,
       icon: <BarChart2 className="h-5 w-5 stroke-[var(--color-primary-0)]" />
