@@ -4,7 +4,6 @@ import { StatsGrid } from "@/components/StatsGrid";
 import { HeroBanner } from "@/components/home/HeroBanner";
 import { UserActivityChart } from "@/components/home/UserActivityChart";
 import { SubscriptionManagement } from "@/components/home/SubscriptionManagement";
-import { ClientDataMetrics } from "@/components/home/ClientDataMetrics";
 import { QuickLinks } from "@/components/home/QuickLinks";
 
 export default function Home() {
@@ -29,9 +28,8 @@ export default function Home() {
       {/* График активности */}
       <UserActivityChart />
       
-      {/* Admin feature sections */}
+      {/* Admin feature section */}
       <SubscriptionManagement />
-      <ClientDataMetrics />
       
       {/* Быстрая навигация по ключевым разделам */}
       <QuickLinks />

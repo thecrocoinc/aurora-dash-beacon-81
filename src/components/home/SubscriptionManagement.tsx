@@ -1,18 +1,86 @@
 
 import React from "react";
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
-import { Database, Bot, Users, ArrowRight, CheckIcon, XIcon } from "lucide-react";
+import { Database, Bot, Users, ArrowRight, CheckIcon, XIcon, AlertCircle, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
 
 export function SubscriptionManagement() {
-  // Sample data for active subscribers
+  // Enhanced data for active subscribers
   const recentSubscribers = [
-    { id: 1, name: "Анна М.", plan: "Premium", date: "15 Мая", status: "active" },
-    { id: 2, name: "Сергей К.", plan: "Basic", date: "13 Мая", status: "active" },
-    { id: 3, name: "Ирина Л.", plan: "Premium", date: "10 Мая", status: "trial" },
+    { 
+      id: 1, 
+      name: "Анна М.", 
+      avatar: "A",
+      plan: "Premium", 
+      date: "15 Мая", 
+      status: "active",
+      email: "anna@example.com" 
+    },
+    { 
+      id: 2, 
+      name: "Сергей К.", 
+      avatar: "С",
+      plan: "Basic", 
+      date: "13 Мая", 
+      status: "active",
+      email: "sergey@example.com"
+    },
+    { 
+      id: 3, 
+      name: "Ирина Л.", 
+      avatar: "И",
+      plan: "Premium", 
+      date: "10 Мая", 
+      status: "trial",
+      email: "irina@example.com"
+    },
+    { 
+      id: 4, 
+      name: "Павел В.", 
+      avatar: "П",
+      plan: "Basic", 
+      date: "8 Мая", 
+      status: "pending",
+      email: "pavel@example.com"
+    },
   ];
+
+  // Status badge component for better visual representation
+  const StatusBadge = ({ status }: { status: string }) => {
+    switch(status) {
+      case 'active':
+        return (
+          <Badge variant="outline" className="border-0 bg-emerald-500/20 text-emerald-500 flex items-center gap-1.5">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+            Активна
+          </Badge>
+        );
+      case 'trial':
+        return (
+          <Badge variant="outline" className="border-0 bg-amber-500/20 text-amber-500 flex items-center gap-1.5">
+            <Clock className="h-3 w-3" />
+            Пробный период
+          </Badge>
+        );
+      case 'pending':
+        return (
+          <Badge variant="outline" className="border-0 bg-blue-500/20 text-blue-500 flex items-center gap-1.5">
+            <AlertCircle className="h-3 w-3" />
+            Ожидание
+          </Badge>
+        );
+      default:
+        return (
+          <Badge variant="outline" className="border-0 bg-muted text-muted-foreground">
+            {status}
+          </Badge>
+        );
+    }
+  };
 
   return (
     <div className="space-y-4">
@@ -32,42 +100,56 @@ export function SubscriptionManagement() {
         
         <TabsContent value="plans">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
-            {/* Basic Plan - Redesigned */}
-            <Card className="bg-zinc-900 border border-zinc-800 overflow-hidden relative">
-              <div className="absolute inset-0 bg-gradient-to-b from-blue-950/30 to-transparent opacity-70 pointer-events-none"></div>
+            {/* Basic Plan - Redesigned with more modern style */}
+            <Card className="bg-zinc-900 border border-zinc-800 overflow-hidden relative shadow-xl">
+              <div className="absolute inset-0 bg-gradient-to-tr from-blue-950/50 to-transparent opacity-70 pointer-events-none"></div>
               <div className="relative z-10">
                 <CardHeader className="pb-2">
-                  <div className="flex items-center gap-3 mb-1">
-                    <div className="bg-blue-500/20 p-2 rounded-full">
-                      <Bot className="h-5 w-5 text-blue-400" />
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className="bg-blue-500/20 p-2.5 rounded-full">
+                        <Bot className="h-5 w-5 text-blue-400" />
+                      </div>
+                      <CardTitle>Базовый</CardTitle>
                     </div>
-                    <CardTitle>Базовый</CardTitle>
+                    <div className="text-xs text-blue-400 px-2.5 py-1 rounded-full bg-blue-500/10">
+                      Эконом
+                    </div>
                   </div>
-                  <div className="text-2xl font-bold mt-2">799 ₽<span className="text-sm font-normal text-muted-foreground">/мес</span></div>
+                  <div className="mt-4 flex items-baseline">
+                    <span className="text-2xl font-bold">799 ₽</span>
+                    <span className="text-sm font-normal text-muted-foreground ml-1.5">/мес</span>
+                  </div>
                 </CardHeader>
-                <CardContent className="space-y-4">
-                  <div>
+                <CardContent className="space-y-5">
+                  <div className="space-y-1">
                     <div className="flex items-center justify-between text-sm mb-1">
                       <span className="text-muted-foreground">Клиенты</span>
                       <span className="font-medium">15 из 30</span>
                     </div>
                     <div className="w-full h-1.5 bg-blue-900/30 rounded-full overflow-hidden">
-                      <div className="bg-blue-500 h-full rounded-full" style={{ width: '50%' }}></div>
+                      <div className="bg-gradient-to-r from-blue-600 to-blue-400 h-full rounded-full" style={{ width: '50%' }}></div>
                     </div>
                   </div>
                   
                   <ul className="space-y-3 py-2">
                     <li className="flex items-start gap-2.5">
-                      <div className="rounded-full p-0.5 bg-blue-500/20 text-blue-500 mt-0.5">
+                      <div className="rounded-full p-0.5 bg-blue-500/20 text-blue-400 mt-0.5">
                         <CheckIcon className="h-3.5 w-3.5" />
                       </div>
                       <span className="text-sm">Трекинг питания</span>
                     </li>
                     <li className="flex items-start gap-2.5">
-                      <div className="rounded-full p-0.5 bg-blue-500/20 text-blue-500 mt-0.5">
+                      <div className="rounded-full p-0.5 bg-blue-500/20 text-blue-400 mt-0.5">
                         <CheckIcon className="h-3.5 w-3.5" />
                       </div>
                       <span className="text-sm">Базовая аналитика</span>
+                    </li>
+                    <li className="flex items-start gap-2.5">
+                      <div className="rounded-full p-0.5 bg-blue-500/20 text-blue-400 mt-0.5">
+                        <CheckIcon className="h-3.5 w-3.5" />
+                      </div>
+                      <span className="text-sm">Email рассылки</span>
                     </li>
                     <li className="flex items-start gap-2.5">
                       <div className="rounded-full p-0.5 bg-zinc-700/50 text-zinc-500 mt-0.5">
@@ -78,39 +160,42 @@ export function SubscriptionManagement() {
                   </ul>
                 </CardContent>
                 <CardFooter className="pt-2 pb-4">
-                  <Button variant="outline" className="w-full gap-1.5 border-blue-800/50 hover:bg-blue-800/20">
-                    Подробнее <ArrowRight className="h-3.5 w-3.5" />
+                  <Button variant="outline" className="w-full gap-1.5 border-blue-800/50 hover:bg-blue-800/20 group">
+                    Подробнее <ArrowRight className="h-3.5 w-3.5 transform group-hover:translate-x-0.5 transition-transform" />
                   </Button>
                 </CardFooter>
               </div>
             </Card>
             
-            {/* Premium Plan - Redesigned */}
-            <Card className="bg-zinc-900 border-2 border-emerald-800/50 overflow-hidden relative">
-              <div className="absolute inset-0 bg-gradient-to-b from-emerald-900/30 to-transparent opacity-70 pointer-events-none"></div>
+            {/* Premium Plan - Redesigned with more modern style */}
+            <Card className="bg-zinc-900 border-2 border-emerald-800/50 overflow-hidden relative shadow-xl">
+              <div className="absolute inset-0 bg-gradient-to-tr from-emerald-900/50 to-transparent opacity-70 pointer-events-none"></div>
               <div className="absolute top-0 right-0">
-                <div className="bg-emerald-600 text-white text-xs py-1 px-3 font-medium rounded-bl-lg">
+                <div className="bg-gradient-to-r from-emerald-600 to-emerald-500 text-white text-xs py-1.5 px-3 font-medium rounded-bl-lg">
                   Популярный
                 </div>
               </div>
               <div className="relative z-10">
                 <CardHeader className="pb-2">
-                  <div className="flex items-center gap-3 mb-1">
-                    <div className="bg-emerald-500/20 p-2 rounded-full">
+                  <div className="flex items-center gap-3">
+                    <div className="bg-emerald-500/20 p-2.5 rounded-full">
                       <Bot className="h-5 w-5 text-emerald-400" />
                     </div>
                     <CardTitle>Premium</CardTitle>
                   </div>
-                  <div className="text-2xl font-bold mt-2">1499 ₽<span className="text-sm font-normal text-muted-foreground">/мес</span></div>
+                  <div className="mt-4 flex items-baseline">
+                    <span className="text-2xl font-bold">1499 ₽</span>
+                    <span className="text-sm font-normal text-muted-foreground ml-1.5">/мес</span>
+                  </div>
                 </CardHeader>
-                <CardContent className="space-y-4">
-                  <div>
+                <CardContent className="space-y-5">
+                  <div className="space-y-1">
                     <div className="flex items-center justify-between text-sm mb-1">
                       <span className="text-muted-foreground">Клиенты</span>
                       <span className="font-medium">12 из 16</span>
                     </div>
                     <div className="w-full h-1.5 bg-emerald-900/30 rounded-full overflow-hidden">
-                      <div className="bg-emerald-500 h-full rounded-full" style={{ width: '75%' }}></div>
+                      <div className="bg-gradient-to-r from-emerald-600 to-emerald-400 h-full rounded-full" style={{ width: '75%' }}></div>
                     </div>
                   </div>
                   
@@ -131,13 +216,19 @@ export function SubscriptionManagement() {
                       <div className="rounded-full p-0.5 bg-emerald-500/20 text-emerald-400 mt-0.5">
                         <CheckIcon className="h-3.5 w-3.5" />
                       </div>
+                      <span className="text-sm">Email и Telegram рассылки</span>
+                    </li>
+                    <li className="flex items-start gap-2.5">
+                      <div className="rounded-full p-0.5 bg-emerald-500/20 text-emerald-400 mt-0.5">
+                        <CheckIcon className="h-3.5 w-3.5" />
+                      </div>
                       <span className="text-sm">AI рекомендации</span>
                     </li>
                   </ul>
                 </CardContent>
                 <CardFooter className="pt-2 pb-4">
-                  <Button className="w-full gap-1.5 bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-700 hover:to-emerald-600">
-                    Подробнее <ArrowRight className="h-3.5 w-3.5" />
+                  <Button className="w-full gap-1.5 bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-700 hover:to-emerald-600 group">
+                    Подробнее <ArrowRight className="h-3.5 w-3.5 transform group-hover:translate-x-0.5 transition-transform" />
                   </Button>
                 </CardFooter>
               </div>
@@ -146,9 +237,10 @@ export function SubscriptionManagement() {
         </TabsContent>
         
         <TabsContent value="subscribers">
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-lg">Недавние подписки</CardTitle>
+          <Card className="shadow-md">
+            <CardHeader className="pb-2">
+              <CardTitle className="text-lg">Активные подписки</CardTitle>
+              <p className="text-sm text-muted-foreground">Информация о клиентах с активными подписками</p>
             </CardHeader>
             <CardContent>
               <Table>
@@ -156,33 +248,46 @@ export function SubscriptionManagement() {
                   <TableRow>
                     <TableHead>Клиент</TableHead>
                     <TableHead>План</TableHead>
-                    <TableHead>Дата</TableHead>
+                    <TableHead className="hidden sm:table-cell">Дата</TableHead>
                     <TableHead>Статус</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   {recentSubscribers.map((subscriber) => (
                     <TableRow key={subscriber.id}>
-                      <TableCell>{subscriber.name}</TableCell>
-                      <TableCell>{subscriber.plan}</TableCell>
-                      <TableCell>{subscriber.date}</TableCell>
                       <TableCell>
-                        <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${
-                          subscriber.status === 'active' 
-                            ? 'bg-emerald-100 text-emerald-800' 
-                            : 'bg-amber-100 text-amber-800'
+                        <div className="flex items-center gap-2">
+                          <Avatar className="h-8 w-8">
+                            <AvatarImage src={`/avatars/${subscriber.id}.png`} alt={subscriber.name} />
+                            <AvatarFallback className="bg-primary/10 text-primary">{subscriber.avatar}</AvatarFallback>
+                          </Avatar>
+                          <div>
+                            <p className="font-medium leading-none mb-0.5">{subscriber.name}</p>
+                            <p className="text-xs text-muted-foreground hidden sm:block">{subscriber.email}</p>
+                          </div>
+                        </div>
+                      </TableCell>
+                      <TableCell>
+                        <Badge variant="outline" className={`border-0 ${
+                          subscriber.plan === 'Premium' 
+                            ? 'bg-emerald-500/10 text-emerald-500' 
+                            : 'bg-blue-500/10 text-blue-500'
                         }`}>
-                          {subscriber.status === 'active' ? 'Активна' : 'Пробный период'}
-                        </span>
+                          {subscriber.plan}
+                        </Badge>
+                      </TableCell>
+                      <TableCell className="hidden sm:table-cell">{subscriber.date}</TableCell>
+                      <TableCell>
+                        <StatusBadge status={subscriber.status} />
                       </TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
               </Table>
             </CardContent>
-            <CardFooter className="flex justify-center border-t pt-4">
-              <Button variant="outline" size="sm">
-                Показать всех подписчиков
+            <CardFooter className="flex justify-end border-t pt-4">
+              <Button size="sm" className="btn-primary">
+                Управление подписками
               </Button>
             </CardFooter>
           </Card>

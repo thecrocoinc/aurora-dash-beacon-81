@@ -2,7 +2,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
-import { BarChart2, Bot, MessageSquare, Users } from "lucide-react";
+import { BarChart2, MessageSquare, Users, LifeBuoy } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
 // Quick links for admin functions
@@ -32,12 +32,12 @@ const quickLinks = [
     stats: "+12% к конверсии"
   },
   {
-    title: "Телеграм-бот",
-    description: "Настройки бота",
-    icon: Bot,
-    path: "/bot",
+    title: "Техподдержка",
+    description: "Помощь и обучение",
+    icon: LifeBuoy,
+    path: "/settings",
     color: "from-amber-500 to-amber-700",
-    stats: "Онлайн"
+    stats: "24/7"
   }
 ];
 
