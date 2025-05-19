@@ -1,5 +1,4 @@
 
-import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Home, Users, MessageSquare, Settings, Bot, BarChart2, Database, Bell } from "lucide-react";
 import { Sidebar, SidebarContent, SidebarFooter, SidebarGroupLabel, SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarSeparator, SidebarHeader } from "@/components/ui/sidebar";
@@ -7,39 +6,32 @@ import { Sidebar, SidebarContent, SidebarFooter, SidebarGroupLabel, SidebarMenu,
 export function CustomSidebar() {
   const location = useLocation();
 
-  // Dashboard items
-  const dashboardItems = [
-    {
-      name: "Панель управления",
-      icon: Home,
-      path: "/"
-    },
-    {
-      name: "Клиенты",
-      icon: Users,
-      path: "/profiles",
-      badge: "32"
-    },
-    {
-      name: "Диалоги",
-      icon: MessageSquare,
-      path: "/dialogs",
-      badge: "5"
-    },
-    {
-      name: "Аналитика",
-      icon: BarChart2,
-      path: "/biz-agent"
-    },
-    {
-      name: "Рассылки",
-      icon: Bell,
-      path: "/notifications",
-      badge: "New"
-    }
-  ];
+  // Streamlined admin dashboard main menu items
+  const menuItems = [{
+    name: "Панель управления",
+    icon: Home,
+    path: "/",
+    description: "Общая статистика и данные"
+  }, {
+    name: "Клиенты",
+    icon: Users,
+    path: "/profiles",
+    description: "Управление пользователями бота",
+    badge: "32"
+  }, {
+    name: "Диалоги",
+    icon: MessageSquare,
+    path: "/dialogs",
+    description: "Чаты между клиентами и ботом",
+    badge: "5"
+  }, {
+    name: "Аналитика",
+    icon: BarChart2,
+    path: "/biz-agent",
+    description: "Статистика и отчеты бизнеса"
+  }];
 
-  // Admin tools
+  // Focused admin tools
   const featureItems = [{
     name: "Телеграм-бот",
     icon: Bot,
@@ -51,6 +43,12 @@ export function CustomSidebar() {
     path: "/subscription",
     description: "API и внешние сервисы",
     badge: "Pro"
+  }, {
+    name: "Рассылки",
+    icon: Bell,
+    path: "/notifications",
+    description: "Уведомления клиентам",
+    badge: "New"
   }];
 
   const bottomItems = [{
@@ -75,11 +73,12 @@ export function CustomSidebar() {
       </SidebarHeader>
       
       <SidebarContent>
+        {/* Основное меню - без заголовка */}
         <div className="px-2 py-2.5 bg-muted/30 rounded-md mx-2 mb-2">
           <SidebarMenu>
-            {dashboardItems.map(item => (
+            {menuItems.map(item => (
               <SidebarMenuItem key={item.name}>
-                <SidebarMenuButton asChild isActive={isCurrentPath(item.path)}>
+                <SidebarMenuButton asChild isActive={isCurrentPath(item.path)} tooltip={item.description}>
                   <Link to={item.path} className="flex items-center gap-2">
                     <item.icon className="h-4 w-4 stroke-primary" />
                     <span className="text-white">{item.name}</span>

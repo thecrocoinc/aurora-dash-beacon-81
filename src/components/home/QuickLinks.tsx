@@ -2,7 +2,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
-import { AlertTriangle, FileText, Newspaper, Brain, Sparkles } from "lucide-react";
+import { AlertTriangle, FileText, Newspaper, Brain } from "lucide-react";
 
 // Quick links for admin functions
 const quickLinks = [
@@ -41,7 +41,7 @@ export function QuickLinks() {
     <div className="section my-12 md:my-20 grid gap-6 md:gap-8">
       <div className="flex items-center gap-3">
         <div className="p-2 rounded-lg bg-gradient-to-r from-emerald-600/80 to-emerald-700/80">
-          <Sparkles className="h-5 w-5 text-white" />
+          <Brain className="h-5 w-5 text-white" />
         </div>
         <h2 className="text-xl font-semibold">Быстрые действия</h2>
       </div>

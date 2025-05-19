@@ -1,41 +1,47 @@
 
 import React from "react";
+import { StatsGrid } from "@/components/StatsGrid";
 import { HeroBanner } from "@/components/home/HeroBanner";
 import { UserActivityChart } from "@/components/home/UserActivityChart";
-import { StatsGrid } from "@/components/StatsGrid";
+import { SubscriptionManagement } from "@/components/home/SubscriptionManagement";
 import { QuickLinks } from "@/components/home/QuickLinks";
-import { ClientDataMetrics } from "@/components/home/ClientDataMetrics";
-import { SubscribersTable } from "@/components/home/subscription/SubscribersTable";
-import { LatestClientMessages } from "@/components/home/LatestClientMessages";
+import { BarChart2, CreditCard } from "lucide-react";
 
-const Home = () => {
+export default function Home() {
   return (
-    <div className="space-y-8">
+    <section className="space-y-10">
+      {/* Hero Banner */}
       <HeroBanner />
       
-      {/* Two-column grid for activity chart and stats */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <UserActivityChart />
+      <hr className="border-t border-white/5 mt-12 mb-8" />
+      
+      {/* Бизнес-метрики */}
+      <div className="section">
+        <div className="flex items-center gap-3">
+          <div className="p-2 rounded-lg bg-gradient-to-r from-emerald-600/80 to-emerald-700/80">
+            <BarChart2 className="h-5 w-5 text-white" />
+          </div>
+          <h2 className="text-xl font-semibold">Ключевые показатели</h2>
+        </div>
         <StatsGrid />
       </div>
-
-      {/* Three-column grid with client data taking 2/3 of space */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="md:col-span-2">
-          <ClientDataMetrics />
+      
+      {/* График активности */}
+      <UserActivityChart />
+      
+      {/* Admin feature section */}
+      <div className="section">
+        <div className="flex items-center gap-3">
+          <div className="p-2 rounded-lg bg-gradient-to-r from-emerald-600/80 to-emerald-700/80">
+            <CreditCard className="h-5 w-5 text-white" />
+          </div>
+          <h2 className="text-xl font-semibold">Управление подписками</h2>
         </div>
-        <div>
-          <QuickLinks />
-        </div>
+        <SubscriptionManagement />
       </div>
-
-      {/* Two-column grid for messages and subscribers */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <LatestClientMessages />
-        <SubscribersTable />
-      </div>
-    </div>
+      
+      {/* Быстрая навигация по ключевым разделам */}
+      <QuickLinks />
+    </section>
   );
-};
-
-export default Home;
+}

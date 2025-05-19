@@ -1,7 +1,7 @@
 
 import React from "react";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { DollarSign, ArrowRight, CheckIcon } from "lucide-react";
+import { Bot, ArrowRight, CheckIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export function PremiumPlanCard() {
@@ -17,7 +17,7 @@ export function PremiumPlanCard() {
         <CardHeader className="pb-2">
           <div className="flex items-center gap-3">
             <div className="bg-emerald-500/20 p-2.5 rounded-full">
-              <DollarSign className="h-5 w-5 text-emerald-400" />
+              <Bot className="h-5 w-5 text-emerald-400" />
             </div>
             <CardTitle>Premium</CardTitle>
           </div>
