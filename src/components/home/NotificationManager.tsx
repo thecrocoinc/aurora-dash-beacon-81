@@ -62,7 +62,7 @@ export function NotificationManager() {
           </TabsList>
           
           <TabsContent value="scheduled">
-            <Card className="backdrop-blur bg-neutral-900">
+            <Card className="backdrop-blur bg-zinc-900">
               <CardHeader className="flex flex-row items-center justify-between">
                 <CardTitle>Запланированные рассылки</CardTitle>
                 <Select defaultValue="all">

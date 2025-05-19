@@ -62,7 +62,7 @@ export function ClientDataMetrics() {
       
       <div className="mt-4 grid grid-cols-1 md:grid-cols-3 gap-6">
         <div className="md:col-span-2">
-          <Card className="bg-neutral-900">
+          <Card className="bg-zinc-900">
             <CardHeader>
               <CardTitle className="text-lg flex items-center gap-2">
                 <AlertTriangle className="h-4 w-4 text-amber-400" />
