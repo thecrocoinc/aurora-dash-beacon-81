@@ -1,72 +1,50 @@
-
 import React from "react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Bell, Calendar, Users, Filter, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { 
-  Select, 
-  SelectContent, 
-  SelectItem, 
-  SelectTrigger, 
-  SelectValue 
-} from "@/components/ui/select";
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger
-} from "@/components/ui/tabs";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 // Имитация данных о запланированных рассылках
-const scheduledNotifications = [
-  {
-    id: "1",
-    title: "Напоминание о дневном отчете",
-    scheduled: "Ежедневно, 20:00",
-    recipients: "Все клиенты",
-    status: "active"
-  },
-  {
-    id: "2",
-    title: "Еженедельный обзор прогресса",
-    scheduled: "Воскресенье, 18:00",
-    recipients: "Все клиенты",
-    status: "active"
-  },
-  {
-    id: "3",
-    title: "Новые рецепты недели",
-    scheduled: "Завтра, 9:00",
-    recipients: "32 клиента",
-    status: "scheduled"
-  }
-];
+const scheduledNotifications = [{
+  id: "1",
+  title: "Напоминание о дневном отчете",
+  scheduled: "Ежедневно, 20:00",
+  recipients: "Все клиенты",
+  status: "active"
+}, {
+  id: "2",
+  title: "Еженедельный обзор прогресса",
+  scheduled: "Воскресенье, 18:00",
+  recipients: "Все клиенты",
+  status: "active"
+}, {
+  id: "3",
+  title: "Новые рецепты недели",
+  scheduled: "Завтра, 9:00",
+  recipients: "32 клиента",
+  status: "scheduled"
+}];
 
 // Шаблоны сообщений для быстрого создания рассылок
-const messageTemplates = [
-  {
-    id: "1",
-    title: "Напоминание о фото приема пищи",
-    content: "Добрый день! Не забудьте сделать фото вашего сегодняшнего приема пищи.",
-    type: "reminder"
-  },
-  {
-    id: "2",
-    title: "Еженедельная мотивация",
-    content: "Прошла еще одна неделя вашего пути к здоровому образу жизни! Продолжайте в том же духе!",
-    type: "motivation"
-  },
-  {
-    id: "3",
-    title: "Анонс новых функций",
-    content: "Мы добавили новые возможности в наше приложение! Проверьте обновления.",
-    type: "announcement"
-  }
-];
-
+const messageTemplates = [{
+  id: "1",
+  title: "Напоминание о фото приема пищи",
+  content: "Добрый день! Не забудьте сделать фото вашего сегодняшнего приема пищи.",
+  type: "reminder"
+}, {
+  id: "2",
+  title: "Еженедельная мотивация",
+  content: "Прошла еще одна неделя вашего пути к здоровому образу жизни! Продолжайте в том же духе!",
+  type: "motivation"
+}, {
+  id: "3",
+  title: "Анонс новых функций",
+  content: "Мы добавили новые возможности в наше приложение! Проверьте обновления.",
+  type: "announcement"
+}];
 export function NotificationManager() {
-  return (
-    <div className="space-y-4">
+  return <div className="space-y-4">
       <div className="flex flex-wrap items-center gap-3">
         <div className="p-2 rounded-lg bg-gradient-to-r from-amber-500/80 to-amber-700/80">
           <Bell className="h-5 w-5 text-white" />
@@ -84,7 +62,7 @@ export function NotificationManager() {
           </TabsList>
           
           <TabsContent value="scheduled">
-            <Card className="bg-card/70 backdrop-blur">
+            <Card className="backdrop-blur bg-neutral-900">
               <CardHeader className="flex flex-row items-center justify-between">
                 <CardTitle>Запланированные рассылки</CardTitle>
                 <Select defaultValue="all">
@@ -101,14 +79,9 @@ export function NotificationManager() {
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
-                  {scheduledNotifications.map((notification) => (
-                    <div key={notification.id} className="flex items-center justify-between p-3 rounded-md bg-background/40 border border-muted">
+                  {scheduledNotifications.map(notification => <div key={notification.id} className="flex items-center justify-between p-3 rounded-md bg-background/40 border border-muted">
                       <div className="flex items-center gap-3">
-                        {notification.status === "active" ? (
-                          <Bell className="h-5 w-5 text-blue-400" />
-                        ) : (
-                          <Calendar className="h-5 w-5 text-amber-400" />
-                        )}
+                        {notification.status === "active" ? <Bell className="h-5 w-5 text-blue-400" /> : <Calendar className="h-5 w-5 text-amber-400" />}
                         <div>
                           <p className="font-medium">{notification.title}</p>
                           <div className="flex items-center text-xs text-muted-foreground">
@@ -128,8 +101,7 @@ export function NotificationManager() {
                           <span className="sr-only">Удалить</span>
                         </Button>
                       </div>
-                    </div>
-                  ))}
+                    </div>)}
                 </div>
               </CardContent>
             </Card>
@@ -142,17 +114,11 @@ export function NotificationManager() {
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
-                  {messageTemplates.map((template) => (
-                    <div key={template.id} className="p-4 rounded-md border border-muted bg-background/40">
+                  {messageTemplates.map(template => <div key={template.id} className="p-4 rounded-md border border-muted bg-background/40">
                       <div className="flex justify-between items-start">
                         <h4 className="font-medium">{template.title}</h4>
-                        <span className={`text-xs px-2 py-1 rounded-full ${
-                          template.type === "reminder" ? "bg-blue-100 text-blue-800" :
-                          template.type === "motivation" ? "bg-emerald-100 text-emerald-800" :
-                          "bg-amber-100 text-amber-800"
-                        }`}>
-                          {template.type === "reminder" ? "Напоминание" :
-                           template.type === "motivation" ? "Мотивация" : "Анонс"}
+                        <span className={`text-xs px-2 py-1 rounded-full ${template.type === "reminder" ? "bg-blue-100 text-blue-800" : template.type === "motivation" ? "bg-emerald-100 text-emerald-800" : "bg-amber-100 text-amber-800"}`}>
+                          {template.type === "reminder" ? "Напоминание" : template.type === "motivation" ? "Мотивация" : "Анонс"}
                         </span>
                       </div>
                       <p className="text-sm text-muted-foreground mt-2">{template.content}</p>
@@ -160,8 +126,7 @@ export function NotificationManager() {
                         <Button size="sm" variant="outline">Использовать</Button>
                         <Button size="sm" variant="ghost">Редактировать</Button>
                       </div>
-                    </div>
-                  ))}
+                    </div>)}
                   
                   <Button variant="outline" className="w-full">
                     <Bell className="mr-2 h-4 w-4" />
@@ -181,11 +146,7 @@ export function NotificationManager() {
                 <div className="space-y-4">
                   <div>
                     <label className="text-sm font-medium mb-1 block">Название рассылки</label>
-                    <input 
-                      type="text" 
-                      className="w-full p-2 border rounded-md bg-background" 
-                      placeholder="Например: Важное обновление"
-                    />
+                    <input type="text" className="w-full p-2 border rounded-md bg-background" placeholder="Например: Важное обновление" />
                   </div>
                   
                   <div>
@@ -205,26 +166,17 @@ export function NotificationManager() {
                   
                   <div>
                     <label className="text-sm font-medium mb-1 block">Содержание сообщения</label>
-                    <textarea 
-                      className="w-full p-2 border rounded-md bg-background h-32" 
-                      placeholder="Текст сообщения для рассылки..."
-                    />
+                    <textarea className="w-full p-2 border rounded-md bg-background h-32" placeholder="Текст сообщения для рассылки..." />
                   </div>
                   
                   <div className="flex justify-between gap-4">
                     <div className="flex-1">
                       <label className="text-sm font-medium mb-1 block">Дата</label>
-                      <input 
-                        type="date" 
-                        className="w-full p-2 border rounded-md bg-background" 
-                      />
+                      <input type="date" className="w-full p-2 border rounded-md bg-background" />
                     </div>
                     <div className="flex-1">
                       <label className="text-sm font-medium mb-1 block">Время</label>
-                      <input 
-                        type="time" 
-                        className="w-full p-2 border rounded-md bg-background" 
-                      />
+                      <input type="time" className="w-full p-2 border rounded-md bg-background" />
                     </div>
                   </div>
                   
@@ -238,6 +190,5 @@ export function NotificationManager() {
           </TabsContent>
         </Tabs>
       </div>
-    </div>
-  );
+    </div>;
 }
