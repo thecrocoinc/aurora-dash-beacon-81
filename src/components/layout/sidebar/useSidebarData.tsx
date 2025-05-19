@@ -17,7 +17,7 @@ export function useSidebarData() {
 
   // Main menu items
   const menuItems: SidebarItem[] = [{
-    name: "Панель управления",
+    name: "Главная",
     icon: Home,
     path: "/",
     description: "Общая статистика и данные",

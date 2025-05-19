@@ -30,7 +30,7 @@ export function SidebarItemsList({ items, isCurrentPath }: SidebarItemsListProps
                   className="flex items-center gap-2"
                 >
                   <IconComponent className="h-4 w-4 stroke-primary" />
-                  <span className="text-white">
+                  <span className="text-white text-[15px]">
                     {item.name}
                   </span>
                   {displayBadge && (

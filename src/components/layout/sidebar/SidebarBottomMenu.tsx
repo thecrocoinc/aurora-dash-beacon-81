@@ -24,7 +24,7 @@ export function SidebarBottomMenu({ items, isCurrentPath }: SidebarBottomMenuPro
             >
               <Link 
                 to={item.path} 
-                className="flex items-center gap-2 bg-gradient-to-r from-emerald-950 to-emerald-900 rounded-xl py-2.5 px-4"
+                className="flex items-center gap-2 bg-gradient-to-r from-emerald-950 to-emerald-900 rounded-[12px] py-2.5 px-4"
               >
                 <IconComponent className="h-6 w-6 stroke-white" />
                 <span className="text-white text-base font-bold">
