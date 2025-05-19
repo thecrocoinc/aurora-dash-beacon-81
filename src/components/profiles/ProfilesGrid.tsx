@@ -29,7 +29,7 @@ interface ProfilesGridProps {
 
 const ProfilesGrid = ({ profiles }: ProfilesGridProps) => {
   if (!profiles || profiles.length === 0) {
-    // Generate 6 placeholder profiles for demonstration
+    // Generate placeholder profiles for demonstration
     const placeholderProfiles = Array.from({ length: 9 }, (_, i) => ({
       id: `placeholder-${i}`,
       name: ["Анна Иванова", "Максим Петров", "Елена Сидорова", "Алексей Смирнов", 
@@ -47,7 +47,7 @@ const ProfilesGrid = ({ profiles }: ProfilesGridProps) => {
       created_at: new Date().toISOString(),
       last_activity: new Date().toISOString(),
       streak_days: Math.floor(Math.random() * 30),
-      subscription_status: i % 2 === 0 ? 'active' : 'basic'
+      subscription_status: i % 2 === 0 ? 'active' : 'trial' as 'active' | 'trial'
     }));
 
     return (

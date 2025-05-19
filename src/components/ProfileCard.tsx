@@ -3,7 +3,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Progress } from "@/components/ui/progress";
-import { Target, Utensils, Weight } from "lucide-react";
+import { Target, Utensils, Weight, TrendingDown, TrendingUp, Dumbbell } from "lucide-react";
 
 interface ProfileWithDetails {
   id: string;
@@ -41,6 +41,8 @@ const ProfileCard = ({ profile }: ProfileCardProps) => {
     switch(profile.subscription_status) {
       case 'active':
         return <Badge className="bg-purple-600 hover:bg-purple-700 text-white">Premium</Badge>;
+      case 'trial':
+      case 'expired':
       default:
         return <Badge className="bg-blue-600 hover:bg-blue-700 text-white">Basic</Badge>;
     }
@@ -50,9 +52,9 @@ const ProfileCard = ({ profile }: ProfileCardProps) => {
   const getGoalIcon = () => {
     switch(profile.goal_type) {
       case 'weight_loss':
-        return <Weight className="h-3.5 w-3.5 text-muted-foreground" />;
+        return <TrendingDown className="h-3.5 w-3.5 text-muted-foreground" />;
       case 'weight_gain':
-        return <Weight className="h-3.5 w-3.5 text-muted-foreground" />;
+        return <TrendingUp className="h-3.5 w-3.5 text-muted-foreground" />;
       case 'maintenance':
         return <Target className="h-3.5 w-3.5 text-muted-foreground" />;
       default:
