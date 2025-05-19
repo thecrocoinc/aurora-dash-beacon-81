@@ -26,7 +26,7 @@ export function UserActivityChart() {
   const currentData = activityData[period];
   
   return (
-    <Card className="overflow-hidden">
+    <Card className="overflow-hidden bg-card dark:bg-card/5 backdrop-blur-sm border dark:border-amber-500/10">
       <CardHeader className="flex flex-row items-center justify-between">
         <CardTitle className="text-xl">Активность пользователей</CardTitle>
         

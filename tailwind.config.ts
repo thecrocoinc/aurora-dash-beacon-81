@@ -95,16 +95,21 @@ export default {
 				'float': {
 					'0%, 100%': { transform: 'translateY(0)' },
 					'50%': { transform: 'translateY(-5px)' }
+				},
+				'glow': {
+					'0%, 100%': { boxShadow: '0 0 10px rgba(255, 107, 107, 0.2)' },
+					'50%': { boxShadow: '0 0 20px rgba(255, 107, 107, 0.4)' }
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
 				'accordion-up': 'accordion-up 0.2s ease-out',
-				'float': 'float 3s ease-in-out infinite'
+				'float': 'float 3s ease-in-out infinite',
+				'glow': 'glow 3s ease-in-out infinite'
 			},
 			boxShadow: {
 				'soft': '0 4px 20px -2px rgba(0, 0, 0, 0.1)',
-				'glow': '0 0 25px rgba(99, 102, 241, 0.15)'
+				'glow': '0 0 25px rgba(255, 107, 107, 0.15)'
 			}
 		}
 	},
