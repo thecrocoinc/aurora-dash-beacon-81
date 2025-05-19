@@ -5,7 +5,6 @@ import { UserActivityChart } from "@/components/home/UserActivityChart";
 import { StatsGrid } from "@/components/StatsGrid";
 import { QuickLinks } from "@/components/home/QuickLinks";
 import { ClientDataMetrics } from "@/components/home/ClientDataMetrics";
-import { NotificationManager } from "@/components/home/NotificationManager";
 import { SubscribersTable } from "@/components/home/subscription/SubscribersTable";
 import { LatestClientMessages } from "@/components/home/LatestClientMessages";
 
@@ -32,8 +31,6 @@ const Home = () => {
         <LatestClientMessages />
         <SubscribersTable />
       </div>
-      
-      <NotificationManager />
     </div>
   );
 };
