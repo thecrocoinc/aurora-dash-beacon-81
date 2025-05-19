@@ -8,11 +8,11 @@ export const ChartLegend: React.FC = () => {
   return (
     <div className="flex items-center text-sm gap-4 mb-4">
       <span className="flex items-center">
-        <span className="h-3 w-3 rounded-full bg-gray-700 mr-2"></span>
+        <span className="h-3 w-3 rounded-full bg-[var(--color-surface-muted)] mr-2"></span>
         Всего пользователей
       </span>
       <span className="flex items-center">
-        <span className="h-3 w-3 rounded-full bg-gold mr-2"></span>
+        <span className="h-3 w-3 rounded-full bg-[var(--color-primary-end)] mr-2"></span>
         Активные пользователи
       </span>
     </div>
@@ -25,18 +25,18 @@ export const ActivitySummary: React.FC<{ period: PeriodType }> = ({ period }) =>
   
   return (
     <div className="mt-6 grid grid-cols-2 gap-6">
-      <div className="bg-card/30 dark:bg-gray-800/20 p-4 rounded-lg backdrop-blur-sm border border-gray-800/20 shadow-sm">
-        <p className="text-sm text-muted-foreground mb-1">Всего пользователей</p>
+      <div className="bg-[var(--color-surface)] p-4 rounded-[var(--radius)] shadow border border-[var(--color-surface-muted)]">
+        <p className="text-sm text-[var(--color-text-muted)] mb-1">Всего пользователей</p>
         <div className="flex items-baseline">
           <p className="text-2xl font-medium">{summaryData.users}</p>
-          <span className="ml-2 text-sm font-medium text-gray-400">{summaryData.growth}</span>
+          <span className="ml-2 text-sm font-medium text-[var(--color-text-muted)]">{summaryData.growth}</span>
         </div>
       </div>
-      <div className="bg-card/30 dark:bg-gold-muted p-4 rounded-lg backdrop-blur-sm border border-gold/20 shadow-glow">
-        <p className="text-sm text-muted-foreground mb-1">Активных пользователей</p>
+      <div className="bg-[var(--color-surface)] p-4 rounded-[var(--radius)] shadow border border-[var(--color-primary-end)]/20">
+        <p className="text-sm text-[var(--color-text-muted)] mb-1">Активных пользователей</p>
         <div className="flex items-baseline">
           <p className="text-2xl font-medium">{summaryData.active}</p>
-          <span className="ml-2 text-sm font-medium text-gold">{summaryData.activeRate}</span>
+          <span className="ml-2 text-sm font-medium text-[var(--color-primary-end)]">{summaryData.activeRate}</span>
         </div>
       </div>
     </div>

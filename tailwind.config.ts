@@ -63,12 +63,13 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				},
-				// Заменяем теплые акценты на золотые
+				// Updated gold tokens based on design tokens
 				gold: {
 					DEFAULT: 'hsl(var(--gold))',
 					foreground: 'hsl(var(--gold-foreground))',
 					muted: 'hsl(var(--gold-muted))',
 					accent: 'hsl(var(--gold-accent))',
+					dim: '#C9A86C', // Using color_gold_dim directly
 				}
 			},
 			width: {
@@ -116,7 +117,8 @@ export default {
 			},
 			boxShadow: {
 				'soft': '0 4px 20px -2px rgba(0, 0, 0, 0.2)',
-				'glow': '0 0 25px rgba(212, 175, 55, 0.15)'
+				'glow': '0 0 25px rgba(212, 175, 55, 0.15)',
+				'default': 'var(--shadow)',
 			}
 		}
 	},
