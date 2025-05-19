@@ -5,7 +5,6 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Watch } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
-import MacroChips from "./MacroChips";
 
 type ProfileCardProps = {
   profile: {
@@ -16,9 +15,6 @@ type ProfileCardProps = {
     currentKcal?: number;
     dailyGoal?: number;
     watch_connected?: boolean;
-    prot?: number;
-    fat?: number;
-    carb?: number;
     subscription_status?: 'active' | 'expired' | 'trial';
   };
 };
@@ -93,19 +89,11 @@ const ProfileCard = ({ profile }: ProfileCardProps) => {
               <Progress value={kcalPercentage} className="h-1.5" />
             </div>
             
-            <div className="mt-3 pt-2 border-t border-zinc-700/10">
-              <div className="flex justify-between text-xs text-muted-foreground mb-2">
-                <span>Нутриенты</span>
-                {profile.currentKcal && profile.dailyGoal && (
-                  <span className="font-mono">{profile.currentKcal} / {profile.dailyGoal} ккал</span>
-                )}
+            {profile.currentKcal && profile.dailyGoal && (
+              <div className="mt-2 flex justify-end text-xs text-muted-foreground">
+                <span className="font-mono">{profile.currentKcal} / {profile.dailyGoal} ккал</span>
               </div>
-              <MacroChips 
-                protein={profile.prot} 
-                fat={profile.fat} 
-                carbs={profile.carb}
-              />
-            </div>
+            )}
           </div>
         </div>
       </CardContent>

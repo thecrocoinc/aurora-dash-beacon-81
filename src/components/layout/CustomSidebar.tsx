@@ -78,10 +78,34 @@ export function CustomSidebar() {
       </SidebarHeader>
       
       <SidebarContent>
-        {/* Основное меню - все пункты в одном блоке */}
+        {/* Главный пункт - Панель управления */}
+        <div className="px-2 py-3 mb-4">
+          <SidebarMenu>
+            <SidebarMenuItem>
+              <SidebarMenuButton 
+                asChild 
+                isActive={isCurrentPath(menuItems[0].path)} 
+                tooltip={menuItems[0].description}
+                className="h-10" // Повышенная высота для главных пунктов
+              >
+                <Link 
+                  to={menuItems[0].path} 
+                  className="flex items-center gap-2 emerald-gradient rounded-lg py-2 px-3"
+                >
+                  <menuItems[0].icon className="h-5 w-5 stroke-primary" />
+                  <span className="text-primary font-medium">
+                    {menuItems[0].name}
+                  </span>
+                </Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+          </SidebarMenu>
+        </div>
+        
+        {/* Основное меню - все прочие пункты в одном блоке */}
         <div className="px-2 py-2.5 bg-muted/30 rounded-md mx-2 mb-2">
           <SidebarMenu>
-            {menuItems.map(item => (
+            {menuItems.slice(1).map(item => (
               <SidebarMenuItem key={item.name}>
                 <SidebarMenuButton 
                   asChild 
@@ -90,12 +114,10 @@ export function CustomSidebar() {
                 >
                   <Link 
                     to={item.path} 
-                    className={`flex items-center gap-2 ${
-                      item.isPrimary ? 'emerald-gradient text-primary font-medium' : ''
-                    }`}
+                    className="flex items-center gap-2"
                   >
-                    <item.icon className={`h-4 w-4 ${item.isPrimary ? 'stroke-primary' : 'stroke-primary'}`} />
-                    <span className={item.isPrimary ? 'text-primary' : 'text-white'}>
+                    <item.icon className="h-4 w-4 stroke-primary" />
+                    <span>
                       {item.name}
                     </span>
                     {item.badge && (
@@ -120,15 +142,14 @@ export function CustomSidebar() {
                 asChild 
                 isActive={isCurrentPath(item.path)} 
                 tooltip={item.description}
+                className="h-10" // Повышенная высота для главных пунктов
               >
                 <Link 
                   to={item.path} 
-                  className={`flex items-center gap-2 ${
-                    item.isPrimary ? 'emerald-gradient text-primary font-medium' : ''
-                  }`}
+                  className="flex items-center gap-2 emerald-gradient rounded-lg py-2 px-3"
                 >
-                  <item.icon className={`h-4 w-4 ${item.isPrimary ? 'stroke-primary' : 'stroke-primary'}`} />
-                  <span className={item.isPrimary ? 'text-primary' : 'text-white'}>
+                  <item.icon className="h-5 w-5 stroke-primary" />
+                  <span className="text-primary font-medium">
                     {item.name}
                   </span>
                 </Link>

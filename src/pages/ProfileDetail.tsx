@@ -115,10 +115,9 @@ const ProfileDetail = () => {
     .join("") || "";
     
   // Determine plan type based on user ID (since subscription_status doesn't exist in the table)
-  // We'll simulate plan type based on the user ID to maintain the UI functionality
   const getPlanBadge = () => {
     // Using a hash of the ID to deterministically assign a plan type
-    const isPremium = profile.id.charCodeAt(0) % 2 === 0; // Simple hash check
+    const isPremium = profile.id.charCodeAt(0) % 2 === 0; 
     
     if (isPremium) {
       return <Badge className="bg-purple-600/90 text-white">Premium</Badge>;
@@ -136,9 +135,13 @@ const ProfileDetail = () => {
     <div className="space-y-6">
       <div className="flex items-start justify-between">
         <div className="flex items-center gap-4">
-          <Avatar className="h-20 w-20">
-            <AvatarImage src={profile?.avatar_url ? `${profile.avatar_url}?w=160&h=160&fit=crop&crop=faces` : undefined} alt={profile?.name} />
-            <AvatarFallback className="text-2xl">{initials}</AvatarFallback>
+          <Avatar className="h-20 w-20 border-2 border-white/10">
+            <AvatarImage 
+              src={profile?.avatar_url} 
+              alt={profile?.name} 
+              className="object-cover"
+            />
+            <AvatarFallback className="text-2xl bg-purple-800/30 text-purple-200">{initials}</AvatarFallback>
           </Avatar>
           <div>
             <div className="flex items-center gap-2">
@@ -164,19 +167,29 @@ const ProfileDetail = () => {
               </CardHeader>
               <CardContent className="flex flex-col items-center">
                 <KcalRing value={summary?.kcal || 0} target={dailyGoal} />
-                <div className="flex gap-4 mt-6">
+                <div className="flex gap-8 mt-6">
                   <div className="flex flex-col items-center">
                     <div className="text-sm text-muted-foreground mb-1">Белки</div>
                     <div className="text-xl font-semibold">{summary?.prot || 0} г</div>
+                    <div className="text-xs text-muted-foreground mt-1">25% от нормы</div>
                   </div>
                   <div className="flex flex-col items-center">
                     <div className="text-sm text-muted-foreground mb-1">Жиры</div>
                     <div className="text-xl font-semibold">{summary?.fat || 0} г</div>
+                    <div className="text-xs text-muted-foreground mt-1">30% от нормы</div>
                   </div>
                   <div className="flex flex-col items-center">
                     <div className="text-sm text-muted-foreground mb-1">Углеводы</div>
                     <div className="text-xl font-semibold">{summary?.carb || 0} г</div>
+                    <div className="text-xs text-muted-foreground mt-1">45% от нормы</div>
                   </div>
+                </div>
+                <div className="w-full mt-6">
+                  <MacroChips 
+                    protein={summary?.prot} 
+                    fat={summary?.fat} 
+                    carbs={summary?.carb} 
+                  />
                 </div>
               </CardContent>
             </Card>
