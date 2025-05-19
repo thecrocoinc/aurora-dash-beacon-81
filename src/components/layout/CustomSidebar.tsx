@@ -1,74 +1,15 @@
 
 import { Link, useLocation } from "react-router-dom";
 import { Home, Users, MessageSquare, BarChart2, Mail, Bug, Star, Settings } from "lucide-react";
-import { Sidebar, SidebarContent, SidebarFooter, SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarSeparator, SidebarHeader } from "@/components/ui/sidebar";
+import { Sidebar, SidebarContent, SidebarFooter, SidebarSeparator, SidebarHeader } from "@/components/ui/sidebar";
+import { SidebarMainMenu } from "./sidebar/SidebarMainMenu";
+import { SidebarItemsList } from "./sidebar/SidebarItemsList";
+import { SidebarBottomMenu } from "./sidebar/SidebarBottomMenu";
+import { useSidebarData } from "./sidebar/useSidebarData";
 
 export function CustomSidebar() {
   const location = useLocation();
-
-  // Основное меню с обновленным стилем
-  const menuItems = [{
-    name: "Панель управления",
-    icon: Home,
-    path: "/",
-    description: "Общая статистика и данные",
-    isPrimary: true
-  }, {
-    name: "Клиенты",
-    icon: Users,
-    path: "/profiles",
-    description: "Управление пользователями бота",
-    badge: "32",
-    isPrimary: false
-  }, {
-    name: "Диалоги",
-    icon: MessageSquare,
-    path: "/dialogs",
-    description: "Чаты между клиентами и ботом",
-    badge: "5",
-    isPrimary: false
-  }, {
-    name: "Аналитика",
-    icon: BarChart2,
-    path: "/biz-agent",
-    description: "Статистика и отчеты бизнеса",
-    isPrimary: false
-  }, {
-    name: "Рассылки",
-    icon: Mail,
-    path: "/notifications",
-    description: "Управление рассылками",
-    badge: "New",
-    isPrimary: false
-  }, {
-    name: "Баги",
-    icon: Bug,
-    path: "/bugs",
-    description: "Отчеты об ошибках",
-    isPrimary: false
-  }, {
-    name: "Отзывы",
-    icon: Star,
-    path: "/reviews",
-    description: "Отзывы пользователей",
-    isPrimary: false
-  }];
-
-  // Настройки отдельно внизу
-  const bottomItems = [{
-    name: "Настройки",
-    icon: Settings,
-    path: "/settings",
-    description: "Параметры системы",
-    isPrimary: true
-  }];
-
-  const isCurrentPath = (path: string) => {
-    return location.pathname === path;
-  };
-
-  // Fix: Extract the icon component from menuItems for proper rendering
-  const HomeIcon = menuItems[0].icon;
+  const { menuItems, bottomItems, isCurrentPath } = useSidebarData();
 
   return (
     <Sidebar className="w-56 border-r border-white/10 bg-sidebar backdrop-blur">
@@ -82,92 +23,24 @@ export function CustomSidebar() {
       
       <SidebarContent>
         {/* Главный пункт - Панель управления */}
-        <div className="px-2 py-3 mb-4">
-          <SidebarMenu>
-            <SidebarMenuItem>
-              <SidebarMenuButton 
-                asChild 
-                isActive={isCurrentPath(menuItems[0].path)} 
-                tooltip={menuItems[0].description}
-                className="h-10" // Повышенная высота для главных пунктов
-              >
-                <Link 
-                  to={menuItems[0].path} 
-                  className="flex items-center gap-2 emerald-gradient rounded-lg py-2 px-3"
-                >
-                  <HomeIcon className="h-5 w-5 stroke-primary" />
-                  <span className="text-primary font-medium">
-                    {menuItems[0].name}
-                  </span>
-                </Link>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-          </SidebarMenu>
-        </div>
+        <SidebarMainMenu 
+          item={menuItems[0]} 
+          isActive={isCurrentPath(menuItems[0].path)}
+        />
         
         {/* Основное меню - все прочие пункты в одном блоке */}
-        <div className="px-2 py-2.5 bg-muted/30 rounded-md mx-2 mb-2">
-          <SidebarMenu>
-            {menuItems.slice(1).map(item => {
-              // Fix: Create a variable for the icon component for each item
-              const IconComponent = item.icon;
-              return (
-                <SidebarMenuItem key={item.name}>
-                  <SidebarMenuButton 
-                    asChild 
-                    isActive={isCurrentPath(item.path)} 
-                    tooltip={item.description}
-                  >
-                    <Link 
-                      to={item.path} 
-                      className="flex items-center gap-2"
-                    >
-                      <IconComponent className="h-4 w-4 stroke-primary" />
-                      <span>
-                        {item.name}
-                      </span>
-                      {item.badge && (
-                        <span className="ml-auto text-[10px] bg-primary/20 text-primary rounded-full px-2 py-0.5">
-                          {item.badge}
-                        </span>
-                      )}
-                    </Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              );
-            })}
-          </SidebarMenu>
-        </div>
+        <SidebarItemsList 
+          items={menuItems.slice(1)} 
+          isCurrentPath={isCurrentPath} 
+        />
       </SidebarContent>
       
       <SidebarFooter>
         <SidebarSeparator className="my-2" />
-        <SidebarMenu>
-          {bottomItems.map(item => {
-            // Fix: Create a variable for the icon component for each bottom item
-            const IconComponent = item.icon;
-            return (
-              <SidebarMenuItem key={item.name}>
-                <SidebarMenuButton 
-                  asChild 
-                  isActive={isCurrentPath(item.path)} 
-                  tooltip={item.description}
-                  className="h-10" // Повышенная высота для главных пунктов
-                >
-                  <Link 
-                    to={item.path} 
-                    className="flex items-center gap-2 emerald-gradient rounded-lg py-2 px-3"
-                  >
-                    <IconComponent className="h-5 w-5 stroke-primary" />
-                    <span className="text-primary font-medium">
-                      {item.name}
-                    </span>
-                  </Link>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-            );
-          })}
-        </SidebarMenu>
+        <SidebarBottomMenu 
+          items={bottomItems} 
+          isCurrentPath={isCurrentPath} 
+        />
       </SidebarFooter>
     </Sidebar>
   );
