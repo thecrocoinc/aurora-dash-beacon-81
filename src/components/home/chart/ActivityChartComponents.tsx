@@ -25,14 +25,14 @@ export const ActivitySummary: React.FC<{ period: PeriodType }> = ({ period }) =>
   
   return (
     <div className="mt-6 grid grid-cols-2 gap-6">
-      <div className="bg-slate-50 dark:bg-slate-800 p-4 rounded-lg">
+      <div className="bg-card dark:bg-slate-800/70 p-4 rounded-lg backdrop-blur-sm border border-white/5">
         <p className="text-sm text-muted-foreground mb-1">Всего пользователей</p>
         <div className="flex items-baseline">
           <p className="text-2xl font-medium">{summaryData.users}</p>
           <span className="ml-2 text-sm font-medium text-green-500">{summaryData.growth}</span>
         </div>
       </div>
-      <div className="bg-slate-50 dark:bg-slate-800 p-4 rounded-lg">
+      <div className="bg-card dark:bg-slate-800/70 p-4 rounded-lg backdrop-blur-sm border border-white/5">
         <p className="text-sm text-muted-foreground mb-1">Активных пользователей</p>
         <div className="flex items-baseline">
           <p className="text-2xl font-medium">{summaryData.active}</p>
