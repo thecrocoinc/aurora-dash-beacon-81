@@ -12,7 +12,7 @@ export const ChartLegend: React.FC = () => {
         Всего пользователей
       </span>
       <span className="flex items-center">
-        <span className="h-3 w-3 rounded-full bg-emerald-500 mr-2"></span>
+        <span className="h-3 w-3 rounded-full bg-warm mr-2"></span>
         Активные пользователи
       </span>
     </div>
@@ -32,11 +32,11 @@ export const ActivitySummary: React.FC<{ period: PeriodType }> = ({ period }) =>
           <span className="ml-2 text-sm font-medium text-blue-500">{summaryData.growth}</span>
         </div>
       </div>
-      <div className="bg-card dark:bg-emerald-800/20 p-4 rounded-lg backdrop-blur-sm border border-emerald-500/10">
+      <div className="bg-card dark:bg-warm-muted p-4 rounded-lg backdrop-blur-sm border border-warm/10">
         <p className="text-sm text-muted-foreground mb-1">Активных пользователей</p>
         <div className="flex items-baseline">
           <p className="text-2xl font-medium">{summaryData.active}</p>
-          <span className="ml-2 text-sm font-medium text-emerald-500">{summaryData.activeRate}</span>
+          <span className="ml-2 text-sm font-medium text-warm">{summaryData.activeRate}</span>
         </div>
       </div>
     </div>
