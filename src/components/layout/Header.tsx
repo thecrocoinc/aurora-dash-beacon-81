@@ -1,21 +1,13 @@
-
-import * as React from "react"
-import { useLocation } from "react-router-dom"
-import { useIsMobile } from "@/hooks/use-mobile"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Button } from "@/components/ui/button"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { Bell, MessageSquare, BarChart2 } from "lucide-react"
-
+import * as React from "react";
+import { useLocation } from "react-router-dom";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { Bell, MessageSquare, BarChart2 } from "lucide-react";
 export function Header() {
-  const location = useLocation()
-  const isMobile = useIsMobile()
+  const location = useLocation();
+  const isMobile = useIsMobile();
 
   // Mapping paths to display names
   const pathNames = {
@@ -26,33 +18,31 @@ export function Header() {
     "/biz-agent": "AI Ассистент",
     "/bot": "Телеграм-бот",
     "/subscription": "Подписки",
-    "/notifications": "Рассылки",
-  }
+    "/notifications": "Рассылки"
+  };
 
   // Get current page title
-  const currentPath = location.pathname
-  const pageTitle = pathNames[currentPath as keyof typeof pathNames] || "AI-Nutrition Admin"
-
-  return (
-    <header className="sticky top-0 z-10 border-b border-gold/10 bg-background/80 backdrop-blur">
+  const currentPath = location.pathname;
+  const pageTitle = pathNames[currentPath as keyof typeof pathNames] || "AI-Nutrition Admin";
+  return <header className="sticky top-0 z-10 border-b border-gold/10 bg-background/80 backdrop-blur">
       <div className="container flex h-16 items-center justify-between py-4">
         <div className="flex flex-1 items-center">
-          <h1 className="ml-2 text-sm font-bold md:text-base premium-text">
+          <h1 className="ml-2 text-sm font-bold md:text-base premium-text text-emerald-800">
             {pageTitle}
           </h1>
         </div>
         <div className="flex items-center gap-4">
           {/* App actions */}
           <div className="hidden md:flex items-center gap-2">
-            <Button variant="ghost" size="icon" className="relative text-muted-foreground hover:text-foreground">
+            <Button variant="ghost" size="icon" className="relative text-emerald-700">
               <BarChart2 className="h-5 w-5" />
               <span className="absolute -top-1 -right-1 h-4 w-4 rounded-full bg-gold flex items-center justify-center text-[10px] text-black font-medium">+8%</span>
             </Button>
-            <Button variant="ghost" size="icon" className="relative text-muted-foreground hover:text-foreground">
+            <Button variant="ghost" size="icon" className="relative text-emerald-800">
               <Bell className="h-5 w-5" />
               <span className="absolute top-0.5 right-0.5 h-2 w-2 rounded-full bg-gold" />
             </Button>
-            <Button variant="ghost" size="icon" className="relative text-muted-foreground hover:text-foreground">
+            <Button variant="ghost" size="icon" className="relative text-emerald-800">
               <MessageSquare className="h-5 w-5" />
               <span className="absolute top-0.5 right-0.5 h-2 w-2 rounded-full bg-gold" />
             </Button>
@@ -86,6 +76,5 @@ export function Header() {
           </DropdownMenu>
         </div>
       </div>
-    </header>
-  )
+    </header>;
 }
