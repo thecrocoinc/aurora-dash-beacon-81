@@ -140,11 +140,11 @@
 }
 
 .card-accent-emerald {
-  @apply border-t-4 border-t-[var(--color-emerald-start)]/60;
+  @apply border-t-4 border-t-[rgba(32,180,134,0.6)];
 }
 
 .card-accent-gold {
-  @apply border-t-4 border-t-[var(--color-primary-start)]/60;
+  @apply border-t-4 border-t-[rgba(244,201,120,0.6)];
 }
 
 [aria-role="secondary"] {
