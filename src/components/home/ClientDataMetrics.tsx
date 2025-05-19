@@ -1,107 +1,154 @@
 
 import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Heart, BarChart2 } from "lucide-react";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Users, AlertTriangle, X, Calendar } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
+
+// Имитация данных клиентов, требующих внимания
+const clientsNeedingAttention = [
+  {
+    id: "1",
+    name: "Ирина П.",
+    avatar: null,
+    issue: "Пропущено 3 дня отчетов",
+    type: "missed_reports",
+    lastActive: "3 дня назад"
+  },
+  {
+    id: "2",
+    name: "Алексей М.",
+    avatar: null,
+    issue: "Отклонение от плана питания",
+    type: "diet_deviation",
+    lastActive: "Сегодня"
+  },
+  {
+    id: "3",
+    name: "Светлана К.",
+    avatar: null,
+    issue: "Не достигает цели по белку",
+    type: "nutrient_deficit",
+    lastActive: "Вчера"
+  },
+  {
+    id: "4",
+    name: "Михаил Д.",
+    avatar: null,
+    issue: "Запрос консультации",
+    type: "support_request",
+    lastActive: "12 часов назад"
+  },
+];
+
+// Имитация данных о прогрессе клиентов в целом
+const progressMetrics = [
+  { label: "Соблюдают план", value: 68, color: "emerald" },
+  { label: "Требуют внимания", value: 23, color: "amber" },
+  { label: "Критические", value: 9, color: "red" },
+];
 
 export function ClientDataMetrics() {
   return (
     <div className="space-y-4">
       <div className="flex flex-wrap items-center gap-3">
         <div className="p-2 rounded-lg bg-gradient-to-r from-purple-500/80 to-purple-700/80">
-          <Heart className="h-5 w-5 text-white" />
+          <Users className="h-5 w-5 text-white" />
         </div>
-        <h2 className="text-xl font-semibold">Данные клиентов</h2>
+        <h2 className="text-xl font-semibold">Клиенты, требующие внимания</h2>
       </div>
-      <p className="text-muted-foreground">Мониторинг данных о питании и активности ваших клиентов</p>
+      <p className="text-muted-foreground">Отслеживайте клиентов, которым может потребоваться ваша помощь</p>
       
-      <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-6">
-        <Card className="card-gradient">
-          <CardHeader>
-            <CardTitle className="text-lg flex items-center gap-2">
-              <Heart className="h-4 w-4 text-red-400" />
-              <span>Метрики здоровья</span>
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              <div className="flex items-center justify-between">
-                <span className="text-sm">Средний пульс</span>
-                <div className="flex items-center">
-                  <span className="font-medium health-excellent">72</span>
-                  <span className="text-xs text-muted-foreground ml-2">уд/мин</span>
-                </div>
+      <div className="mt-4 grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="md:col-span-2">
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-lg flex items-center gap-2">
+                <AlertTriangle className="h-4 w-4 text-amber-400" />
+                <span>Требуют внимания</span>
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                {clientsNeedingAttention.map((client) => (
+                  <div key={client.id} className="flex items-center justify-between p-3 rounded-md bg-background/40 border border-muted hover:bg-background/70 transition-colors">
+                    <div className="flex items-center gap-3">
+                      <Avatar className="h-9 w-9">
+                        <AvatarImage src={client.avatar || undefined} alt={client.name} />
+                        <AvatarFallback>{client.name.charAt(0)}</AvatarFallback>
+                      </Avatar>
+                      <div>
+                        <p className="font-medium">{client.name}</p>
+                        <div className="flex items-center text-xs">
+                          {client.type === "missed_reports" && (
+                            <Calendar className="h-3 w-3 mr-1 text-red-400" />
+                          )}
+                          {client.type === "support_request" && (
+                            <AlertTriangle className="h-3 w-3 mr-1 text-blue-400" />
+                          )}
+                          <span className="text-muted-foreground">{client.issue}</span>
+                          <span className="mx-2">•</span>
+                          <span>{client.lastActive}</span>
+                        </div>
+                      </div>
+                    </div>
+                    <Link to={`/profiles/${client.id}`}>
+                      <Button size="sm" variant="outline">
+                        Детали
+                      </Button>
+                    </Link>
+                  </div>
+                ))}
+
+                <Link to="/profiles" className="block w-full">
+                  <Button variant="outline" className="w-full">
+                    Все клиенты
+                  </Button>
+                </Link>
               </div>
-              
-              <div className="flex items-center justify-between">
-                <span className="text-sm">Среднее КБЖУ</span>
-                <div className="flex items-center">
-                  <span className="font-medium health-good">1850</span>
-                  <span className="text-xs text-muted-foreground ml-2">ккал</span>
-                </div>
-              </div>
-              
-              <div className="flex items-center justify-between">
-                <span className="text-sm">Средняя активность</span>
-                <div className="flex items-center">
-                  <span className="font-medium health-average">6,200</span>
-                  <span className="text-xs text-muted-foreground ml-2">шагов</span>
-                </div>
-              </div>
-              
-              <div className="flex items-center justify-between">
-                <span className="text-sm">Средний сон</span>
-                <div className="flex items-center">
-                  <span className="font-medium health-poor">6.4</span>
-                  <span className="text-xs text-muted-foreground ml-2">часов</span>
-                </div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+            </CardContent>
+          </Card>
+        </div>
         
-        <Card className="card-gradient">
-          <CardHeader>
-            <CardTitle className="text-lg flex items-center gap-2">
-              <BarChart2 className="h-4 w-4 text-emerald-400" />
-              <span>Прогресс целей</span>
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-3">
-              <div className="flex justify-between items-center">
-                <span className="text-sm">Снижение веса</span>
-                <div className="w-36 h-2 bg-muted/50 rounded-full">
-                  <div className="bg-emerald-500 h-full w-4/5 rounded-full"></div>
+        <div>
+          <Card className="card-gradient">
+            <CardHeader>
+              <CardTitle className="text-lg flex items-center gap-2">
+                <Users className="h-4 w-4 text-blue-400" />
+                <span>Общий прогресс</span>
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-6 mt-2">
+                {progressMetrics.map((metric) => (
+                  <div key={metric.label} className="space-y-2">
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm">{metric.label}</span>
+                      <span className={`text-sm font-medium text-${metric.color}-500`}>{metric.value}%</span>
+                    </div>
+                    <div className="w-full h-2 bg-muted/50 rounded-full">
+                      <div 
+                        className={`h-full rounded-full bg-${metric.color}-500`}
+                        style={{ width: `${metric.value}%` }}
+                      ></div>
+                    </div>
+                  </div>
+                ))}
+                
+                <div className="pt-4 border-t border-border/40">
+                  <div className="flex justify-between items-center text-sm mb-2">
+                    <span>Общее выполнение целей</span>
+                    <span className="font-medium">76%</span>
+                  </div>
+                  <div className="w-full h-3 bg-muted/50 rounded-full overflow-hidden">
+                    <div className="h-full bg-gradient-to-r from-emerald-500 to-emerald-400 w-3/4 rounded-full"></div>
+                  </div>
                 </div>
-                <span className="text-xs">80%</span>
               </div>
-              
-              <div className="flex justify-between items-center">
-                <span className="text-sm">Баланс БЖУ</span>
-                <div className="w-36 h-2 bg-muted/50 rounded-full">
-                  <div className="bg-emerald-500 h-full w-3/4 rounded-full"></div>
-                </div>
-                <span className="text-xs">75%</span>
-              </div>
-              
-              <div className="flex justify-between items-center">
-                <span className="text-sm">Витамины</span>
-                <div className="w-36 h-2 bg-muted/50 rounded-full">
-                  <div className="bg-emerald-500 h-full w-5/6 rounded-full"></div>
-                </div>
-                <span className="text-xs">83%</span>
-              </div>
-              
-              <div className="flex justify-between items-center">
-                <span className="text-sm">Гидратация</span>
-                <div className="w-36 h-2 bg-muted/50 rounded-full">
-                  <div className="bg-blue-500 h-full w-2/3 rounded-full"></div>
-                </div>
-                <span className="text-xs">67%</span>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+            </CardContent>
+          </Card>
+        </div>
       </div>
     </div>
   );

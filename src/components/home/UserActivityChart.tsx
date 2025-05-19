@@ -15,13 +15,13 @@ import { ChartContainer, ChartTooltipContent } from "@/components/ui/chart";
 
 // Sample data for the past week
 const activityData = [
-  { day: "Пн", users: 32, active: 28 },
-  { day: "Вт", users: 35, active: 30 },
-  { day: "Ср", users: 38, active: 29 },
-  { day: "Чт", users: 40, active: 32 },
-  { day: "Пт", users: 42, active: 36 },
-  { day: "Сб", users: 35, active: 28 },
-  { day: "Вс", users: 30, active: 24 },
+  { day: "Пн", users: 32, active: 28, meals: 124 },
+  { day: "Вт", users: 35, active: 30, meals: 145 },
+  { day: "Ср", users: 38, active: 29, meals: 132 },
+  { day: "Чт", users: 40, active: 32, meals: 156 },
+  { day: "Пт", users: 42, active: 36, meals: 178 },
+  { day: "Сб", users: 35, active: 28, meals: 110 },
+  { day: "Вс", users: 30, active: 24, meals: 98 },
 ];
 
 const config = {
@@ -33,6 +33,10 @@ const config = {
     label: "Активность",
     theme: { light: "#10b981", dark: "#34d399" },
   },
+  meals: {
+    label: "Приемы пищи",
+    theme: { light: "#f59e0b", dark: "#fbbf24" },
+  }
 };
 
 export function UserActivityChart() {
@@ -48,6 +52,10 @@ export function UserActivityChart() {
           <span className="flex items-center">
             <span className="h-2 w-2 rounded-full bg-emerald-400 mr-1"></span>
             Активность
+          </span>
+          <span className="flex items-center">
+            <span className="h-2 w-2 rounded-full bg-amber-400 mr-1"></span>
+            Приемы пищи
           </span>
         </div>
       </CardHeader>
@@ -72,6 +80,13 @@ export function UserActivityChart() {
                   type="monotone"
                   dataKey="active"
                   stroke="var(--color-active)"
+                  strokeWidth={2}
+                  activeDot={{ r: 6 }}
+                />
+                <Line
+                  type="monotone"
+                  dataKey="meals"
+                  stroke="var(--color-meals)"
                   strokeWidth={2}
                   activeDot={{ r: 6 }}
                 />
