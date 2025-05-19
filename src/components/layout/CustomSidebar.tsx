@@ -38,10 +38,10 @@ export function CustomSidebar() {
     path: "/bot",
     description: "Настройки и шаблоны бота"
   }, {
-    name: "Подписки",
+    name: "Интеграции",
     icon: Database,
     path: "/subscription",
-    description: "Управление тарифами",
+    description: "API и внешние сервисы",
     badge: "Pro"
   }, {
     name: "Рассылки",
@@ -94,7 +94,7 @@ export function CustomSidebar() {
           </SidebarMenu>
         </div>
 
-        <SidebarSeparator className="my-3" />
+        <SidebarSeparator className="my-2" />
         
         <div className="px-2 py-2.5 bg-muted/30 rounded-md mx-2 mb-2">
           <SidebarGroupLabel className="text-primary text-[13px] font-medium mb-2 px-2">
