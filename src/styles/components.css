@@ -1,226 +1,228 @@
 
 @tailwind components;
 
-/* Button Styles - унифицированы */
-.btn-primary {
-  @apply bg-gradient-to-br from-[var(--color-primary-0)] to-[var(--color-primary-1)] 
-         text-[var(--color-bg)] shadow 
-         hover:ring-2 hover:ring-primary/40
-         focus:ring-2 focus:ring-primary/40
-         active:from-[var(--color-primary-1)] active:to-[var(--color-primary-3)]
-         transition-all;
-}
+@layer components {
+  /* Button Styles - унифицированы */
+  .btn-primary {
+    @apply bg-gradient-to-br from-primary to-primary/80
+           text-background shadow 
+           hover:ring-2 hover:ring-primary/40
+           focus:ring-2 focus:ring-primary/40
+           active:from-primary/90 active:to-primary/70
+           transition-all;
+  }
 
-.btn-secondary {
-  @apply border border-[var(--color-surface-muted)] text-[var(--color-text)] 
-         bg-transparent hover:bg-[var(--color-surface-muted)]/50 
-         hover:border-primary/30
-         transition-all;
-}
+  .btn-secondary {
+    @apply border border-muted text-foreground 
+           bg-transparent hover:bg-muted/50 
+           hover:border-primary/30
+           transition-all;
+  }
 
-.btn-emerald {
-  @apply bg-gradient-to-br from-[var(--color-emerald-1)] to-[var(--color-emerald-0)]
-         text-[var(--color-text)] shadow
-         hover:ring-2 hover:ring-[var(--color-emerald-2)]/40
-         active:from-[var(--color-emerald-0)] active:to-[var(--color-emerald-4)]
-         transition-all;
-}
+  .btn-emerald {
+    @apply bg-gradient-to-br from-emerald-600 to-emerald-800
+           text-white shadow
+           hover:ring-2 hover:ring-emerald-500/40
+           active:from-emerald-800 active:to-emerald-950
+           transition-all;
+  }
 
-/* Base component styles - улучшены */
-.glass-morphism {
-  @apply backdrop-blur-lg bg-black/30 border border-white/10 shadow-[var(--shadow)];
-}
+  /* Base component styles - улучшены */
+  .glass-morphism {
+    @apply backdrop-blur-lg bg-black/30 border border-white/10 shadow-default;
+  }
 
-.apple-glass {
-  @apply backdrop-blur-xl bg-white/10 border border-white/20 shadow-[var(--shadow)];
-}
+  .apple-glass {
+    @apply backdrop-blur-xl bg-white/10 border border-white/20 shadow-default;
+  }
 
-/* Elevation Styles */
-.card {
-  @apply bg-[var(--color-surface)] ring-1 ring-white/5 rounded-[var(--radius)] p-6 transition-all duration-300;
-}
+  /* Elevation Styles */
+  .card {
+    @apply bg-card ring-1 ring-white/5 rounded-lg p-6 transition-all duration-300;
+  }
 
-.card:hover {
-  @apply translate-y-[-2px] duration-200 shadow-[var(--shadow)];
-}
+  .card:hover {
+    @apply -translate-y-0.5 duration-200 shadow-default;
+  }
 
-.hero, .modal {
-  @apply bg-[var(--color-surface)] shadow-xl rounded-[var(--radius)] p-8;
-}
+  .hero, .modal {
+    @apply bg-card shadow-xl rounded-lg p-8;
+  }
 
-.emerald-card {
-  @apply bg-[var(--color-emerald-0)] ring-1 ring-[var(--color-emerald-1)]/30 rounded-[var(--radius)];
-}
+  .emerald-card {
+    @apply bg-emerald-950 ring-1 ring-emerald-800/30 rounded-lg;
+  }
 
-.card-gradient {
-  @apply bg-gradient-to-br from-[var(--color-surface)] to-[var(--color-surface-muted)] rounded-[var(--radius)];
-}
+  .card-gradient {
+    @apply bg-gradient-to-br from-card to-muted rounded-lg;
+  }
 
-.admin-panel-gradient {
-  @apply bg-[var(--color-surface)];
-}
+  .admin-panel-gradient {
+    @apply bg-card;
+  }
 
-/* Gold gradient classes */
-.gold-gradient {
-  @apply bg-gradient-to-r from-[var(--color-primary-0)] to-[var(--color-primary-1)];
-}
+  /* Gold gradient classes */
+  .gold-gradient {
+    @apply bg-gradient-to-r from-primary to-primary/80;
+  }
 
-.gold-text {
-  @apply text-transparent bg-clip-text bg-gradient-to-r from-[var(--color-primary-0)] to-[var(--color-primary-1)];
-}
+  .gold-text {
+    @apply text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary/80;
+  }
 
-/* Emerald gradient */
-.emerald-gradient {
-  @apply bg-gradient-to-br from-[var(--color-emerald-1)] to-[var(--color-emerald-0)];
-}
+  /* Emerald gradient */
+  .emerald-gradient {
+    @apply bg-gradient-to-br from-emerald-700 to-emerald-900;
+  }
 
-/* Premium gradient */
-.premium-gradient {
-  @apply bg-gradient-to-r from-[var(--color-surface)] to-[var(--color-surface-muted)];
-}
+  /* Premium gradient */
+  .premium-gradient {
+    @apply bg-gradient-to-r from-card to-muted;
+  }
 
-/* Button effects */
-.btn-apple {
-  @apply transition-all duration-300 relative overflow-hidden;
-}
+  /* Button effects */
+  .btn-apple {
+    @apply transition-all duration-300 relative overflow-hidden;
+  }
 
-.btn-apple::after {
-  content: '';
-  @apply absolute inset-0 bg-white/10 opacity-0 transition-opacity duration-300;
-}
+  .btn-apple::after {
+    content: '';
+    @apply absolute inset-0 bg-white/10 opacity-0 transition-opacity duration-300;
+  }
 
-.btn-apple:hover::after {
-  @apply opacity-100;
-}
+  .btn-apple:hover::after {
+    @apply opacity-100;
+  }
 
-/* Premium effects */
-.premium-border {
-  @apply border border-primary/30 shadow-sm;
-}
+  /* Premium effects */
+  .premium-border {
+    @apply border border-primary/30 shadow-sm;
+  }
 
-.premium-card {
-  @apply bg-[var(--color-surface)] backdrop-blur-lg border border-primary/20 shadow-[var(--shadow)];
-}
+  .premium-card {
+    @apply bg-card backdrop-blur-lg border border-primary/20 shadow-default;
+  }
 
-.premium-button {
-  @apply bg-[var(--color-primary-1)] text-[var(--color-bg)] font-medium hover:bg-[var(--color-primary-0)] transition-colors;
-}
+  .premium-button {
+    @apply bg-primary/80 text-background font-medium hover:bg-primary transition-colors;
+  }
 
-.premium-text {
-  @apply text-transparent bg-clip-text bg-gradient-to-r from-[var(--color-primary-0)] to-[var(--color-primary-1)];
-}
+  .premium-text {
+    @apply text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary/80;
+  }
 
-/* Sidebar specific styles */
-.sidebar-nav .logo,
-[class*="sidebar-accent"],
-.sidebar-accent {
-  @apply text-[var(--color-primary-0)];
-}
+  /* Sidebar specific styles */
+  .sidebar-nav .logo,
+  [class*="sidebar-accent"],
+  .sidebar-accent {
+    @apply text-primary;
+  }
 
-.badge, .counter {
-  @apply bg-primary/20 text-[var(--color-primary-0)];
-}
+  .badge, .counter {
+    @apply bg-primary/20 text-primary;
+  }
 
-/* Card and surface styles */
-.card, .modal, .panel {
-  @apply bg-[var(--color-surface)] rounded-[var(--radius)] ring-1 ring-white/5;
-}
+  /* Card and surface styles */
+  .card, .modal, .panel {
+    @apply bg-card rounded-lg ring-1 ring-white/5;
+  }
 
-[aria-role="secondary"] {
-  @apply bg-[var(--color-surface-muted)];
-}
+  [aria-role="secondary"] {
+    @apply bg-muted;
+  }
 
-/* Progress rings */
-.progress-ring path.active {
-  @apply stroke-[var(--color-primary-1)];
-}
+  /* Progress rings */
+  .progress-ring path.active {
+    @apply stroke-primary/80;
+  }
 
-.progress-ring path.bg {
-  @apply stroke-[var(--color-surface-muted)];
-}
+  .progress-ring path.bg {
+    @apply stroke-muted;
+  }
 
-/* Chart styles */
-.chart-primary {
-  @apply stroke-[var(--color-primary-0)] fill-none;
-}
+  /* Chart styles */
+  .chart-primary {
+    @apply stroke-primary fill-none;
+  }
 
-.chart-secondary {
-  @apply stroke-[#E0E3E9] fill-none;
-}
+  .chart-secondary {
+    @apply stroke-[#E0E3E9] fill-none;
+  }
 
-.chart-grid {
-  @apply stroke-[#30333A];
-}
+  .chart-grid {
+    @apply stroke-[#30333A];
+  }
 
-/* Tooltips и другие информационные элементы */
-.tooltip {
-  @apply bg-[var(--color-surface)] text-[var(--color-text)] px-3 py-2 text-sm rounded-[calc(var(--radius)-4px)] 
-         shadow-[var(--shadow)] border border-white/5;
-}
+  /* Tooltips и другие информационные элементы */
+  .tooltip {
+    @apply bg-card text-foreground px-3 py-2 text-sm rounded-md
+           shadow-default border border-white/5;
+  }
 
-/* Badges унифицированы */
-.badge-primary {
-  @apply bg-primary/20 text-[var(--color-primary-0)] rounded-full px-2 py-0.5;
-}
+  /* Badges унифицированы */
+  .badge-primary {
+    @apply bg-primary/20 text-primary rounded-full px-2 py-0.5;
+  }
 
-.badge-emerald {
-  @apply bg-[var(--color-emerald-1)]/20 text-[var(--color-emerald-2)] rounded-full px-2 py-0.5;
-}
+  .badge-emerald {
+    @apply bg-emerald-700/20 text-emerald-500 rounded-full px-2 py-0.5;
+  }
 
-.badge-status {
-  @apply inline-flex items-center gap-1.5;
-}
+  .badge-status {
+    @apply inline-flex items-center gap-1.5;
+  }
 
-.badge-status::before {
-  content: '';
-  @apply w-2 h-2 rounded-full;
-}
+  .badge-status::before {
+    content: '';
+    @apply w-2 h-2 rounded-full;
+  }
 
-.badge-status-active::before {
-  @apply bg-[var(--color-success)];
-}
+  .badge-status-active::before {
+    @apply bg-green-500;
+  }
 
-.badge-status-pending::before {
-  @apply bg-[var(--color-warning)];
-}
+  .badge-status-pending::before {
+    @apply bg-amber-500;
+  }
 
-.badge-status-offline::before {
-  @apply bg-[var(--color-danger)];
-}
+  .badge-status-offline::before {
+    @apply bg-red-500;
+  }
 
-/* Статистические карты и графики */
-.stat-card {
-  @apply relative overflow-hidden card;
-}
+  /* Статистические карты и графики */
+  .stat-card {
+    @apply relative overflow-hidden card;
+  }
 
-.stat-card-header {
-  @apply flex justify-between items-center mb-4;
-}
+  .stat-card-header {
+    @apply flex justify-between items-center mb-4;
+  }
 
-.stat-card-title {
-  @apply text-[var(--color-text-muted)] font-medium text-sm;
-}
+  .stat-card-title {
+    @apply text-muted-foreground font-medium text-sm;
+  }
 
-.stat-card-icon {
-  @apply h-10 w-10 p-2 rounded-full bg-primary/10 flex items-center justify-center;
-}
+  .stat-card-icon {
+    @apply h-10 w-10 p-2 rounded-full bg-primary/10 flex items-center justify-center;
+  }
 
-.stat-card-icon svg {
-  @apply stroke-[var(--color-primary-0)]/70;
-}
+  .stat-card-icon svg {
+    @apply text-primary/70;
+  }
 
-.stat-card-value {
-  @apply text-3xl font-bold;
-}
+  .stat-card-value {
+    @apply text-3xl font-bold;
+  }
 
-.stat-card-trend {
-  @apply flex items-center gap-1.5 mt-2;
-}
+  .stat-card-trend {
+    @apply flex items-center gap-1.5 mt-2;
+  }
 
-.stat-card-trend-positive {
-  @apply text-[var(--color-success)];
-}
+  .stat-card-trend-positive {
+    @apply text-green-500;
+  }
 
-.stat-card-trend-negative {
-  @apply text-[var(--color-danger)];
+  .stat-card-trend-negative {
+    @apply text-red-500;
+  }
 }

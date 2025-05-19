@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -120,5 +121,16 @@ export default {
 			}
 		}
 	},
+	safelist: [
+		{ pattern: /^bg-.*/ },
+		{ pattern: /^text-.*/ },
+		{ pattern: /^border-.*/ },
+		{ pattern: /^stroke-.*/ },
+		{ pattern: /^fill-.*/ },
+		{ pattern: /^from-.*/ },
+		{ pattern: /^to-.*/ },
+		{ pattern: /^via-.*/ },
+		{ pattern: /^hover:.*/ },
+	],
 	plugins: [require("tailwindcss-animate")],
 } satisfies Config;
