@@ -226,6 +226,7 @@ export type Database = {
           medical_conditions: string[] | null
           name: string | null
           notes: string | null
+          subscription_status: string | null
           target_weight: number | null
           telegram_id: number | null
           username: string | null
@@ -244,6 +245,7 @@ export type Database = {
           medical_conditions?: string[] | null
           name?: string | null
           notes?: string | null
+          subscription_status?: string | null
           target_weight?: number | null
           telegram_id?: number | null
           username?: string | null
@@ -262,6 +264,7 @@ export type Database = {
           medical_conditions?: string[] | null
           name?: string | null
           notes?: string | null
+          subscription_status?: string | null
           target_weight?: number | null
           telegram_id?: number | null
           username?: string | null

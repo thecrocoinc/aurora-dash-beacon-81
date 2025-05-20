@@ -10,6 +10,7 @@ interface ProfileData {
   avatar_url: string | null;
   goal_type?: string | null;
   created_at?: string | null;
+  subscription_status?: string;
 }
 
 export interface ProfileWithDetails {
@@ -27,7 +28,7 @@ export interface ProfileWithDetails {
   created_at?: string | null;
   last_activity?: string | null;
   streak_days?: number;
-  subscription_status?: 'active' | 'expired' | 'trial';
+  subscription_status?: string;
 }
 
 export const useProfilesData = () => {
@@ -43,7 +44,7 @@ export const useProfilesData = () => {
       try {
         const { data: profilesData, error } = await supabase
           .from('profiles')
-          .select('id,name,avatar_url,goal_type,created_at');
+          .select('id,name,avatar_url,goal_type,created_at,subscription_status');
         
         if (error) {
           console.error("Error fetching profiles:", error);
@@ -52,7 +53,7 @@ export const useProfilesData = () => {
         
         // For each profile, fetch their daily summary to calculate kcal ratio
         const profilesWithKcal = await Promise.all(
-          (profilesData || []).map(async (profile: ProfileData & { goal_type?: string, created_at?: string }) => {
+          (profilesData || []).map(async (profile: ProfileData) => {
             try {
               const { data: summaryData, error: summaryError } = await supabase
                 .rpc('day_summary', { 
@@ -86,12 +87,6 @@ export const useProfilesData = () => {
               const streak = Math.floor(Math.random() * 30); // Random streak between 0-30 days
               const lastActivity = new Date(new Date().getTime() - Math.random() * 7 * 24 * 60 * 60 * 1000);
               
-              // Simulate subscription status based on user ID hash for consistency with ProfileDetail
-              // This is a deterministic approach based on the first character of the ID
-              const subscriptionType = profile.id.charCodeAt(0) % 3;
-              const subscriptionStatus = subscriptionType === 0 ? 'active' : 
-                                      subscriptionType === 1 ? 'trial' : 'expired';
-              
               return {
                 id: profile.id,
                 name: profile.name || 'Unnamed User',
@@ -107,7 +102,7 @@ export const useProfilesData = () => {
                 created_at: profile.created_at,
                 last_activity: format(lastActivity, "yyyy-MM-dd HH:mm"),
                 streak_days: streak,
-                subscription_status: subscriptionStatus as 'active' | 'expired' | 'trial',
+                subscription_status: profile.subscription_status,
               };
             } catch (err) {
               console.error("Error processing profile summary:", err);
@@ -125,7 +120,7 @@ export const useProfilesData = () => {
                 goal_type: profile.goal_type,
                 created_at: profile.created_at,
                 streak_days: 0,
-                subscription_status: 'expired' as const,
+                subscription_status: profile.subscription_status || 'basic',
               };
             }
           })
