@@ -14,7 +14,7 @@ interface ProfileWithDetails {
   avatar: string | null;
   watch_connected: boolean;
   kcalRatio: number;
-  subscription_status?: 'active' | 'trial' | 'expired';
+  subscription_status?: string;
   streak_days?: number;
   goal_type?: string | null;
 }

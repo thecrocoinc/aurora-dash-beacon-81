@@ -11,6 +11,25 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { LayoutGrid, LayoutList } from "lucide-react";
 import { ProfilesStats } from "@/components/profiles/ProfilesStats";
 
+// Using the updated interface with subscription_status as string
+interface ProfileWithDetails {
+  id: string;
+  name: string;
+  avatar: string | null;
+  watch_connected: boolean;
+  kcalRatio: number;
+  currentKcal: number;
+  dailyGoal: number;
+  prot: number;
+  fat: number;
+  carb: number;
+  goal_type?: string | null;
+  created_at?: string | null;
+  last_activity?: string | null;
+  streak_days?: number;
+  subscription_status?: string;
+}
+
 const Profiles = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");

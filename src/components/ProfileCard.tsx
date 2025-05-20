@@ -1,6 +1,4 @@
-
 import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Progress } from "@/components/ui/progress";
 import { Target, Utensils, TrendingDown, TrendingUp } from "lucide-react";
@@ -21,7 +19,7 @@ interface ProfileWithDetails {
   created_at?: string | null;
   last_activity?: string | null;
   streak_days?: number;
-  subscription_status?: 'active' | 'trial' | 'expired';
+  subscription_status?: string;
 }
 
 interface ProfileCardProps {
