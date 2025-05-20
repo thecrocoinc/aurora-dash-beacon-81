@@ -82,6 +82,7 @@ const Dialogs = () => {
     const today = new Date();
     const isToday = date.toDateString() === today.toDateString();
     
+    // Updated format to use colon (:) between hours and minutes
     return isToday ? format(date, "HH:mm") : format(date, "dd.MM");
   };
 
@@ -144,6 +145,7 @@ const Dialogs = () => {
                   <div className="flex-1 min-w-0">
                     <div className="flex justify-between items-center">
                       <div className="font-medium">{dialog.name}</div>
+                      {/* Moved timestamp to its own container */}
                       <div className="text-xs text-muted-foreground">
                         {formatTime(dialog.timestamp)}
                       </div>
@@ -151,13 +153,15 @@ const Dialogs = () => {
                     <div className="text-sm text-muted-foreground truncate">
                       {dialog.lastMessage}
                     </div>
+                    {/* Moved the badge out of the timestamp container and placed it below */}
+                    {dialog.unread > 0 && (
+                      <div className="flex justify-end mt-1">
+                        <Badge className="h-5 min-w-5 flex items-center justify-center bg-primary text-white rounded-full px-1.5 py-0">
+                          {dialog.unread}
+                        </Badge>
+                      </div>
+                    )}
                   </div>
-                  
-                  {dialog.unread > 0 && (
-                    <Badge className="ml-auto flex-shrink-0 h-5 min-w-5 flex items-center justify-center bg-primary text-white rounded-full px-1.5 py-0">
-                      {dialog.unread}
-                    </Badge>
-                  )}
                 </div>
               );
             })}
