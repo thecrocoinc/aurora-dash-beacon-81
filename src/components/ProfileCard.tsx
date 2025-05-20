@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Progress } from "@/components/ui/progress";
 import { Target, Utensils, TrendingDown, TrendingUp, Dumbbell } from "lucide-react";
+import { PlanBadge } from "@/components/home/subscription/PlanBadge";
 
 interface ProfileWithDetails {
   id: string;
@@ -20,7 +21,7 @@ interface ProfileWithDetails {
   created_at?: string | null;
   last_activity?: string | null;
   streak_days?: number;
-  subscription_status?: 'active' | 'trial';
+  subscription_status?: 'active' | 'trial' | 'expired';
 }
 
 interface ProfileCardProps {
@@ -40,10 +41,10 @@ const ProfileCard = ({ profile }: ProfileCardProps) => {
   const getSubscriptionBadge = () => {
     switch(profile.subscription_status) {
       case 'active':
-        return <Badge className="bg-purple-600 hover:bg-purple-700 text-white">Premium</Badge>;
+        return <PlanBadge plan="Premium" />;
       case 'trial':
       default:
-        return <Badge className="bg-blue-600 hover:bg-blue-700 text-white">Basic</Badge>;
+        return <PlanBadge plan="Basic" />;
     }
   };
   
