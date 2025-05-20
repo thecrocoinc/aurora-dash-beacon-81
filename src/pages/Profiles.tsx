@@ -177,16 +177,16 @@ const Profiles = () => {
                       <LayoutList className="h-4 w-4" /> Список
                     </TabsTrigger>
                   </TabsList>
+                  
+                  <TabsContent value="grid" className="mt-0">
+                    <ProfilesGrid profiles={filteredProfiles} />
+                  </TabsContent>
+                  
+                  <TabsContent value="list" className="mt-0">
+                    <ProfilesList profiles={filteredProfiles} />
+                  </TabsContent>
                 </Tabs>
               </div>
-              
-              <TabsContent value="grid" className="mt-0">
-                <ProfilesGrid profiles={filteredProfiles} />
-              </TabsContent>
-              
-              <TabsContent value="list" className="mt-0">
-                <ProfilesList profiles={filteredProfiles} />
-              </TabsContent>
             </div>
           )}
         </CardContent>
