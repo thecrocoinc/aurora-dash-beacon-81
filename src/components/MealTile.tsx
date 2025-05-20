@@ -3,7 +3,7 @@ import React from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { format, parseISO, isValid } from "date-fns";
-import { Utensils, Coffee, Apple, Egg } from "lucide-react";
+import { Utensils, Coffee, Apple, Egg, Pizza, Sandwich, Soup, Cake, LucideIcon } from "lucide-react";
 
 type MealProps = {
   id: string;
@@ -22,17 +22,21 @@ type MealTileProps = {
 };
 
 // Icons for different meal types
-const mealIcons = [
+const mealIcons: LucideIcon[] = [
   Utensils,
   Coffee, 
   Apple,
   Egg,
+  Pizza,
+  Sandwich,
+  Soup,
+  Cake
 ];
 
 const MealTile = ({ meal }: MealTileProps) => {
   // Get a consistent icon based on the meal id
   const getMealIcon = () => {
-    if (!meal.id) return mealIcons[0];
+    if (!meal.id) return <Utensils className="h-6 w-6" />;
     const index = Math.abs(meal.id.charCodeAt(0) % mealIcons.length);
     const IconComponent = mealIcons[index];
     return <IconComponent className="h-6 w-6" />;
