@@ -45,12 +45,12 @@ export const DialogListItem = ({ dialog, isSelected, onClick }: DialogListItemPr
       
       <div className="flex-1 min-w-0 flex flex-col justify-center h-full">
         <div className="flex justify-between items-center">
-          <div className="font-medium truncate max-w-[180px]">{dialog.name}</div>
-          <div className="text-xs text-muted-foreground">
+          <div className="font-medium truncate max-w-[180px] text-[15px]">{dialog.name}</div>
+          <div className="text-xs text-muted-foreground whitespace-nowrap ml-2">
             {formatTime(dialog.timestamp)}
           </div>
         </div>
-        <div className="text-sm text-muted-foreground truncate max-w-full">
+        <div className="text-sm text-muted-foreground truncate max-w-full leading-5 mt-0.5 text-[13.5px]">
           {dialog.lastMessage}
         </div>
         {dialog.unread > 0 && (
