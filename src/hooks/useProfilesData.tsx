@@ -54,7 +54,7 @@ export const useProfilesData = () => {
         
         // For each profile, fetch their daily summary to calculate kcal ratio
         const profilesWithKcal = await Promise.all(
-          (profilesData || []).map(async (profile: ProfileData) => {
+          (profilesData || []).map(async (profile: ProfileData, index: number) => {
             try {
               const { data: summaryData, error: summaryError } = await supabase
                 .rpc('day_summary', { 
@@ -88,10 +88,13 @@ export const useProfilesData = () => {
               const streak = Math.floor(Math.random() * 30); // Random streak between 0-30 days
               const lastActivity = new Date(new Date().getTime() - Math.random() * 7 * 24 * 60 * 60 * 1000);
               
+              // For the first 5 profiles, ensure they don't have actual photos
+              const avatar = index < 5 ? null : profile.avatar_url;
+              
               return {
                 id: profile.id,
                 name: profile.name || 'Unnamed User',
-                avatar: profile.avatar_url,
+                avatar: avatar,
                 watch_connected: hasWatch,
                 kcalRatio: currentKcal / dailyGoal,
                 currentKcal,

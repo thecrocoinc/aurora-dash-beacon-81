@@ -5,6 +5,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Progress } from "@/components/ui/progress";
 import { getSubscriptionBadge, getGoalInfo } from "@/utils/profileUtils";
 import { useNavigate } from "react-router-dom";
+import { User } from "lucide-react";
 
 interface ProfileWithDetails {
   id: string;
@@ -63,13 +64,16 @@ const ProfileTableRow = ({ profile }: ProfileTableRowProps) => {
     >
       <TableCell className="flex items-center gap-2">
         <Avatar className={`h-8 w-8 flex-shrink-0 ${isPremium ? 'ring-1 ring-purple-500/30' : 'ring-1 ring-blue-500/30'}`}>
-          <AvatarImage src={profile.avatar || undefined} alt={profile.name} />
-          <AvatarFallback className={`
-            ${isPremium ? 'bg-purple-500/10 text-purple-400' : 
-            'bg-blue-500/10 text-blue-400'} text-xs`}
-          >
-            {initials}
-          </AvatarFallback>
+          {profile.avatar ? (
+            <AvatarImage src={profile.avatar} alt={profile.name} />
+          ) : (
+            <AvatarFallback className={`
+              ${isPremium ? 'bg-purple-500/10 text-purple-400' : 
+              'bg-blue-500/10 text-blue-400'}`}
+            >
+              {profile.avatar ? initials : <User className="h-4 w-4" />}
+            </AvatarFallback>
+          )}
         </Avatar>
         <span className="font-medium text-sm truncate max-w-[140px]">{profile.name}</span>
       </TableCell>
