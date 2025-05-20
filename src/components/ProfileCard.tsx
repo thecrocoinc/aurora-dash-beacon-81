@@ -3,7 +3,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Progress } from "@/components/ui/progress";
-import { Target, Utensils, TrendingDown, TrendingUp, Dumbbell } from "lucide-react";
+import { Target, Utensils, TrendingDown, TrendingUp } from "lucide-react";
 import { PlanBadge } from "@/components/home/subscription/PlanBadge";
 
 interface ProfileWithDetails {
@@ -37,28 +37,21 @@ const ProfileCard = ({ profile }: ProfileCardProps) => {
   // Calculate progress percentage
   const progressPercentage = Math.round(profile.kcalRatio * 100);
   
-  // Get subscription badge
-  const getSubscriptionBadge = () => {
-    switch(profile.subscription_status) {
-      case 'active':
-        return <PlanBadge plan="Premium" />;
-      case 'trial':
-      default:
-        return <PlanBadge plan="Basic" />;
-    }
-  };
+  // Determine if premium or basic
+  const isPremium = profile.subscription_status === 'active';
+  const isTrial = profile.subscription_status === 'trial';
   
   // Get goal icon
   const getGoalIcon = () => {
     switch(profile.goal_type) {
       case 'weight_loss':
-        return <TrendingDown className="h-3.5 w-3.5 text-muted-foreground" />;
+        return <TrendingDown className={`h-3.5 w-3.5 ${isPremium ? 'text-purple-400' : 'text-blue-400'}`} />;
       case 'weight_gain':
-        return <TrendingUp className="h-3.5 w-3.5 text-muted-foreground" />;
+        return <TrendingUp className={`h-3.5 w-3.5 ${isPremium ? 'text-purple-400' : 'text-blue-400'}`} />;
       case 'maintenance':
-        return <Target className="h-3.5 w-3.5 text-muted-foreground" />;
+        return <Target className={`h-3.5 w-3.5 ${isPremium ? 'text-purple-400' : 'text-blue-400'}`} />;
       default:
-        return <Utensils className="h-3.5 w-3.5 text-muted-foreground" />;
+        return <Utensils className={`h-3.5 w-3.5 ${isPremium ? 'text-purple-400' : 'text-blue-400'}`} />;
     }
   };
   
@@ -77,20 +70,32 @@ const ProfileCard = ({ profile }: ProfileCardProps) => {
   };
 
   return (
-    <Card className="h-full transition-all duration-200 hover:shadow-md hover:-translate-y-0.5">
+    <Card className={`h-full transition-all duration-200 hover:shadow-md hover:-translate-y-0.5
+      ${isPremium ? 'border-purple-500/30 bg-gradient-to-tr from-purple-950/5 to-transparent' : 
+      isTrial ? 'border-blue-500/30 bg-gradient-to-tr from-blue-950/5 to-transparent' : 
+      'border-white/10'}`}
+    >
       <CardContent className="p-3">
         <div className="flex flex-col h-full">
           <div className="flex justify-between items-start mb-2">
             <div className="flex gap-2">
-              <Avatar className="h-9 w-9 ring-1 ring-white/10">
+              <Avatar className={`h-9 w-9 ${isPremium ? 'ring-1 ring-purple-500/30' : isTrial ? 'ring-1 ring-blue-500/30' : 'ring-1 ring-white/10'}`}>
                 <AvatarImage src={profile.avatar || undefined} alt={profile.name} />
-                <AvatarFallback className="bg-primary/20 text-primary text-xs">{initials}</AvatarFallback>
+                <AvatarFallback className={`
+                  ${isPremium ? 'bg-purple-500/10 text-purple-400' : 
+                  isTrial ? 'bg-blue-500/10 text-blue-400' : 
+                  'bg-primary/20 text-primary'} text-xs`}
+                >
+                  {initials}
+                </AvatarFallback>
               </Avatar>
               
               <div>
-                <h3 className="font-medium leading-none mb-1 text-sm">{profile.name}</h3>
+                <h3 className={`font-medium leading-none mb-1 text-sm ${isPremium ? 'text-purple-50' : ''}`}>
+                  {profile.name}
+                </h3>
                 <div className="flex items-center gap-1.5">
-                  {getSubscriptionBadge()}
+                  <PlanBadge plan={isPremium ? 'Premium' : 'Basic'} />
                   <span className="flex items-center gap-1 text-xs text-muted-foreground">
                     {getGoalIcon()} {getGoalText()}
                   </span>
@@ -108,7 +113,7 @@ const ProfileCard = ({ profile }: ProfileCardProps) => {
               value={progressPercentage} 
               className="h-2 bg-muted/50" 
               style={{ 
-                "--progress-background": "rgb(16, 185, 129)",
+                "--progress-background": isPremium ? "rgb(139, 92, 246)" : "rgb(59, 130, 246)",
               } as React.CSSProperties}
             />
           </div>
