@@ -20,11 +20,11 @@ const DialogDrawer = ({
   return (
     <Drawer open={open} onOpenChange={onOpenChange}>
       <DrawerContent className="h-[85vh]">
-        <DrawerHeader className="border-b">
+        <DrawerHeader className="border-b border-border/30 py-4">
           <DrawerTitle className="flex items-center gap-3">
             {selectedDialog && (
               <>
-                <Avatar className="h-8 w-8">
+                <Avatar className="h-9 w-9 ring-2 ring-background">
                   <AvatarImage src={selectedDialog.avatar} alt={selectedDialog.name} />
                   <AvatarFallback>
                     {selectedDialog.name
@@ -33,12 +33,15 @@ const DialogDrawer = ({
                       .join("")}
                   </AvatarFallback>
                 </Avatar>
-                <span>{selectedDialog.name}</span>
-                {selectedDialog.isActive && (
-                  <span className="badge-status badge-status-active text-xs text-muted-foreground">
-                    Онлайн
-                  </span>
-                )}
+                <div className="flex flex-col">
+                  <span className="font-medium">{selectedDialog.name}</span>
+                  {selectedDialog.isActive && (
+                    <span className="badge-status badge-status-active text-xs text-muted-foreground flex items-center gap-1.5">
+                      <span className="w-1.5 h-1.5 bg-green-500 rounded-full"></span>
+                      Онлайн
+                    </span>
+                  )}
+                </div>
               </>
             )}
           </DrawerTitle>

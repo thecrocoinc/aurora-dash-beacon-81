@@ -19,7 +19,8 @@ export const formatTime = (date: Date): string => {
   } else if (isYesterday) {
     return "Вчера";
   } else {
-    // Используем более читаемый формат даты для истории сообщений
-    return format(date, "dd.MM");
+    const thisYear = today.getFullYear() === date.getFullYear();
+    // Возвращаем день и месяц для дат этого года, полную дату для других лет
+    return thisYear ? format(date, "d MMM") : format(date, "dd.MM.yy");
   }
 };

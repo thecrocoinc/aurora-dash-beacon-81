@@ -30,37 +30,46 @@ export const DialogListItem = ({ dialog, isSelected, onClick }: DialogListItemPr
   return (
     <div 
       key={dialog.id} 
-      className={`h-[72px] p-4 flex items-center gap-4 hover:bg-muted/30 cursor-pointer transition-colors ${isSelected ? 'bg-muted/50' : ''}`}
+      className={`group h-[72px] p-4 flex items-center gap-4 hover:bg-muted/40 cursor-pointer transition-colors duration-200 ${
+        isSelected ? 'bg-muted/60 border-l-2 border-primary' : 'border-l-2 border-transparent'
+      }`}
       onClick={() => onClick(dialog.id)}
+      role="button"
+      aria-selected={isSelected}
+      tabIndex={0}
     >
       <div className="relative flex-shrink-0">
-        <Avatar>
+        <Avatar className="h-10 w-10 ring-2 ring-background">
           <AvatarImage src={dialog.avatar} alt={dialog.name} />
           <AvatarFallback>{initials}</AvatarFallback>
         </Avatar>
         {dialog.isActive && (
-          <span className="absolute bottom-0 right-0 h-2.5 w-2.5 rounded-full bg-green-500 ring-1 ring-background"></span>
+          <span className="absolute bottom-0 right-0 h-3 w-3 rounded-full bg-green-500 ring-2 ring-background animate-pulse"></span>
         )}
       </div>
       
-      <div className="flex-1 min-w-0 flex flex-col justify-center h-full">
+      <div className="flex-1 min-w-0 flex flex-col justify-center space-y-0.5">
         <div className="flex justify-between items-center">
-          <div className="font-medium truncate max-w-[180px] text-[15px]">{dialog.name}</div>
+          <div className="font-medium truncate max-w-[180px] text-sm">
+            {dialog.name}
+          </div>
           <div className="text-xs text-muted-foreground whitespace-nowrap ml-2">
             {formatTime(dialog.timestamp)}
           </div>
         </div>
-        <div className="text-sm text-muted-foreground truncate max-w-full leading-5 mt-0.5 text-[13.5px]">
+        <div className="text-sm text-muted-foreground truncate max-w-full leading-5 opacity-90">
           {dialog.lastMessage}
         </div>
-        {dialog.unread > 0 && (
-          <div className="flex justify-end mt-1">
-            <Badge className="h-5 min-w-5 flex items-center justify-center bg-primary text-white rounded-full px-1.5 py-0">
-              {dialog.unread}
-            </Badge>
-          </div>
-        )}
       </div>
+      
+      {dialog.unread > 0 && (
+        <Badge 
+          className="h-5 min-w-5 flex items-center justify-center bg-primary text-white rounded-full px-1.5 py-0 ml-1 transition-all duration-200 group-hover:scale-110"
+          aria-label={`${dialog.unread} непрочитанных сообщений`}
+        >
+          {dialog.unread}
+        </Badge>
+      )}
     </div>
   );
 };

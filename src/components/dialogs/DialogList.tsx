@@ -2,6 +2,7 @@
 import { CardContent } from "@/components/ui/card";
 import { DialogItem, DialogListItem } from "./DialogListItem";
 import DialogEmptyState from "./DialogEmptyState";
+import { LayoutGrid, MessageSquareX } from "lucide-react";
 
 interface DialogListProps {
   dialogs: DialogItem[];
@@ -26,16 +27,21 @@ const DialogList = ({
   const displayedDialogs = isFiltering ? filteredDialogs : dialogs;
 
   return (
-    <CardContent className="p-0">
+    <CardContent className="p-0 max-h-[70vh] overflow-y-auto overflow-x-hidden">
       {showEmptyState ? (
         <DialogEmptyState onAction={onPingBot} />
       ) : showNoResultsEmptyState ? (
-        <div className="flex flex-col items-center justify-center py-12">
-          <h3 className="text-lg font-medium mb-1">Нет результатов</h3>
-          <p className="text-sm text-muted-foreground">Попробуйте изменить поисковый запрос.</p>
+        <div className="flex flex-col items-center justify-center py-12 px-4 text-center animate-fade-in">
+          <div className="bg-muted/30 p-4 rounded-full mb-4">
+            <MessageSquareX className="h-10 w-10 text-muted-foreground" />
+          </div>
+          <h3 className="text-lg font-medium mb-2">Нет результатов</h3>
+          <p className="text-sm text-muted-foreground max-w-[280px]">
+            Попробуйте изменить поисковый запрос или проверить правильность написания.
+          </p>
         </div>
       ) : (
-        <div className="divide-y divide-white/5">
+        <div className="divide-y divide-border/30">
           {displayedDialogs.map((dialog) => (
             <DialogListItem 
               key={dialog.id}

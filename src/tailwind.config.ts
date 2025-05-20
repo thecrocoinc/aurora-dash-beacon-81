@@ -70,6 +70,27 @@ export default {
 					accent: 'hsl(var(--gold-accent))',
 					dim: '#C9A86C', // Using color_gold_dim directly
 				},
+				emerald: {
+					'950': '#01261F',
+					'900': '#024134',
+					'800': '#035D4A',
+					'700': '#046E58',
+					'600': '#05866D',
+					'500': '#059682'
+				},
+				purple: {
+					'950': '#2E1065',
+					'900': '#4C1D95',
+					'800': '#5B21B6',
+					'700': '#6D28D9',
+					'600': '#7C3AED',
+					'500': '#8B5CF6',
+					'400': '#A78BFA',
+					'300': '#C4B5FD',
+					'200': '#DDD6FE',
+					'100': '#EDE9FE',
+					'50': '#F5F3FF',
+				},
 			},
 			width: {
 				'44': '11rem',
@@ -106,13 +127,23 @@ export default {
 				'glow': {
 					'0%, 100%': { boxShadow: '0 0 10px rgba(212, 175, 55, 0.2)' },
 					'50%': { boxShadow: '0 0 20px rgba(212, 175, 55, 0.4)' }
+				},
+				'fade-in': {
+					'0%': { opacity: '0', transform: 'translateY(10px)' },
+					'100%': { opacity: '1', transform: 'translateY(0)' }
+				},
+				'pulse-glow': {
+					'0%, 100%': { boxShadow: '0 0 5px rgba(212, 175, 55, 0.2)' },
+					'50%': { boxShadow: '0 0 15px rgba(212, 175, 55, 0.4)' }
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
 				'accordion-up': 'accordion-up 0.2s ease-out',
 				'float': 'float 3s ease-in-out infinite',
-				'glow': 'glow 3s ease-in-out infinite'
+				'glow': 'glow 3s ease-in-out infinite',
+				'fade-in': 'fade-in 0.4s ease-out',
+				'pulse-glow': 'pulse-glow 3s ease-in-out infinite'
 			},
 			boxShadow: {
 				'soft': '0 4px 20px -2px rgba(0, 0, 0, 0.2)',
@@ -121,16 +152,16 @@ export default {
 			}
 		}
 	},
-    safelist: [
-        { pattern: /^bg-.*/ },
-        { pattern: /^text-.*/ },
-        { pattern: /^border-.*/ },
-        { pattern: /^stroke-.*/ },
-        { pattern: /^fill-.*/ },
-        { pattern: /^from-.*/ },
-        { pattern: /^to-.*/ },
-        { pattern: /^via-.*/ },
-        { pattern: /^hover:.*/ },
-    ],
+	safelist: [
+		{ pattern: /^bg-.*/ },
+		{ pattern: /^text-.*/ },
+		{ pattern: /^border-.*/ },
+		{ pattern: /^stroke-.*/ },
+		{ pattern: /^fill-.*/ },
+		{ pattern: /^from-.*/ },
+		{ pattern: /^to-.*/ },
+		{ pattern: /^via-.*/ },
+		{ pattern: /^hover:.*/ },
+	],
 	plugins: [require("tailwindcss-animate")],
 } satisfies Config;

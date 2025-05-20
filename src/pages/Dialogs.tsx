@@ -1,5 +1,5 @@
 
-import { useState, useCallback, useMemo } from "react";
+import { useState, useCallback, useMemo, useEffect } from "react";
 import { Card } from "@/components/ui/card";
 import { toast } from "@/components/ui/use-toast";
 import DialogHeader from "@/components/dialogs/DialogHeader";
@@ -85,22 +85,30 @@ const Dialogs = () => {
     toast({
       title: "Бот активирован",
       description: "Бот начал работу с новым клиентом.",
+      className: "bg-primary/10 border-primary/20 text-foreground",
     });
   }, []);
+
+  // Auto-highlight first dialog when filtering
+  useEffect(() => {
+    if (filteredDialogs.length > 0 && searchQuery && !selectedDialog) {
+      setSelectedDialog(filteredDialogs[0].id);
+    }
+  }, [filteredDialogs, searchQuery, selectedDialog]);
 
   const selectedDialogData = mockDialogs.find(dialog => dialog.id === selectedDialog);
   const isFiltering = searchQuery.trim().length > 0;
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 animate-fade-in">
       <div>
-        <h1 className="text-3xl font-bold tracking-tight">Диалоги</h1>
+        <h1 className="text-2xl md:text-3xl font-bold tracking-tight">Диалоги</h1>
         <p className="text-muted-foreground mt-2">
           Управляйте беседами между клиентами и ботом
         </p>
       </div>
       
-      <Card className="glass-morphism border-white/5 overflow-hidden">
+      <Card className="glass-morphism border-white/10 overflow-hidden transition-all duration-300 hover:shadow-default">
         <DialogHeader 
           title="Недавние беседы" 
           description="Просмотр и управление диалогами клиентов с ботом"
