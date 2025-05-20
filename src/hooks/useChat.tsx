@@ -21,6 +21,9 @@ export const useChat = (profileId: string | undefined) => {
       return;
     }
 
+    // Convert profileId to number
+    const chatId = Number(profileId);
+
     // Initial fetch of messages
     const fetchMessages = async () => {
       setLoading(true);
@@ -28,7 +31,7 @@ export const useChat = (profileId: string | undefined) => {
         const { data, error: fetchError } = await supabase
           .from("chat_logs")
           .select("*")
-          .eq("chat_id", profileId)
+          .eq("chat_id", chatId)
           .order("created_at", { ascending: true });
 
         if (fetchError) {
@@ -60,14 +63,14 @@ export const useChat = (profileId: string | undefined) => {
 
     // Subscribe to new messages for this profile
     const channel = supabase
-      .channel(`msgs_${profileId}`)
+      .channel(`msgs_${chatId}`)
       .on(
         "postgres_changes",
         {
           event: "INSERT",
           schema: "public",
           table: "chat_logs",
-          filter: `chat_id=eq.${profileId}`,
+          filter: `chat_id=eq.${chatId}`,
         },
         (payload) => {
           const newMessage = payload.new as ChatLog;
@@ -96,13 +99,15 @@ export const useChat = (profileId: string | undefined) => {
   // Function to send a new message
   const sendMessage = async (content: string): Promise<void> => {
     if (!profileId || !content.trim()) return;
+    
+    const chatId = Number(profileId);
 
     try {
       const { error } = await supabase.from("chat_logs").insert({
-        chat_id: parseInt(profileId),
+        chat_id: chatId,
         content: content.trim(),
         role: "user",
-        session_id: `session_${profileId}`
+        session_id: `session_${chatId}`
       });
 
       if (error) {

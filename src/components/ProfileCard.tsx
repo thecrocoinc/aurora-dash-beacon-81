@@ -8,9 +8,9 @@ import { Link } from "react-router-dom";
 
 interface ProfileWithDetails {
   id: string;
-  name: string;
-  avatar: string | null;
-  watch_connected: boolean;
+  first_name: string | null;
+  avatar?: string | null;
+  watch_connected?: boolean;
   kcalRatio: number;
   currentKcal: number;
   dailyGoal: number;
@@ -29,7 +29,9 @@ interface ProfileCardProps {
 }
 
 const ProfileCard = ({ profile }: ProfileCardProps) => {
-  const initials = profile.name
+  const displayName = profile.first_name || "User";
+  
+  const initials = displayName
     .split(" ")
     .map((n) => n[0])
     .join("");
@@ -88,7 +90,6 @@ const ProfileCard = ({ profile }: ProfileCardProps) => {
           <div className="flex justify-between items-start mb-2">
             <div className="flex gap-2 max-w-full overflow-hidden">
               <Avatar className={`h-9 w-9 flex-shrink-0 ${isPremium ? 'ring-1 ring-purple-500/30' : isTrial ? 'ring-1 ring-blue-500/30' : 'ring-1 ring-white/10'}`}>
-                <AvatarImage src={profile.avatar || undefined} alt={profile.name} />
                 <AvatarFallback className={`
                   ${isPremium ? 'bg-purple-500/10 text-purple-400' : 
                   isTrial ? 'bg-blue-500/10 text-blue-400' : 
@@ -100,7 +101,7 @@ const ProfileCard = ({ profile }: ProfileCardProps) => {
               
               <div className="overflow-hidden">
                 <h3 className={`font-medium leading-none mb-1 text-sm truncate ${isPremium ? 'text-purple-50' : ''}`}>
-                  {profile.name}
+                  {displayName}
                 </h3>
                 <div className="flex items-center gap-1.5 max-w-full">
                   <PlanBadge plan={isPremium ? 'Premium' : 'Basic'} />

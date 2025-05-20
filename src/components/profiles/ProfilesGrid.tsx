@@ -6,9 +6,9 @@ import DemoProfilesGrid from "./DemoProfilesGrid";
 
 interface ProfileWithDetails {
   id: string;
-  name: string;
-  avatar: string | null;
-  watch_connected: boolean;
+  first_name: string | null;
+  avatar?: string | null;
+  watch_connected?: boolean;
   kcalRatio: number;
   currentKcal: number;
   dailyGoal: number;

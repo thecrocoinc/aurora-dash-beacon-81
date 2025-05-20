@@ -20,7 +20,6 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Skeleton } from "@/components/ui/skeleton";
-import { cn } from "@/lib/utils";
 import { useClientDetail } from "@/hooks/useClientDetail";
 import MacroChips from "@/components/MacroChips";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";

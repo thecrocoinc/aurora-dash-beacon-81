@@ -44,3 +44,18 @@ export const getGoalInfo = (goalType?: string | null) => {
     </div>
   );
 };
+
+/**
+ * Get initials from first_name or username
+ */
+export const getInitials = (profile: { first_name?: string | null, username?: string | null }) => {
+  if (profile.first_name) {
+    return profile.first_name.charAt(0).toUpperCase();
+  }
+  
+  if (profile.username) {
+    return profile.username.charAt(0).toUpperCase();
+  }
+  
+  return "?";
+};

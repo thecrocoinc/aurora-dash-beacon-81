@@ -37,8 +37,7 @@ export const useClientDetail = (clientId: string | undefined, selectedDate: Date
     queryFn: async () => {
       if (!clientId || !profile?.telegram_id) return null;
       const { data, error } = await supabase
-        .rpc('get_current_summary', { _chat_id: profile?.telegram_id })
-        .single();
+        .rpc('get_current_summary', { _chat_id: profile?.telegram_id });
       
       if (error) {
         if (error.code === 'PGRST116') {
@@ -48,7 +47,17 @@ export const useClientDetail = (clientId: string | undefined, selectedDate: Date
         throw error;
       }
       
-      return data as Digest;
+      return data as {
+        kcal: number;
+        prot: number;
+        fat: number;
+        carb: number;
+        chat_id: number;
+        for_date: string;
+        created_at: string;
+        meals_json: string[];
+        summary_md: string;
+      };
     },
     enabled: !!profile?.telegram_id
   });

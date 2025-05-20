@@ -13,14 +13,26 @@ import ChatTab from "@/components/profile/ChatTab";
 import { Database } from '@/supabase/types/database.types';
 
 type Profile = Database['public']['Tables']['profiles']['Row'];
+type Meal = Database['public']['Tables']['meals']['Row'] & {
+  photo_id?: string;  // Adding optional photo_id field
+};
 
 interface ProfileExtended extends Profile {
+  locale?: string;
   goal_type?: string;
   subscription_status?: string;
   weight?: number;
   height?: number;
   target_weight?: number;
   avatar_url?: string | null;
+}
+
+interface SummaryType {
+  kcal: number;
+  prot: number;
+  fat: number;
+  carb: number;
+  summary_md?: string;
 }
 
 const ProfileDetail = () => {
@@ -36,7 +48,7 @@ const ProfileDetail = () => {
     queryFn: async () => {
       const { data, error } = await supabase
         .from('profiles')
-        .select('id, first_name, username, telegram_id, created_at')
+        .select('id, first_name, username, telegram_id, created_at, locale')
         .eq('id', id)
         .single();
       
@@ -58,7 +70,7 @@ const ProfileDetail = () => {
   });
 
   // Fetch day summary for calories
-  const { data: summary, isLoading: summaryLoading } = useQuery({
+  const { data: summaryData, isLoading: summaryLoading } = useQuery({
     queryKey: ['day-summary', id, today],
     queryFn: async () => {
       if (!profile?.telegram_id) return null;
@@ -73,6 +85,9 @@ const ProfileDetail = () => {
     },
     enabled: !!profile?.telegram_id
   });
+
+  // Cast summary data to the correct type
+  const summary: SummaryType = summaryData as SummaryType;
 
   // Update kcalRatio when summary changes
   useEffect(() => {
@@ -95,7 +110,10 @@ const ProfileDetail = () => {
         .limit(20);
       
       if (error) throw error;
-      return data || [];
+      return (data || []).map(meal => ({
+        ...meal,
+        photo_id: undefined
+      })) as Meal[];
     },
     enabled: !!profile?.telegram_id
   });
