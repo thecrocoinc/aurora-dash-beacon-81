@@ -6,8 +6,7 @@ import { format } from "date-fns";
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle } from "@/components/ui/drawer";
 import ChatInterface from "@/components/ChatInterface";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { MessageSquare, Plus, Search } from "lucide-react";
+import { MessageSquare, Search } from "lucide-react";
 import { toast } from "@/components/ui/use-toast";
 
 // Mock data for dialog placeholders
@@ -82,27 +81,21 @@ const Dialogs = () => {
     const today = new Date();
     const isToday = date.toDateString() === today.toDateString();
     
-    // Updated format to use colon (:) between hours and minutes
+    // Using colon format for time
     return isToday ? format(date, "HH:mm") : format(date, "dd.MM");
   };
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight">Диалоги</h1>
-          <p className="text-muted-foreground mt-2">
-            Управляйте беседами между клиентами и ботом
-          </p>
-        </div>
-        <Button variant="default" className="gap-1.5">
-          <Plus size={18} />
-          Создать обращение
-        </Button>
+      <div>
+        <h1 className="text-3xl font-bold tracking-tight">Диалоги</h1>
+        <p className="text-muted-foreground mt-2">
+          Управляйте беседами между клиентами и ботом
+        </p>
       </div>
       
-      <Card className="glass-morphism border-white/5">
-        <CardHeader className="flex flex-row items-center justify-between">
+      <Card className="glass-morphism border-white/5 overflow-hidden">
+        <CardHeader className="flex flex-row items-center justify-between border-b border-white/5 pb-4">
           <div>
             <CardTitle>Недавние беседы</CardTitle>
             <CardDescription>Просмотр и управление диалогами клиентов с ботом</CardDescription>
@@ -116,8 +109,8 @@ const Dialogs = () => {
             />
           </div>
         </CardHeader>
-        <CardContent>
-          <div className="space-y-1 divide-y divide-white/5">
+        <CardContent className="p-0">
+          <div className="divide-y divide-white/5">
             {mockDialogs.map((dialog) => {
               const initials = dialog.name
                 ? dialog.name
@@ -129,7 +122,7 @@ const Dialogs = () => {
               return (
                 <div 
                   key={dialog.id} 
-                  className={`p-3 -mx-3 flex items-center gap-4 hover:bg-muted rounded-md cursor-pointer transition-colors ${dialog.id === selectedDialog ? 'bg-muted/70' : ''}`}
+                  className={`p-4 flex items-center gap-4 hover:bg-muted/30 cursor-pointer transition-colors ${dialog.id === selectedDialog ? 'bg-muted/50' : ''}`}
                   onClick={() => handleDialogClick(dialog.id)}
                 >
                   <div className="relative">
@@ -145,7 +138,6 @@ const Dialogs = () => {
                   <div className="flex-1 min-w-0">
                     <div className="flex justify-between items-center">
                       <div className="font-medium">{dialog.name}</div>
-                      {/* Moved timestamp to its own container */}
                       <div className="text-xs text-muted-foreground">
                         {formatTime(dialog.timestamp)}
                       </div>
@@ -153,7 +145,6 @@ const Dialogs = () => {
                     <div className="text-sm text-muted-foreground truncate">
                       {dialog.lastMessage}
                     </div>
-                    {/* Moved the badge out of the timestamp container and placed it below */}
                     {dialog.unread > 0 && (
                       <div className="flex justify-end mt-1">
                         <Badge className="h-5 min-w-5 flex items-center justify-center bg-primary text-white rounded-full px-1.5 py-0">
@@ -193,6 +184,11 @@ const Dialogs = () => {
                     </AvatarFallback>
                   </Avatar>
                   <span>{selectedDialogData.name}</span>
+                  {selectedDialogData.isActive && (
+                    <span className="badge-status badge-status-active text-xs text-muted-foreground">
+                      Онлайн
+                    </span>
+                  )}
                 </>
               )}
             </DrawerTitle>
@@ -200,11 +196,6 @@ const Dialogs = () => {
           <div className="p-0 h-[calc(100%-60px)] flex flex-col">
             <div className="flex-1">
               <ChatInterface profileId={selectedDialog || undefined} />
-            </div>
-            <div className="p-4 border-t">
-              <Button variant="default" className="w-full">
-                Написать ответ
-              </Button>
             </div>
           </div>
         </DrawerContent>
