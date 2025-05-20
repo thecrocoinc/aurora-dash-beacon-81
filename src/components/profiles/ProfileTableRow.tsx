@@ -87,7 +87,7 @@ const ProfileTableRow = ({ profile }: ProfileTableRowProps) => {
       <TableCell>
         <div className="flex flex-col items-end">
           <div className="text-xs mb-1 whitespace-nowrap">
-            {profile.currentKcal}/{profile.dailyGoal} ккал
+            {profile.currentKcal} / {profile.dailyGoal} ккал
           </div>
           <div className="w-full flex items-center gap-2">
             <Progress 

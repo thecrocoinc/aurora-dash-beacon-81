@@ -6,9 +6,7 @@ import ProfilesError from "@/components/profiles/ProfilesError";
 import SearchAndFilters from "@/components/profiles/SearchAndFilters";
 import ProfilesLoading from "@/components/profiles/ProfilesLoading";
 import ProfilesList from "@/components/profiles/ProfilesList";
-import { RefreshCw } from "lucide-react";
 import { ProfilesStats } from "@/components/profiles/ProfilesStats";
-import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 
 // Using the updated interface with subscription_status as string
@@ -76,38 +74,17 @@ const Profiles = () => {
     return matchesSearch;
   });
 
-  // Function to manually refresh data
-  const handleRefresh = () => {
-    refreshProfiles();
-    toast({
-      title: "Обновление данных",
-      description: "Данные профилей обновляются...",
-    });
-  };
-
   if (error) {
     return <ProfilesError error={error} />;
   }
 
   return (
     <div className="space-y-6">
-      <div className="flex justify-between items-start">
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight">Клиенты</h1>
-          <p className="text-muted-foreground mt-1">
-            Управление профилями пользователей и их питанием
-          </p>
-        </div>
-        
-        <Button 
-          variant="outline" 
-          size="sm" 
-          onClick={handleRefresh}
-          className="flex items-center gap-1"
-        >
-          <RefreshCw className="h-3.5 w-3.5" />
-          Обновить
-        </Button>
+      <div>
+        <h1 className="text-3xl font-bold tracking-tight">Клиенты</h1>
+        <p className="text-muted-foreground mt-1">
+          Управление профилями пользователей и их питанием
+        </p>
       </div>
 
       {/* Statistics Panel */}
@@ -130,7 +107,7 @@ const Profiles = () => {
               <p>Не удалось загрузить данные профилей.</p>
               <button 
                 className="mt-4 px-4 py-2 bg-primary text-white rounded" 
-                onClick={handleRefresh}
+                onClick={refreshProfiles}
               >
                 Попробовать снова
               </button>
