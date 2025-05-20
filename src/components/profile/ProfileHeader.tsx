@@ -1,7 +1,7 @@
 
 import React from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
+import { getSubscriptionBadge } from "@/utils/profileUtils";
 
 type ProfileHeaderProps = {
   profile: {
@@ -9,6 +9,7 @@ type ProfileHeaderProps = {
     name: string | null;
     avatar_url: string | null;
     goal_type?: string | null;
+    subscription_status?: string;
   };
 };
 
@@ -17,18 +18,6 @@ const ProfileHeader = ({ profile }: ProfileHeaderProps) => {
     ?.split(" ")
     .map((n) => n[0])
     .join("") || "";
-    
-  // Determine plan type based on user ID (since subscription_status doesn't exist in the table)
-  const getPlanBadge = () => {
-    // Using a hash of the ID to deterministically assign a plan type
-    const isPremium = profile.id.charCodeAt(0) % 2 === 0; 
-    
-    if (isPremium) {
-      return <Badge className="bg-purple-600/90 text-white">Premium</Badge>;
-    } else {
-      return <Badge className="bg-blue-600/90 text-white">Basic</Badge>;
-    }
-  };
     
   return (
     <div className="flex items-start justify-between">
@@ -44,7 +33,9 @@ const ProfileHeader = ({ profile }: ProfileHeaderProps) => {
         <div>
           <div className="flex items-center gap-2">
             <h1 className="text-3xl font-bold tracking-tight">{profile?.name}</h1>
-            {getPlanBadge()}
+            {profile.subscription_status ? 
+              getSubscriptionBadge(profile.subscription_status) : 
+              getSubscriptionBadge('basic')}
           </div>
         </div>
       </div>
