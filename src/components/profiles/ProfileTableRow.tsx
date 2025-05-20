@@ -71,7 +71,7 @@ const ProfileTableRow = ({ profile }: ProfileTableRowProps) => {
               ${isPremium ? 'bg-purple-500/10 text-purple-400' : 
               'bg-blue-500/10 text-blue-400'}`}
             >
-              {profile.avatar ? initials : <User className="h-4 w-4" />}
+              <User className="h-4 w-4" />
             </AvatarFallback>
           )}
         </Avatar>
