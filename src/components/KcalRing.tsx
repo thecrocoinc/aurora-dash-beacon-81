@@ -3,15 +3,14 @@ import React from "react";
 
 type KcalRingProps = {
   value: number;
-  target?: number;
-  size?: "sm" | "md" | "lg";
+  size?: number | "sm" | "md" | "lg";
+  showValue?: boolean;
   label?: string;
 };
 
-const KcalRing = ({ value, target = 2000, size = "md", label }: KcalRingProps) => {
-  const percentage = Math.min((value / target) * 100, 100);
+const KcalRing = ({ value, size = "md", showValue, label }: KcalRingProps) => {
+  const percentage = Math.min((value) * 100, 100);
   const safeValue = isNaN(value) ? 0 : value;
-  const safeTarget = isNaN(target) || target === 0 ? 2000 : target;
   const safePercentage = isNaN(percentage) ? 0 : percentage;
 
   // Determine progress color based on percentage
@@ -23,6 +22,14 @@ const KcalRing = ({ value, target = 2000, size = "md", label }: KcalRingProps) =
 
   // Size configurations
   const getSizeConfig = () => {
+    if (typeof size === "number") {
+      return { 
+        width: `w-[${size}px] h-[${size}px]`, 
+        textSize: size > 60 ? "text-xl" : "text-sm", 
+        subTextSize: "text-xs" 
+      };
+    }
+
     switch (size) {
       case "sm":
         return { width: "w-24 h-24", textSize: "text-xl", subTextSize: "text-xs" };
@@ -67,8 +74,8 @@ const KcalRing = ({ value, target = 2000, size = "md", label }: KcalRingProps) =
           <span className={`${textSize} font-bold`}>{label}</span>
         ) : (
           <>
-            <span className={`${textSize} font-bold`}>{safeValue}</span>
-            <span className={`${subTextSize} text-muted-foreground`}>/ {safeTarget} ккал</span>
+            <span className={`${textSize} font-bold`}>{Math.round(safeValue * 100)}%</span>
+            {!showValue && <span className={`${subTextSize} text-muted-foreground`}>/ 100%</span>}
           </>
         )}
       </div>

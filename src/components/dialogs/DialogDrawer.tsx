@@ -7,7 +7,7 @@ import { DialogItem } from "./DialogListItem";
 import ChatBubble from "@/components/ChatBubble";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Loader2 } from "lucide-react";
-import { Message } from "@/types/chat";
+import { ChatLog, Message } from "@/types/chat";
 
 interface DialogDrawerProps {
   open: boolean;
@@ -95,7 +95,7 @@ const DialogDrawer = ({
   if (!selectedDialog) return null;
 
   return (
-    <Drawer open={open} onOpenChange={onOpenChange} direction="right">
+    <Drawer open={open} onOpenChange={onOpenChange}>
       <DrawerHeader className="flex flex-col gap-1.5 p-4 border-b">
         <h3 className="text-lg font-semibold">{selectedDialog.name}</h3>
         <p className="text-sm text-muted-foreground">

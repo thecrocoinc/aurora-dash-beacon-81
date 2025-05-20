@@ -10,7 +10,19 @@ import ProfileLoading from "@/components/profile/ProfileLoading";
 import OverviewTab from "@/components/profile/OverviewTab";
 import InsightsTab from "@/components/profile/InsightsTab";
 import ChatTab from "@/components/profile/ChatTab";
-import { Profile, ProfileExtended, Digest, Meal } from '@/types/profile';
+import { ProfileExtended, Digest, Meal } from '@/types/profile';
+
+type ExtendedMeal = {
+  id: string;
+  dish: string;
+  grams: number;
+  photo_id?: string;
+  eaten_at: string;
+  kcal?: number;
+  prot?: number;
+  fat?: number;
+  carb?: number;
+};
 
 const ProfileDetail = () => {
   const { id } = useParams<{ id: string }>();
@@ -60,13 +72,13 @@ const ProfileDetail = () => {
       if (error) throw error;
       
       // Cast to Digest type with proper typing
-      const digest: Digest = data ? {
-        kcal: typeof data.kcal === 'number' ? data.kcal : 0,
-        prot: typeof data.prot === 'number' ? data.prot : 0,
-        fat: typeof data.fat === 'number' ? data.fat : 0,
-        carb: typeof data.carb === 'number' ? data.carb : 0,
-        summary_md: typeof data.summary_md === 'string' ? data.summary_md : ''
-      } : { kcal: 0, prot: 0, fat: 0, carb: 0 };
+      const digest: Digest = {
+        kcal: typeof data?.kcal === 'number' ? data.kcal : 0,
+        prot: typeof data?.prot === 'number' ? data.prot : 0,
+        fat: typeof data?.fat === 'number' ? data.fat : 0,
+        carb: typeof data?.carb === 'number' ? data.carb : 0,
+        summary_md: typeof data?.summary_md === 'string' ? data.summary_md : ''
+      };
       
       return digest;
     },
@@ -100,14 +112,16 @@ const ProfileDetail = () => {
         if (error) throw error;
         
         // Map meals to the correct type with string IDs
-        return (data || []).map(meal => ({
+        const mappedMeals = (data || []).map(meal => ({
           ...meal,
           id: meal.id.toString(),
           // Add required fields for compatibility with existing components
           photo_id: undefined,
           chat_id: profile.telegram_id,
           deleted: false
-        })) as unknown as Meal[];
+        })) as unknown as ExtendedMeal[];
+        
+        return mappedMeals;
       } catch (error) {
         console.error("Error fetching meals:", error);
         return [];
@@ -162,7 +176,7 @@ const ProfileDetail = () => {
             profile={profile}
             summary={summary} 
             dailyGoal={dailyGoal} 
-            meals={meals} 
+            meals={meals as any} 
             mealsLoading={mealsLoading} 
           />
         </TabsContent>

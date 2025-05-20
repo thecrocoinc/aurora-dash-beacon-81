@@ -5,7 +5,9 @@ export type Profile = Database['public']['Tables']['profiles']['Row'];
 
 export type Meal = Database['public']['Tables']['meals']['Row'] & {
   photo_file_id?: string;
+  photo_id?: string;
   id: string;
+  deleted?: boolean;
 };
 
 export type Digest = {
@@ -20,8 +22,8 @@ export interface ProfileWithDetails {
   id: string;
   first_name?: string | null;
   username?: string | null;
-  avatar: string | null;
-  watch_connected: boolean;
+  avatar?: string | null;
+  watch_connected?: boolean;
   kcalRatio: number;
   currentKcal: number;
   dailyGoal: number;
@@ -38,7 +40,7 @@ export interface ProfileWithDetails {
   avatar_url?: string;
 }
 
-export interface ProfileExtended extends Profile {
+export interface ProfileExtended extends Omit<Profile, 'locale'> {
   goal_type?: string;
   subscription_status?: string;
   weight?: number;
