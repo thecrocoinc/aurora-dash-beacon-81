@@ -1,16 +1,14 @@
 
 import { useState } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { format } from "date-fns";
-import { Drawer, DrawerContent, DrawerHeader, DrawerTitle } from "@/components/ui/drawer";
-import ChatInterface from "@/components/ChatInterface";
-import { Badge } from "@/components/ui/badge";
-import { MessageSquare, Search } from "lucide-react";
+import { Card } from "@/components/ui/card";
 import { toast } from "@/components/ui/use-toast";
+import DialogHeader from "@/components/dialogs/DialogHeader";
+import DialogList from "@/components/dialogs/DialogList";
+import DialogDrawer from "@/components/dialogs/DialogDrawer";
+import { DialogItem } from "@/components/dialogs/DialogListItem";
 
 // Mock data for dialog placeholders
-const mockDialogs = [
+const mockDialogs: DialogItem[] = [
   {
     id: "1",
     name: "Анна Смирнова",
@@ -75,15 +73,6 @@ const Dialogs = () => {
   };
 
   const selectedDialogData = mockDialogs.find(dialog => dialog.id === selectedDialog);
-  
-  // Format timestamp with relative time
-  const formatTime = (date: Date) => {
-    const today = new Date();
-    const isToday = date.toDateString() === today.toDateString();
-    
-    // Using colon format for time
-    return isToday ? format(date, "HH:mm") : format(date, "dd.MM");
-  };
 
   return (
     <div className="space-y-6">
@@ -95,111 +84,23 @@ const Dialogs = () => {
       </div>
       
       <Card className="glass-morphism border-white/5 overflow-hidden">
-        <CardHeader className="flex flex-row items-center justify-between border-b border-white/5 pb-4">
-          <div>
-            <CardTitle>Недавние беседы</CardTitle>
-            <CardDescription>Просмотр и управление диалогами клиентов с ботом</CardDescription>
-          </div>
-          <div className="relative w-[240px]">
-            <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-            <input 
-              type="search"
-              placeholder="Поиск диалогов..."
-              className="w-full rounded-md border border-white/10 bg-black/20 py-2 pl-8 pr-3 text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary/30"
-            />
-          </div>
-        </CardHeader>
-        <CardContent className="p-0">
-          <div className="divide-y divide-white/5">
-            {mockDialogs.map((dialog) => {
-              const initials = dialog.name
-                ? dialog.name
-                    .split(" ")
-                    .map((n) => n[0])
-                    .join("")
-                : "?";
-                
-              return (
-                <div 
-                  key={dialog.id} 
-                  className={`h-[72px] p-4 flex items-center gap-4 hover:bg-muted/30 cursor-pointer transition-colors ${dialog.id === selectedDialog ? 'bg-muted/50' : ''}`}
-                  onClick={() => handleDialogClick(dialog.id)}
-                >
-                  <div className="relative flex-shrink-0">
-                    <Avatar>
-                      <AvatarImage src={dialog.avatar} alt={dialog.name} />
-                      <AvatarFallback>{initials}</AvatarFallback>
-                    </Avatar>
-                    {dialog.isActive && (
-                      <span className="absolute bottom-0 right-0 h-2.5 w-2.5 rounded-full bg-green-500 ring-1 ring-background"></span>
-                    )}
-                  </div>
-                  
-                  <div className="flex-1 min-w-0 flex flex-col justify-center h-full">
-                    <div className="flex justify-between items-center">
-                      <div className="font-medium truncate max-w-[180px]">{dialog.name}</div>
-                      <div className="text-xs text-muted-foreground">
-                        {formatTime(dialog.timestamp)}
-                      </div>
-                    </div>
-                    <div className="text-sm text-muted-foreground truncate max-w-full">
-                      {dialog.lastMessage}
-                    </div>
-                    {dialog.unread > 0 && (
-                      <div className="flex justify-end mt-1">
-                        <Badge className="h-5 min-w-5 flex items-center justify-center bg-primary text-white rounded-full px-1.5 py-0">
-                          {dialog.unread}
-                        </Badge>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-          
-          {mockDialogs.length === 0 && (
-            <div className="flex flex-col items-center justify-center py-12">
-              <MessageSquare className="h-12 w-12 text-muted-foreground/50 mb-4" />
-              <h3 className="text-lg font-medium mb-1">Нет диалогов</h3>
-              <p className="text-sm text-muted-foreground">Создайте новое обращение или подождите, пока клиенты не начнут общаться.</p>
-            </div>
-          )}
-        </CardContent>
+        <DialogHeader 
+          title="Недавние беседы" 
+          description="Просмотр и управление диалогами клиентов с ботом"
+        />
+        <DialogList 
+          dialogs={mockDialogs}
+          selectedDialogId={selectedDialog}
+          onDialogClick={handleDialogClick}
+        />
       </Card>
 
-      <Drawer open={openDrawer} onOpenChange={setOpenDrawer}>
-        <DrawerContent className="h-[85vh]">
-          <DrawerHeader className="border-b">
-            <DrawerTitle className="flex items-center gap-3">
-              {selectedDialogData && (
-                <>
-                  <Avatar className="h-8 w-8">
-                    <AvatarImage src={selectedDialogData.avatar} alt={selectedDialogData.name} />
-                    <AvatarFallback>
-                      {selectedDialogData.name
-                        .split(" ")
-                        .map((n) => n[0])
-                        .join("")}
-                    </AvatarFallback>
-                  </Avatar>
-                  <span>{selectedDialogData.name}</span>
-                  {selectedDialogData.isActive && (
-                    <span className="badge-status badge-status-active text-xs text-muted-foreground">
-                      Онлайн
-                    </span>
-                  )}
-                </>
-              )}
-            </DrawerTitle>
-          </DrawerHeader>
-          <div className="p-0 h-[calc(100%-60px)] flex flex-col">
-            <div className="flex-1">
-              <ChatInterface profileId={selectedDialog || undefined} />
-            </div>
-          </div>
-        </DrawerContent>
-      </Drawer>
+      <DialogDrawer
+        open={openDrawer}
+        onOpenChange={setOpenDrawer}
+        selectedDialog={selectedDialogData}
+        selectedDialogId={selectedDialog}
+      />
     </div>
   );
 };
