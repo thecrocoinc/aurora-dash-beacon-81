@@ -12,7 +12,8 @@ import ProfileTableRow from "./ProfileTableRow";
 
 interface ProfileWithDetails {
   id: string;
-  name: string;
+  first_name?: string | null;
+  username?: string | null;
   avatar: string | null;
   watch_connected: boolean;
   kcalRatio: number;

@@ -9,10 +9,11 @@ import ProfilesList from "@/components/profiles/ProfilesList";
 import { ProfilesStats } from "@/components/profiles/ProfilesStats";
 import { useToast } from "@/hooks/use-toast";
 
-// Using the updated interface with subscription_status as string
+// Using the updated interface with first_name and username instead of name
 interface ProfileWithDetails {
   id: string;
   first_name?: string | null;
+  username?: string | null;
   avatar: string | null;
   watch_connected: boolean;
   kcalRatio: number;
@@ -51,7 +52,9 @@ const Profiles = () => {
   // Сразу фильтруем профили по поисковому запросу и активному фильтру
   const filteredProfiles = profiles?.filter(profile => {
     // Filter by search query
-    const matchesSearch = profile.first_name?.toLowerCase().includes(searchQuery.toLowerCase()) || false;
+    const matchesSearch = profile.first_name?.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                         profile.username?.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                         false;
     
     // Filter by selected filter if any
     if (activeFilter) {

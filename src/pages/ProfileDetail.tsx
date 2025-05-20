@@ -14,7 +14,7 @@ import { Database } from '@/supabase/types/database.types';
 
 type Profile = Database['public']['Tables']['profiles']['Row'];
 type Meal = Database['public']['Tables']['meals']['Row'] & {
-  photo_id?: string;  // Adding optional photo_id field
+  photo_file_id?: string;  // Adding optional photo_file_id field
 };
 
 interface ProfileExtended extends Profile {
@@ -24,9 +24,10 @@ interface ProfileExtended extends Profile {
   height?: number;
   target_weight?: number;
   avatar?: string | null;
+  locale?: string;
 }
 
-interface SummaryType {
+interface Digest {
   kcal: number;
   prot: number;
   fat: number;
@@ -69,7 +70,7 @@ const ProfileDetail = () => {
   });
 
   // Fetch day summary for calories
-  const { data: summaryData, isLoading: summaryLoading } = useQuery({
+  const { data: digestData, isLoading: summaryLoading } = useQuery({
     queryKey: ['day-summary', id, today],
     queryFn: async () => {
       if (!profile?.telegram_id) return null;
@@ -80,13 +81,23 @@ const ProfileDetail = () => {
         });
       
       if (error) throw error;
-      return data as SummaryType || { kcal: 0, prot: 0, fat: 0, carb: 0, summary_md: '' };
+      
+      // Cast to Digest type to ensure we have the expected structure
+      const digest: Digest = data ? {
+        kcal: data.kcal || 0,
+        prot: data.prot || 0,
+        fat: data.fat || 0,
+        carb: data.carb || 0,
+        summary_md: data.summary_md || ''
+      } : { kcal: 0, prot: 0, fat: 0, carb: 0, summary_md: '' };
+      
+      return digest;
     },
     enabled: !!profile?.telegram_id
   });
 
   // Cast summary data to the correct type
-  const summary = summaryData as SummaryType;
+  const summary = digestData || { kcal: 0, prot: 0, fat: 0, carb: 0, summary_md: '' };
 
   // Update kcalRatio when summary changes
   useEffect(() => {
@@ -103,15 +114,15 @@ const ProfileDetail = () => {
       
       const { data, error } = await supabase
         .from('meals')
-        .select('id,dish,grams,eaten_at,kcal,prot,fat,carb')
+        .select('id, dish, grams, eaten_at, kcal, prot, fat, carb, photo_file_id')
         .eq('chat_id', profile.telegram_id)
         .order('eaten_at', { ascending: false })
         .limit(20);
       
       if (error) throw error;
+      
       return (data || []).map(meal => ({
         ...meal,
-        photo_id: undefined,
         id: meal.id.toString() // Convert id to string to match expected type
       }));
     },
@@ -139,6 +150,7 @@ const ProfileDetail = () => {
   const headerProfile = {
     id: profile.id,
     first_name: profile.first_name,
+    username: profile.username,
     goal_type: profile.goal_type,
     subscription_status: profile.subscription_status
   };

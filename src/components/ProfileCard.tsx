@@ -9,6 +9,7 @@ interface ProfileCardProps {
   profile: {
     id: string;
     first_name?: string | null;
+    username?: string | null;
     avatar?: string | null;
     kcalRatio: number;
     currentKcal: number;
@@ -46,6 +47,11 @@ const ProfileCard = ({ profile }: ProfileCardProps) => {
               <h3 className="font-semibold line-clamp-1">
                 {profile.first_name || "Пользователь"}
               </h3>
+              {profile.username && (
+                <p className="text-xs text-muted-foreground">
+                  @{profile.username}
+                </p>
+              )}
               {getGoalInfo(profile.goal_type)}
             </div>
           </div>
@@ -56,9 +62,9 @@ const ProfileCard = ({ profile }: ProfileCardProps) => {
         <div className="flex items-center justify-center py-1">
           <KcalRing 
             value={profile.kcalRatio} 
-            current={profile.currentKcal}
-            goal={profile.dailyGoal}
-            size="md" 
+            size="md"
+            // Make sure KcalRing receives properties it expects
+            label={`${profile.currentKcal}/${profile.dailyGoal}`}
           />
         </div>
         <MacroChips

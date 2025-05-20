@@ -11,6 +11,7 @@ const DemoProfilesGrid = () => {
   const fakeDemoProfiles = Array.from({ length: 8 }, (_, i) => ({
     id: `demo-${i + 1}`,
     first_name: faker.person.firstName(),
+    username: faker.internet.userName(),
     avatar: null
   }));
 
