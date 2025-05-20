@@ -46,8 +46,8 @@ const ProfileTableRow = ({ profile }: ProfileTableRowProps) => {
   
   // Get progress bar color based on subscription status
   const getProgressColor = () => {
-    if (isPremium) return "rgba(139, 92, 246, 0.7)"; // Softer purple color
-    return "rgba(59, 130, 246, 0.7)"; // Softer blue color
+    if (isPremium) return "rgb(139, 92, 246)"; // purple-500
+    return "rgb(59, 130, 246)"; // blue-500
   };
   
   // Navigate to profile detail page using React Router
@@ -62,11 +62,11 @@ const ProfileTableRow = ({ profile }: ProfileTableRowProps) => {
       onClick={handleClick}
     >
       <TableCell className="flex items-center gap-2">
-        <Avatar className={`h-8 w-8 flex-shrink-0 ${isPremium ? 'ring-1 ring-purple-500/20' : 'ring-1 ring-blue-500/20'}`}>
+        <Avatar className={`h-8 w-8 flex-shrink-0 ${isPremium ? 'ring-1 ring-purple-500/30' : 'ring-1 ring-blue-500/30'}`}>
           <AvatarImage src={profile.avatar || undefined} alt={profile.name} />
           <AvatarFallback className={`
-            ${isPremium ? 'bg-purple-500/5 text-purple-400' : 
-            'bg-blue-500/5 text-blue-400'} text-xs`}
+            ${isPremium ? 'bg-purple-500/10 text-purple-400' : 
+            'bg-blue-500/10 text-blue-400'} text-xs`}
           >
             {initials}
           </AvatarFallback>
@@ -86,13 +86,13 @@ const ProfileTableRow = ({ profile }: ProfileTableRowProps) => {
       
       <TableCell>
         <div className="flex flex-col items-end">
-          <div className="text-xs mb-1 whitespace-nowrap text-muted-foreground">
+          <div className="text-xs mb-1 whitespace-nowrap">
             {profile.currentKcal} / {profile.dailyGoal} ккал
           </div>
           <div className="w-full flex items-center gap-2">
             <Progress 
               value={progressPercentage} 
-              className="h-2 flex-1 bg-muted/30" 
+              className="h-2 flex-1 bg-muted/50" 
               style={{ 
                 "--progress-background": getProgressColor(),
               } as React.CSSProperties}
