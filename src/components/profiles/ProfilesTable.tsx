@@ -25,7 +25,7 @@ interface ProfileWithDetails {
   created_at?: string | null;
   last_activity?: string | null;
   streak_days?: number;
-  subscription_status?: 'active' | 'trial' | 'expired';
+  subscription_status?: string;
 }
 
 interface ProfilesTableProps {
