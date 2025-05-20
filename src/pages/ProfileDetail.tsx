@@ -1,6 +1,6 @@
 
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { format } from "date-fns";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -13,17 +13,18 @@ import ChatTab from "@/components/profile/ChatTab";
 
 const ProfileDetail = () => {
   const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
   const today = format(new Date(), "yyyy-MM-dd");
   const [kcalRatio, setKcalRatio] = useState(0);
   const [dailyGoal, setDailyGoal] = useState(2000);
   
-  // Fetch profile data
+  // Fetch profile data with metrics
   const { data: profile, isLoading: profileLoading } = useQuery({
     queryKey: ['profile', id],
     queryFn: async () => {
       const { data, error } = await supabase
         .from('profiles')
-        .select('id, name, avatar_url, goal_type')
+        .select('id, name, avatar_url, goal_type, subscription_status, height, weight, target_weight')
         .eq('id', id)
         .single();
       
@@ -103,6 +104,7 @@ const ProfileDetail = () => {
         
         <TabsContent value="overview" className="mt-6">
           <OverviewTab 
+            profile={profile}
             summary={summary} 
             dailyGoal={dailyGoal} 
             meals={meals} 

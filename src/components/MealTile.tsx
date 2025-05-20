@@ -3,6 +3,7 @@ import React from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { format, parseISO, isValid } from "date-fns";
+import { Utensils, Coffee, Apple, Egg } from "lucide-react";
 
 type MealProps = {
   id: string;
@@ -20,28 +21,34 @@ type MealTileProps = {
   meal: MealProps;
 };
 
-// Unsplash fallback images for food
-const FALLBACK_IMAGES = [
-  "https://images.unsplash.com/photo-1618160702438-9b02ab6515c9",
-  "https://images.unsplash.com/photo-1546069901-ba9599a7e63c",
-  "https://images.unsplash.com/photo-1504674900247-0877df9cc836",
-  "https://images.unsplash.com/photo-1512621776951-a57141f2eefd",
-  "https://images.unsplash.com/photo-1495521821757-a1efb6729352",
-  "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe",
+// Icons for different meal types
+const mealIcons = [
+  Utensils,
+  Coffee, 
+  Apple,
+  Egg,
 ];
 
 const MealTile = ({ meal }: MealTileProps) => {
-  // Get a consistent fallback image based on the meal id
-  const getFallbackImage = () => {
-    if (!meal.id) return FALLBACK_IMAGES[0];
-    const index = Math.abs(meal.id.charCodeAt(0) % FALLBACK_IMAGES.length);
-    return FALLBACK_IMAGES[index];
+  // Get a consistent icon based on the meal id
+  const getMealIcon = () => {
+    if (!meal.id) return mealIcons[0];
+    const index = Math.abs(meal.id.charCodeAt(0) % mealIcons.length);
+    const IconComponent = mealIcons[index];
+    return <IconComponent className="h-6 w-6" />;
+  };
+  
+  // Get background color based on meal type
+  const getBackgroundColor = () => {
+    if (!meal.id) return "bg-blue-600";
+    const charCode = meal.id.charCodeAt(0);
+    
+    if (charCode % 4 === 0) return "bg-blue-600";
+    if (charCode % 4 === 1) return "bg-emerald-600";
+    if (charCode % 4 === 2) return "bg-amber-600";
+    return "bg-purple-600";
   };
 
-  const imageUrl = meal.photo_id 
-    ? `${meal.photo_id}?w=400&h=300&fit=crop`
-    : `${getFallbackImage()}?w=400&h=300&fit=crop`;
-  
   const formattedTime = meal.eaten_at && isValid(parseISO(meal.eaten_at))
     ? format(parseISO(meal.eaten_at), "h:mm a")
     : "Unknown time";
@@ -50,29 +57,34 @@ const MealTile = ({ meal }: MealTileProps) => {
     <Tooltip>
       <TooltipTrigger asChild>
         <Card className="overflow-hidden">
-          <div className="relative h-40">
-            <img
-              src={imageUrl}
-              alt={meal.dish || "Food item"}
-              className="object-cover w-full h-full"
-            />
-            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-3">
-              <h3 className="font-medium text-white">{meal.dish || "Unknown meal"}</h3>
-              <div className="flex justify-between">
-                <span className="text-sm text-white/90">{formattedTime}</span>
-                <span className="text-sm font-semibold text-white">{meal.kcal || 0} kcal</span>
+          <CardContent className="p-0">
+            <div className="flex items-center">
+              <div className={`${getBackgroundColor()} h-full p-4 flex items-center justify-center text-white`}>
+                {getMealIcon()}
+              </div>
+              <div className="p-3 flex-1">
+                <h3 className="font-medium">{meal.dish || "Unknown meal"}</h3>
+                <div className="flex justify-between text-sm text-muted-foreground">
+                  <span>{formattedTime}</span>
+                  <span className="font-semibold">{meal.kcal || 0} ккал</span>
+                </div>
+                {meal.grams && (
+                  <span className="text-xs text-muted-foreground block mt-1">
+                    Порция: {meal.grams}г
+                  </span>
+                )}
               </div>
             </div>
-          </div>
+          </CardContent>
         </Card>
       </TooltipTrigger>
       <TooltipContent>
         <div className="space-y-1">
           <p className="font-medium">{meal.dish || "Unknown meal"}</p>
-          <p className="text-xs">Protein: {meal.prot || 0}g</p>
-          <p className="text-xs">Carbs: {meal.carb || 0}g</p>
-          <p className="text-xs">Fat: {meal.fat || 0}g</p>
-          {meal.grams && <p className="text-xs">Weight: {meal.grams}g</p>}
+          <p className="text-xs">Белки: {meal.prot || 0}г</p>
+          <p className="text-xs">Углеводы: {meal.carb || 0}г</p>
+          <p className="text-xs">Жиры: {meal.fat || 0}г</p>
+          {meal.grams && <p className="text-xs">Вес порции: {meal.grams}г</p>}
         </div>
       </TooltipContent>
     </Tooltip>

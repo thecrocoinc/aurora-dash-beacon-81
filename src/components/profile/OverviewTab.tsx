@@ -1,13 +1,27 @@
 
 import React from "react";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
+import { Ruler, Weight, Target } from "lucide-react";
+import { Progress } from "@/components/ui/progress";
 import KcalRing from "@/components/KcalRing";
 import MacroChips from "@/components/MacroChips";
 import MasonryGrid from "@/components/MasonryGrid";
 import MealGridSkeleton from "@/components/MealGridSkeleton";
 import MealTilePlaceholder from "@/components/MealTilePlaceholder";
 
+type ProfileType = {
+  id: string;
+  name: string | null;
+  avatar_url: string | null;
+  goal_type?: string | null;
+  subscription_status?: string;
+  height?: number | null;
+  weight?: number | null;
+  target_weight?: number | null;
+};
+
 type OverviewTabProps = {
+  profile: ProfileType;
   summary: {
     kcal: number;
     prot: number;
@@ -29,14 +43,24 @@ type OverviewTabProps = {
   mealsLoading: boolean;
 };
 
-const OverviewTab = ({ summary, dailyGoal, meals, mealsLoading }: OverviewTabProps) => {
+const OverviewTab = ({ profile, summary, dailyGoal, meals, mealsLoading }: OverviewTabProps) => {
   // Create placeholder meals for empty state
   const placeholderMeals = Array.from({ length: 6 }).map((_, i) => (
     <MealTilePlaceholder key={`placeholder-${i}`} />
   ));
   
+  // Calculate weight progress percentage if both values exist
+  const weightProgressPercentage = 
+    profile.weight && profile.target_weight && profile.target_weight !== profile.weight
+      ? Math.min(100, Math.max(0, (profile.weight / profile.target_weight) * 100))
+      : null;
+  
+  // Determine if weight target is to lose or gain weight
+  const isWeightLoss = profile.weight && profile.target_weight ? profile.weight > profile.target_weight : false;
+  
   return (
     <div className="grid gap-6 md:grid-cols-2">
+      {/* Nutrition metrics card */}
       <Card>
         <CardHeader>
           <CardTitle>Питание за день</CardTitle>
@@ -71,7 +95,62 @@ const OverviewTab = ({ summary, dailyGoal, meals, mealsLoading }: OverviewTabPro
         </CardContent>
       </Card>
       
+      {/* Client metrics card */}
       <Card>
+        <CardHeader>
+          <CardTitle>Физические показатели</CardTitle>
+          <CardDescription>Рост, вес и цель</CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-6">
+          <div className="grid grid-cols-2 gap-4">
+            <div className="flex items-center gap-3 p-3 border rounded-md border-border/40">
+              <Ruler className="h-5 w-5 text-muted-foreground" />
+              <div>
+                <div className="text-sm font-medium">Рост</div>
+                <div className="text-xl font-semibold">{profile.height || '—'} {profile.height ? 'см' : ''}</div>
+              </div>
+            </div>
+            <div className="flex items-center gap-3 p-3 border rounded-md border-border/40">
+              <Weight className="h-5 w-5 text-muted-foreground" />
+              <div>
+                <div className="text-sm font-medium">Текущий вес</div>
+                <div className="text-xl font-semibold">{profile.weight || '—'} {profile.weight ? 'кг' : ''}</div>
+              </div>
+            </div>
+          </div>
+          
+          {profile.target_weight && (
+            <div className="space-y-2 pt-2">
+              <div className="flex justify-between items-center">
+                <div className="flex items-center gap-2">
+                  <Target className="h-4 w-4 text-muted-foreground" />
+                  <span className="text-sm font-medium">Целевой вес</span>
+                </div>
+                <span className="text-sm font-semibold">{profile.target_weight} кг</span>
+              </div>
+              
+              {weightProgressPercentage !== null && (
+                <div className="space-y-1">
+                  <Progress 
+                    value={weightProgressPercentage} 
+                    className="h-2"
+                    style={{
+                      "--progress-background": isWeightLoss ? "rgb(239, 68, 68)" : "rgb(34, 197, 94)",
+                    } as React.CSSProperties}
+                  />
+                  <div className="flex justify-between text-xs text-muted-foreground">
+                    <span>Текущий: {profile.weight} кг</span>
+                    <span>Цель: {profile.target_weight} кг</span>
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+        </CardContent>
+      </Card>
+      
+      {/* Meals card */}
+      <Card className="md:col-span-2">
         <CardHeader>
           <CardTitle>Приемы пищи</CardTitle>
           <CardDescription>Съеденные продукты</CardDescription>
