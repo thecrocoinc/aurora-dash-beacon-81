@@ -1,7 +1,7 @@
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import { format } from "date-fns";
+import { formatTime } from "@/utils/dateUtils";
 
 export interface DialogItem {
   id: string;
@@ -20,15 +20,6 @@ interface DialogListItemProps {
 }
 
 export const DialogListItem = ({ dialog, isSelected, onClick }: DialogListItemProps) => {
-  // Format timestamp with relative time
-  const formatTime = (date: Date) => {
-    const today = new Date();
-    const isToday = date.toDateString() === today.toDateString();
-    
-    // Using colon format for time
-    return isToday ? format(date, "HH:mm") : format(date, "dd.MM");
-  };
-
   const initials = dialog.name
     ? dialog.name
         .split(" ")

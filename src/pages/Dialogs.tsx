@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState, useCallback, useMemo } from "react";
 import { Card } from "@/components/ui/card";
 import { toast } from "@/components/ui/use-toast";
 import DialogHeader from "@/components/dialogs/DialogHeader";
@@ -59,20 +59,37 @@ const mockDialogs: DialogItem[] = [
 const Dialogs = () => {
   const [openDrawer, setOpenDrawer] = useState(false);
   const [selectedDialog, setSelectedDialog] = useState<string | null>(null);
+  const [searchQuery, setSearchQuery] = useState<string>("");
   
-  const handleDialogClick = (dialogId: string) => {
+  // Filter dialogs based on search query
+  const filteredDialogs = useMemo(() => {
+    const query = searchQuery.toLowerCase().trim();
+    if (!query) return mockDialogs;
+    
+    return mockDialogs.filter(dialog => 
+      dialog.name.toLowerCase().includes(query) || 
+      dialog.lastMessage.toLowerCase().includes(query)
+    );
+  }, [searchQuery]);
+  
+  const handleDialogClick = useCallback((dialogId: string) => {
     setSelectedDialog(dialogId);
     setOpenDrawer(true);
-  };
+  }, []);
   
-  const handlePingBot = () => {
+  const handleSearchChange = useCallback((query: string) => {
+    setSearchQuery(query);
+  }, []);
+  
+  const handlePingBot = useCallback(() => {
     toast({
       title: "Бот активирован",
       description: "Бот начал работу с новым клиентом.",
     });
-  };
+  }, []);
 
   const selectedDialogData = mockDialogs.find(dialog => dialog.id === selectedDialog);
+  const isFiltering = searchQuery.trim().length > 0;
 
   return (
     <div className="space-y-6">
@@ -87,11 +104,16 @@ const Dialogs = () => {
         <DialogHeader 
           title="Недавние беседы" 
           description="Просмотр и управление диалогами клиентов с ботом"
+          searchQuery={searchQuery}
+          onSearchChange={handleSearchChange}
         />
         <DialogList 
           dialogs={mockDialogs}
+          filteredDialogs={filteredDialogs}
           selectedDialogId={selectedDialog}
           onDialogClick={handleDialogClick}
+          isFiltering={isFiltering}
+          onPingBot={handlePingBot}
         />
       </Card>
 

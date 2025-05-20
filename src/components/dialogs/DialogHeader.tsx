@@ -1,13 +1,25 @@
 
 import { CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Search } from "lucide-react";
+import { ChangeEvent } from "react";
 
 interface DialogHeaderProps {
   title: string;
   description: string;
+  searchQuery: string;
+  onSearchChange: (query: string) => void;
 }
 
-const DialogHeader = ({ title, description }: DialogHeaderProps) => {
+const DialogHeader = ({ 
+  title, 
+  description, 
+  searchQuery, 
+  onSearchChange 
+}: DialogHeaderProps) => {
+  const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
+    onSearchChange(e.target.value);
+  };
+
   return (
     <CardHeader className="flex flex-row items-center justify-between border-b border-white/5 pb-4">
       <div>
@@ -19,6 +31,8 @@ const DialogHeader = ({ title, description }: DialogHeaderProps) => {
         <input 
           type="search"
           placeholder="Поиск диалогов..."
+          value={searchQuery}
+          onChange={handleSearchChange}
           className="w-full rounded-md border border-white/10 bg-black/20 py-2 pl-8 pr-3 text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary/30"
         />
       </div>
