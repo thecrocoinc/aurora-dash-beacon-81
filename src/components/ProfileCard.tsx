@@ -90,13 +90,13 @@ const ProfileCard = ({ profile }: ProfileCardProps) => {
                 </AvatarFallback>
               </Avatar>
               
-              <div>
-                <h3 className={`font-medium leading-none mb-1 text-sm ${isPremium ? 'text-purple-50' : ''}`}>
+              <div className="overflow-hidden">
+                <h3 className={`font-medium leading-none mb-1 text-sm truncate ${isPremium ? 'text-purple-50' : ''}`}>
                   {profile.name}
                 </h3>
                 <div className="flex items-center gap-1.5">
                   <PlanBadge plan={isPremium ? 'Premium' : 'Basic'} />
-                  <span className="flex items-center gap-1 text-xs text-muted-foreground">
+                  <span className="flex items-center gap-1 text-xs text-muted-foreground truncate">
                     {getGoalIcon()} {getGoalText()}
                   </span>
                 </div>
@@ -107,7 +107,7 @@ const ProfileCard = ({ profile }: ProfileCardProps) => {
           <div className="mt-2">
             <div className="flex justify-between items-center mb-1 text-xs">
               <span className="text-muted-foreground">Прогресс:</span>
-              <span>{profile.currentKcal}/{profile.dailyGoal} ккал</span>
+              <span className="whitespace-nowrap">{profile.currentKcal}/{profile.dailyGoal} ккал</span>
             </div>
             <Progress 
               value={progressPercentage} 

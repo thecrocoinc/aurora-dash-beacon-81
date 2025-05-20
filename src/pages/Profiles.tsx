@@ -151,7 +151,7 @@ const Profiles = () => {
             </div>
           ) : (
             <div className="space-y-4">
-              <div className="flex justify-between items-center">
+              <div className="flex flex-wrap justify-between items-center gap-2">
                 <div className="text-sm text-muted-foreground">
                   {filteredProfiles && filteredProfiles.length > 0 
                     ? `Найдено: ${filteredProfiles.length} ${activeFilter ? 'с фильтром' : ''}`
@@ -177,16 +177,16 @@ const Profiles = () => {
                       <LayoutList className="h-4 w-4" /> Список
                     </TabsTrigger>
                   </TabsList>
-                
-                  <TabsContent value="grid" className="mt-0">
-                    <ProfilesGrid profiles={filteredProfiles} />
-                  </TabsContent>
-                  
-                  <TabsContent value="list" className="mt-0">
-                    <ProfilesList profiles={filteredProfiles} />
-                  </TabsContent>
                 </Tabs>
               </div>
+              
+              <TabsContent value="grid" className="mt-0">
+                <ProfilesGrid profiles={filteredProfiles} />
+              </TabsContent>
+              
+              <TabsContent value="list" className="mt-0">
+                <ProfilesList profiles={filteredProfiles} />
+              </TabsContent>
             </div>
           )}
         </CardContent>

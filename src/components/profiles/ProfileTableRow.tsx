@@ -66,7 +66,7 @@ const ProfileTableRow = ({ profile }: ProfileTableRowProps) => {
             {initials}
           </AvatarFallback>
         </Avatar>
-        <span className="font-medium text-sm">{profile.name}</span>
+        <span className="font-medium text-sm truncate max-w-[140px]">{profile.name}</span>
       </TableCell>
       
       <TableCell>
@@ -79,7 +79,7 @@ const ProfileTableRow = ({ profile }: ProfileTableRowProps) => {
       
       <TableCell>
         <div className="flex flex-col items-end">
-          <div className="text-xs mb-1">
+          <div className="text-xs mb-1 whitespace-nowrap">
             {profile.currentKcal}/{profile.dailyGoal} ккал
           </div>
           <div className="w-full flex items-center gap-2">

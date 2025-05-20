@@ -41,10 +41,10 @@ const ProfilesTable = ({ profiles }: ProfilesTableProps) => {
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead className="w-[250px]">Клиент</TableHead>
-            <TableHead className="w-[100px]">Тариф</TableHead>
+            <TableHead className="w-[200px]">Клиент</TableHead>
+            <TableHead className="w-[90px]">Тариф</TableHead>
             <TableHead className="w-[120px]">Цель</TableHead>
-            <TableHead className="text-right w-[250px]">Прогресс</TableHead>
+            <TableHead className="text-right w-[200px]">Прогресс</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
