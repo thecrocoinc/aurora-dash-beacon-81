@@ -9,324 +9,264 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      bot_settings: {
+      chat_logs: {
         Row: {
-          owner_id: string
-          system_prompt: string | null
-          temperature: number | null
-        }
-        Insert: {
-          owner_id?: string
-          system_prompt?: string | null
-          temperature?: number | null
-        }
-        Update: {
-          owner_id?: string
-          system_prompt?: string | null
-          temperature?: number | null
-        }
-        Relationships: []
-      }
-      finances: {
-        Row: {
-          date: string | null
-          id: number
-          owner_id: string | null
-          revenue: number | null
-        }
-        Insert: {
-          date?: string | null
-          id?: number
-          owner_id?: string | null
-          revenue?: number | null
-        }
-        Update: {
-          date?: string | null
-          id?: number
-          owner_id?: string | null
-          revenue?: number | null
-        }
-        Relationships: []
-      }
-      fitness_goals: {
-        Row: {
-          achieved: boolean | null
+          chat_id: number
+          content: string
           created_at: string
-          description: string | null
-          goal_type: string
-          id: string
-          profile_id: string
-          target_date: string | null
-          target_value: number | null
+          first_name: string | null
+          id: number
+          metadata: Json | null
+          role: string | null
+          session_id: string
+          username: string | null
         }
         Insert: {
-          achieved?: boolean | null
+          chat_id: number
+          content: string
           created_at?: string
-          description?: string | null
-          goal_type: string
-          id?: string
-          profile_id: string
-          target_date?: string | null
-          target_value?: number | null
+          first_name?: string | null
+          id?: number
+          metadata?: Json | null
+          role?: string | null
+          session_id: string
+          username?: string | null
         }
         Update: {
-          achieved?: boolean | null
+          chat_id?: number
+          content?: string
           created_at?: string
-          description?: string | null
-          goal_type?: string
-          id?: string
-          profile_id?: string
-          target_date?: string | null
-          target_value?: number | null
+          first_name?: string | null
+          id?: number
+          metadata?: Json | null
+          role?: string | null
+          session_id?: string
+          username?: string | null
         }
-        Relationships: [
-          {
-            foreignKeyName: "fitness_goals_profile_id_fkey"
-            columns: ["profile_id"]
-            isOneToOne: false
-            referencedRelation: "profiles"
-            referencedColumns: ["id"]
-          },
-        ]
+        Relationships: []
+      }
+      digests: {
+        Row: {
+          carb: number | null
+          chat_id: number
+          created_at: string | null
+          fat: number | null
+          for_date: string
+          kcal: number | null
+          meals_json: Json | null
+          msg_id: number | null
+          prot: number | null
+          summary_md: string | null
+        }
+        Insert: {
+          carb?: number | null
+          chat_id: number
+          created_at?: string | null
+          fat?: number | null
+          for_date: string
+          kcal?: number | null
+          meals_json?: Json | null
+          msg_id?: number | null
+          prot?: number | null
+          summary_md?: string | null
+        }
+        Update: {
+          carb?: number | null
+          chat_id?: number
+          created_at?: string | null
+          fat?: number | null
+          for_date?: string
+          kcal?: number | null
+          meals_json?: Json | null
+          msg_id?: number | null
+          prot?: number | null
+          summary_md?: string | null
+        }
+        Relationships: []
       }
       meals: {
         Row: {
           carb: number | null
+          chat_id: number
+          deleted: boolean | null
+          dish: string
+          eaten_at: string
+          fat: number | null
+          grams: number
+          id: number
+          kcal: number | null
+          prot: number | null
+        }
+        Insert: {
+          carb?: number | null
+          chat_id: number
+          deleted?: boolean | null
+          dish: string
+          eaten_at?: string
+          fat?: number | null
+          grams: number
+          id?: number
+          kcal?: number | null
+          prot?: number | null
+        }
+        Update: {
+          carb?: number | null
+          chat_id?: number
+          deleted?: boolean | null
+          dish?: string
+          eaten_at?: string
+          fat?: number | null
+          grams?: number
+          id?: number
+          kcal?: number | null
+          prot?: number | null
+        }
+        Relationships: []
+      }
+      meals_draft: {
+        Row: {
+          candidates: Json | null
+          chat_id: number
+          chosen_name: string | null
+          created_at: string | null
+          grams_pred: number | null
+          id: number
+          message_id: number
+          photo_file_id: string | null
+          status: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          candidates?: Json | null
+          chat_id: number
+          chosen_name?: string | null
+          created_at?: string | null
+          grams_pred?: number | null
+          id?: number
+          message_id: number
+          photo_file_id?: string | null
+          status?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          candidates?: Json | null
+          chat_id?: number
+          chosen_name?: string | null
+          created_at?: string | null
+          grams_pred?: number | null
+          id?: number
+          message_id?: number
+          photo_file_id?: string | null
+          status?: string | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      n8n_chat_histories: {
+        Row: {
+          id: number
+          message: Json
+          session_id: string
+        }
+        Insert: {
+          id?: number
+          message: Json
+          session_id: string
+        }
+        Update: {
+          id?: number
+          message?: Json
+          session_id?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          created_at: string | null
+          first_name: string | null
+          id: string
+          locale: string | null
+          telegram_id: number
+          username: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          first_name?: string | null
+          id?: string
+          locale?: string | null
+          telegram_id: number
+          username?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          first_name?: string | null
+          id?: string
+          locale?: string | null
+          telegram_id?: number
+          username?: string | null
+        }
+        Relationships: []
+      }
+    }
+    Views: {
+      meals_clean: {
+        Row: {
+          carb: number | null
+          chat_id: number | null
           deleted: boolean | null
           dish: string | null
           eaten_at: string | null
           fat: number | null
           grams: number | null
-          id: string
+          id: number | null
           kcal: number | null
-          photo_id: string | null
-          profile_id: string | null
           prot: number | null
         }
         Insert: {
           carb?: number | null
+          chat_id?: number | null
           deleted?: boolean | null
           dish?: string | null
           eaten_at?: string | null
           fat?: number | null
           grams?: number | null
-          id?: string
+          id?: number | null
           kcal?: number | null
-          photo_id?: string | null
-          profile_id?: string | null
           prot?: number | null
         }
         Update: {
           carb?: number | null
+          chat_id?: number | null
           deleted?: boolean | null
           dish?: string | null
           eaten_at?: string | null
           fat?: number | null
           grams?: number | null
-          id?: string
+          id?: number | null
           kcal?: number | null
-          photo_id?: string | null
-          profile_id?: string | null
           prot?: number | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "meals_profile_id_fkey"
-            columns: ["profile_id"]
-            isOneToOne: false
-            referencedRelation: "profiles"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      measurements: {
-        Row: {
-          arms: number | null
-          chest: number | null
-          hips: number | null
-          id: string
-          profile_id: string
-          recorded_at: string
-          thighs: number | null
-          waist: number | null
-        }
-        Insert: {
-          arms?: number | null
-          chest?: number | null
-          hips?: number | null
-          id?: string
-          profile_id: string
-          recorded_at?: string
-          thighs?: number | null
-          waist?: number | null
-        }
-        Update: {
-          arms?: number | null
-          chest?: number | null
-          hips?: number | null
-          id?: string
-          profile_id?: string
-          recorded_at?: string
-          thighs?: number | null
-          waist?: number | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "measurements_profile_id_fkey"
-            columns: ["profile_id"]
-            isOneToOne: false
-            referencedRelation: "profiles"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      messages: {
-        Row: {
-          content: string | null
-          created_at: string | null
-          id: number
-          profile_id: string | null
-          role: string | null
-        }
-        Insert: {
-          content?: string | null
-          created_at?: string | null
-          id?: number
-          profile_id?: string | null
-          role?: string | null
-        }
-        Update: {
-          content?: string | null
-          created_at?: string | null
-          id?: number
-          profile_id?: string | null
-          role?: string | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "messages_profile_id_fkey"
-            columns: ["profile_id"]
-            isOneToOne: false
-            referencedRelation: "profiles"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      profiles: {
-        Row: {
-          activity_level: string | null
-          avatar_url: string | null
-          birthdate: string | null
-          created_at: string | null
-          dietary_restrictions: string[] | null
-          gender: string | null
-          goal_type: string | null
-          height: number | null
-          id: string
-          medical_conditions: string[] | null
-          name: string | null
-          notes: string | null
-          subscription_status: string | null
-          target_weight: number | null
-          telegram_id: number | null
-          username: string | null
-          weight: number | null
-        }
-        Insert: {
-          activity_level?: string | null
-          avatar_url?: string | null
-          birthdate?: string | null
-          created_at?: string | null
-          dietary_restrictions?: string[] | null
-          gender?: string | null
-          goal_type?: string | null
-          height?: number | null
-          id?: string
-          medical_conditions?: string[] | null
-          name?: string | null
-          notes?: string | null
-          subscription_status?: string | null
-          target_weight?: number | null
-          telegram_id?: number | null
-          username?: string | null
-          weight?: number | null
-        }
-        Update: {
-          activity_level?: string | null
-          avatar_url?: string | null
-          birthdate?: string | null
-          created_at?: string | null
-          dietary_restrictions?: string[] | null
-          gender?: string | null
-          goal_type?: string | null
-          height?: number | null
-          id?: string
-          medical_conditions?: string[] | null
-          name?: string | null
-          notes?: string | null
-          subscription_status?: string | null
-          target_weight?: number | null
-          telegram_id?: number | null
-          username?: string | null
-          weight?: number | null
         }
         Relationships: []
       }
-      weight_logs: {
-        Row: {
-          id: string
-          notes: string | null
-          profile_id: string
-          recorded_at: string
-          weight: number
-        }
-        Insert: {
-          id?: string
-          notes?: string | null
-          profile_id: string
-          recorded_at?: string
-          weight: number
-        }
-        Update: {
-          id?: string
-          notes?: string | null
-          profile_id?: string
-          recorded_at?: string
-          weight?: number
-        }
-        Relationships: [
-          {
-            foreignKeyName: "weight_logs_profile_id_fkey"
-            columns: ["profile_id"]
-            isOneToOne: false
-            referencedRelation: "profiles"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-    }
-    Views: {
-      [_ in never]: never
     }
     Functions: {
-      day_summary: {
-        Args: { _pid: string; _d: string }
-        Returns: {
-          kcal: number
-          prot: number
-          fat: number
-          carb: number
-        }[]
+      get_current_summary: {
+        Args: { _chat_id: number }
+        Returns: Json
       }
-      get_latest_messages_by_profile: {
-        Args: Record<PropertyKey, never>
-        Returns: {
-          profile_id: string
-          ts: string
-          last_message: string
-          name: string
-          avatar_url: string
-        }[]
+      upsert_digest: {
+        Args: {
+          _chat_id: number
+          _for_date: string
+          _kcal: number
+          _prot: number
+          _fat: number
+          _carb: number
+          _meals_json: Json
+          _summary_md: string
+          _msg_id: number
+        }
+        Returns: undefined
       }
     }
     Enums: {
