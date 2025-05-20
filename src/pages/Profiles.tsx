@@ -115,7 +115,7 @@ const Profiles = () => {
                 )}
               </div>
               
-              <ProfilesList profiles={filteredProfiles as ProfileWithDetails[]} />
+              <ProfilesList profiles={filteredProfiles} />
             </div>
           )}
         </CardContent>

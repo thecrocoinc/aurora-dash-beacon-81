@@ -3,25 +3,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import ProfileCard from "@/components/ProfileCard";
 import DemoProfilesGrid from "./DemoProfilesGrid";
-
-interface ProfileWithDetails {
-  id: string;
-  first_name?: string | null;
-  username?: string | null;
-  avatar?: string | null;
-  watch_connected?: boolean;
-  kcalRatio: number;
-  currentKcal: number;
-  dailyGoal: number;
-  prot: number;
-  fat: number;
-  carb: number;
-  goal_type?: string | null;
-  created_at?: string | null;
-  last_activity?: string | null;
-  streak_days?: number;
-  subscription_status?: string;
-}
+import { ProfileWithDetails } from "@/types/profile";
 
 interface ProfilesGridProps {
   profiles: ProfileWithDetails[] | undefined;

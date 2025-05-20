@@ -84,7 +84,7 @@ const ProfileDetail = () => {
   }, [summary, dailyGoal]);
 
   // Fetch meals for this profile
-  const { data: meals, isLoading: mealsLoading } = useQuery({
+  const { data: mealsData, isLoading: mealsLoading } = useQuery({
     queryKey: ['profile-meals', id],
     queryFn: async () => {
       if (!profile?.telegram_id) return [];
@@ -102,8 +102,9 @@ const ProfileDetail = () => {
         // Map meals to the correct type with string IDs
         return (data || []).map(meal => ({
           ...meal,
-          id: meal.id.toString() // Convert id to string to match expected type
-        })) as Meal[];
+          id: meal.id.toString(),
+          photo_file_id: undefined // Add this to match expected Meal type
+        })) as unknown as Meal[];
       } catch (error) {
         console.error("Error fetching meals:", error);
         return [];
@@ -111,6 +112,9 @@ const ProfileDetail = () => {
     },
     enabled: !!profile?.telegram_id
   });
+
+  // Ensure meals is always an array
+  const meals = mealsData || [];
 
   const loading = profileLoading || summaryLoading || mealsLoading;
 
@@ -135,7 +139,8 @@ const ProfileDetail = () => {
     first_name: profile.first_name,
     username: profile.username,
     goal_type: profile.goal_type,
-    subscription_status: profile.subscription_status
+    subscription_status: profile.subscription_status,
+    avatar: null
   };
 
   return (

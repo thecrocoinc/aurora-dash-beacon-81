@@ -3,27 +3,10 @@ import { useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/lib/supabase";
 import { format } from "date-fns";
+import { ProfileWithDetails } from "@/types/profile";
 import { Database } from '@/supabase/types/database.types';
 
 type Profile = Database['public']['Tables']['profiles']['Row'];
-
-export interface ProfileWithDetails {
-  id: string;
-  first_name?: string | null;
-  avatar: string | null;
-  watch_connected: boolean;
-  kcalRatio: number;
-  currentKcal: number;
-  dailyGoal: number;
-  prot: number;
-  fat: number;
-  carb: number;
-  goal_type?: string | null;
-  created_at?: string | null;
-  last_activity?: string | null;
-  streak_days?: number;
-  subscription_status?: string;
-}
 
 export const useProfilesData = () => {
   const [error, setError] = useState<string | null>(null);
@@ -90,6 +73,7 @@ export const useProfilesData = () => {
               return {
                 id: profile.id,
                 first_name: profile.first_name || 'Unnamed User',
+                username: profile.username,
                 avatar: null, // No avatar_url in our schema
                 watch_connected: hasWatch,
                 kcalRatio: currentKcal / dailyGoal,
@@ -103,12 +87,13 @@ export const useProfilesData = () => {
                 last_activity: format(lastActivity, "yyyy-MM-dd HH:mm"),
                 streak_days: streak,
                 subscription_status: simulatedSubscriptionStatus,
-              };
+              } as ProfileWithDetails;
             } catch (err) {
               console.error("Error processing profile summary:", err);
               return {
                 id: profile.id,
                 first_name: profile.first_name || 'Unnamed User',
+                username: profile.username,
                 avatar: null,
                 watch_connected: false,
                 kcalRatio: 0,
@@ -121,7 +106,7 @@ export const useProfilesData = () => {
                 created_at: profile.created_at,
                 streak_days: 0,
                 subscription_status: 'basic',
-              };
+              } as ProfileWithDetails;
             }
           })
         );
