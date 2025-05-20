@@ -40,7 +40,11 @@ const ProfilesList = ({ profiles }: ProfilesListProps) => {
     );
   }
 
-  return <ProfilesTable profiles={profiles} />;
+  return (
+    <div className="w-full">
+      <ProfilesTable profiles={profiles} />
+    </div>
+  );
 };
 
 export default ProfilesList;

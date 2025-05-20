@@ -151,8 +151,9 @@ const Profiles = () => {
             </div>
           ) : (
             <div className="space-y-4">
-              <div className="flex flex-wrap justify-between items-center gap-2">
-                <div className="text-sm text-muted-foreground">
+              {/* Results counter and view mode selector */}
+              <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
+                <div className="text-sm text-muted-foreground mb-2 sm:mb-0">
                   {filteredProfiles && filteredProfiles.length > 0 
                     ? `Найдено: ${filteredProfiles.length} ${activeFilter ? 'с фильтром' : ''}`
                     : 'Нет результатов'
@@ -178,11 +179,11 @@ const Profiles = () => {
                     </TabsTrigger>
                   </TabsList>
                   
-                  <TabsContent value="grid" className="mt-0">
+                  <TabsContent value="grid" className="mt-4">
                     <ProfilesGrid profiles={filteredProfiles} />
                   </TabsContent>
                   
-                  <TabsContent value="list" className="mt-0">
+                  <TabsContent value="list" className="mt-4">
                     <ProfilesList profiles={filteredProfiles} />
                   </TabsContent>
                 </Tabs>

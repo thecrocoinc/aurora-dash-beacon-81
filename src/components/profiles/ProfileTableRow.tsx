@@ -44,6 +44,13 @@ const ProfileTableRow = ({ profile }: ProfileTableRowProps) => {
   const isPremium = profile.subscription_status === 'active';
   const isTrial = profile.subscription_status === 'trial';
   
+  // Get progress bar color based on subscription status
+  const getProgressColor = () => {
+    if (isPremium) return "rgb(139, 92, 246)"; // purple-500
+    if (isTrial) return "rgb(59, 130, 246)"; // blue-500
+    return "rgb(16, 185, 129)"; // green-500
+  };
+  
   // Navigate to profile detail page using React Router
   const handleClick = () => {
     navigate(`/profiles/${profile.id}`);
@@ -56,7 +63,7 @@ const ProfileTableRow = ({ profile }: ProfileTableRowProps) => {
       onClick={handleClick}
     >
       <TableCell className="flex items-center gap-2">
-        <Avatar className={`h-8 w-8 ${isPremium ? 'ring-1 ring-purple-500/30' : isTrial ? 'ring-1 ring-blue-500/30' : 'ring-1 ring-white/10'}`}>
+        <Avatar className={`h-8 w-8 flex-shrink-0 ${isPremium ? 'ring-1 ring-purple-500/30' : isTrial ? 'ring-1 ring-blue-500/30' : 'ring-1 ring-white/10'}`}>
           <AvatarImage src={profile.avatar || undefined} alt={profile.name} />
           <AvatarFallback className={`
             ${isPremium ? 'bg-purple-500/10 text-purple-400' : 
@@ -74,7 +81,9 @@ const ProfileTableRow = ({ profile }: ProfileTableRowProps) => {
       </TableCell>
       
       <TableCell>
-        {getGoalInfo(profile.goal_type)}
+        <div className="truncate max-w-[100px]">
+          {getGoalInfo(profile.goal_type)}
+        </div>
       </TableCell>
       
       <TableCell>
@@ -87,9 +96,7 @@ const ProfileTableRow = ({ profile }: ProfileTableRowProps) => {
               value={progressPercentage} 
               className="h-2 flex-1 bg-muted/50" 
               style={{ 
-                "--progress-background": isPremium ? "rgb(139, 92, 246)" : 
-                                         isTrial ? "rgb(59, 130, 246)" : 
-                                         "rgb(16, 185, 129)",
+                "--progress-background": getProgressColor(),
               } as React.CSSProperties}
             />
             <span className="text-xs text-muted-foreground w-8 text-right">

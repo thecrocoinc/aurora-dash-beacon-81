@@ -41,17 +41,24 @@ const ProfileCard = ({ profile }: ProfileCardProps) => {
   const isPremium = profile.subscription_status === 'active';
   const isTrial = profile.subscription_status === 'trial';
   
+  // Get progress bar color based on subscription status
+  const getProgressColor = () => {
+    if (isPremium) return "rgb(139, 92, 246)"; // purple-500
+    if (isTrial) return "rgb(59, 130, 246)"; // blue-500
+    return "rgb(16, 185, 129)"; // green-500
+  };
+  
   // Get goal icon
   const getGoalIcon = () => {
     switch(profile.goal_type) {
       case 'weight_loss':
-        return <TrendingDown className={`h-3.5 w-3.5 ${isPremium ? 'text-purple-400' : 'text-blue-400'}`} />;
+        return <TrendingDown className={`h-3.5 w-3.5 ${isPremium ? 'text-purple-400' : isTrial ? 'text-blue-400' : 'text-green-400'}`} />;
       case 'weight_gain':
-        return <TrendingUp className={`h-3.5 w-3.5 ${isPremium ? 'text-purple-400' : 'text-blue-400'}`} />;
+        return <TrendingUp className={`h-3.5 w-3.5 ${isPremium ? 'text-purple-400' : isTrial ? 'text-blue-400' : 'text-green-400'}`} />;
       case 'maintenance':
-        return <Target className={`h-3.5 w-3.5 ${isPremium ? 'text-purple-400' : 'text-blue-400'}`} />;
+        return <Target className={`h-3.5 w-3.5 ${isPremium ? 'text-purple-400' : isTrial ? 'text-blue-400' : 'text-green-400'}`} />;
       default:
-        return <Utensils className={`h-3.5 w-3.5 ${isPremium ? 'text-purple-400' : 'text-blue-400'}`} />;
+        return <Utensils className={`h-3.5 w-3.5 ${isPremium ? 'text-purple-400' : isTrial ? 'text-blue-400' : 'text-green-400'}`} />;
     }
   };
   
@@ -77,9 +84,10 @@ const ProfileCard = ({ profile }: ProfileCardProps) => {
     >
       <CardContent className="p-3">
         <div className="flex flex-col h-full">
+          {/* Profile header */}
           <div className="flex justify-between items-start mb-2">
-            <div className="flex gap-2">
-              <Avatar className={`h-9 w-9 ${isPremium ? 'ring-1 ring-purple-500/30' : isTrial ? 'ring-1 ring-blue-500/30' : 'ring-1 ring-white/10'}`}>
+            <div className="flex gap-2 max-w-full overflow-hidden">
+              <Avatar className={`h-9 w-9 flex-shrink-0 ${isPremium ? 'ring-1 ring-purple-500/30' : isTrial ? 'ring-1 ring-blue-500/30' : 'ring-1 ring-white/10'}`}>
                 <AvatarImage src={profile.avatar || undefined} alt={profile.name} />
                 <AvatarFallback className={`
                   ${isPremium ? 'bg-purple-500/10 text-purple-400' : 
@@ -94,16 +102,17 @@ const ProfileCard = ({ profile }: ProfileCardProps) => {
                 <h3 className={`font-medium leading-none mb-1 text-sm truncate ${isPremium ? 'text-purple-50' : ''}`}>
                   {profile.name}
                 </h3>
-                <div className="flex items-center gap-1.5">
+                <div className="flex items-center gap-1.5 max-w-full">
                   <PlanBadge plan={isPremium ? 'Premium' : 'Basic'} />
-                  <span className="flex items-center gap-1 text-xs text-muted-foreground truncate">
-                    {getGoalIcon()} {getGoalText()}
+                  <span className="flex items-center gap-1 text-xs text-muted-foreground truncate max-w-[60px] sm:max-w-[100px] overflow-hidden">
+                    {getGoalIcon()} <span className="truncate">{getGoalText()}</span>
                   </span>
                 </div>
               </div>
             </div>
           </div>
           
+          {/* Progress bar */}
           <div className="mt-2">
             <div className="flex justify-between items-center mb-1 text-xs">
               <span className="text-muted-foreground">Прогресс:</span>
@@ -113,9 +122,7 @@ const ProfileCard = ({ profile }: ProfileCardProps) => {
               value={progressPercentage} 
               className="h-2 bg-muted/50" 
               style={{ 
-                "--progress-background": isPremium ? "rgb(139, 92, 246)" : 
-                                          isTrial ? "rgb(59, 130, 246)" : 
-                                          "rgb(16, 185, 129)",
+                "--progress-background": getProgressColor(),
               } as React.CSSProperties}
             />
           </div>
