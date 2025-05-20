@@ -1,4 +1,3 @@
-
 import { Badge } from "@/components/ui/badge";
 import { Target, Utensils, TrendingDown, TrendingUp } from "lucide-react";
 import * as React from "react";
@@ -9,11 +8,11 @@ import * as React from "react";
 export const getSubscriptionBadge = (status?: string) => {
   switch(status) {
     case 'active':
-      return <Badge className="bg-gradient-to-r from-purple-600/10 to-purple-500/20 text-purple-400 border-0 font-medium">Premium</Badge>;
+      return <Badge className="bg-gradient-to-r from-gray-600/10 to-gray-500/20 text-purple-400 border-0 font-medium">Premium</Badge>;
     case 'trial':
-      return <Badge className="bg-gradient-to-r from-blue-600/10 to-blue-500/20 text-blue-400 border-0 font-medium">Trial</Badge>;
+      return <Badge className="bg-gradient-to-r from-gray-600/10 to-gray-500/20 text-blue-400 border-0 font-medium">Trial</Badge>;
     default:
-      return <Badge className="bg-gradient-to-r from-blue-600/10 to-blue-500/20 text-blue-400 border-0 font-medium">Basic</Badge>;
+      return <Badge className="bg-gradient-to-r from-gray-600/10 to-gray-500/20 text-blue-400 border-0 font-medium">Basic</Badge>;
   }
 };
 
