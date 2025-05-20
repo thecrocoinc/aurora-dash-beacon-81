@@ -2,14 +2,9 @@
 import { useState, useEffect } from "react";
 import { supabase } from "@/lib/supabase";
 import type { Message } from "@/utils/dummy";
+import { Database } from '@/supabase/types/database.types';
 
-interface DatabaseMessage {
-  id: number;
-  profile_id: string;
-  role: string;
-  content: string;
-  created_at: string;
-}
+type ChatLog = Database['public']['Tables']['chat_logs']['Row'];
 
 /**
  * Custom hook to fetch and subscribe to messages for a specific profile
@@ -31,9 +26,9 @@ export const useChat = (profileId: string | undefined) => {
       setLoading(true);
       try {
         const { data, error: fetchError } = await supabase
-          .from("messages")
+          .from("chat_logs")
           .select("*")
-          .eq("profile_id", profileId)
+          .eq("chat_id", profileId)
           .order("created_at", { ascending: true });
 
         if (fetchError) {
@@ -42,7 +37,7 @@ export const useChat = (profileId: string | undefined) => {
 
         // Convert database messages to app format
         const formattedMessages = (data || []).map(
-          (msg: DatabaseMessage): Message => ({
+          (msg: ChatLog): Message => ({
             id: msg.id.toString(),
             text: msg.content,
             timestamp: new Date(msg.created_at),
@@ -71,11 +66,11 @@ export const useChat = (profileId: string | undefined) => {
         {
           event: "INSERT",
           schema: "public",
-          table: "messages",
-          filter: `profile_id=eq.${profileId}`,
+          table: "chat_logs",
+          filter: `chat_id=eq.${profileId}`,
         },
         (payload) => {
-          const newMessage = payload.new as DatabaseMessage;
+          const newMessage = payload.new as ChatLog;
           
           // Add the new message to state
           setMessages((prevMessages) => [
@@ -103,10 +98,11 @@ export const useChat = (profileId: string | undefined) => {
     if (!profileId || !content.trim()) return;
 
     try {
-      const { error } = await supabase.from("messages").insert({
-        profile_id: profileId,
+      const { error } = await supabase.from("chat_logs").insert({
+        chat_id: parseInt(profileId),
+        content: content.trim(),
         role: "user",
-        content: content.trim()
+        session_id: `session_${profileId}`
       });
 
       if (error) {

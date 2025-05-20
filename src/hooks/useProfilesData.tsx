@@ -3,15 +3,9 @@ import { useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/lib/supabase";
 import { format } from "date-fns";
+import { Database } from '@/supabase/types/database.types';
 
-interface ProfileData {
-  id: string;
-  name: string | null;
-  avatar_url: string | null;
-  goal_type?: string | null;
-  created_at?: string | null;
-  subscription_status?: string;
-}
+type Profile = Database['public']['Tables']['profiles']['Row'];
 
 export interface ProfileWithDetails {
   id: string;
@@ -35,7 +29,7 @@ export const useProfilesData = () => {
   const [error, setError] = useState<string | null>(null);
   const queryClient = useQueryClient();
   
-  // Get today's date in YYYY-MM-DD format for the day_summary RPC call
+  // Get today's date in YYYY-MM-DD format for the get_current_summary RPC call
   const today = format(new Date(), "yyyy-MM-dd");
   
   // Fetch profiles from Supabase with improved caching
@@ -45,7 +39,7 @@ export const useProfilesData = () => {
       try {
         const { data: profilesData, error } = await supabase
           .from('profiles')
-          .select('id,name,avatar_url,goal_type,created_at,subscription_status');
+          .select('id, first_name, username, telegram_id, created_at');
         
         if (error) {
           console.error("Error fetching profiles:", error);
@@ -54,25 +48,26 @@ export const useProfilesData = () => {
         
         // For each profile, fetch their daily summary to calculate kcal ratio
         const profilesWithKcal = await Promise.all(
-          (profilesData || []).map(async (profile: ProfileData) => {
+          (profilesData || []).map(async (profile: Profile) => {
             try {
               const { data: summaryData, error: summaryError } = await supabase
-                .rpc('day_summary', { 
-                  _pid: profile.id, 
-                  _d: today 
-                });
+                .rpc('get_current_summary', { _chat_id: profile.telegram_id });
               
               if (summaryError) {
                 console.warn("Error fetching summary for profile:", profile.id, summaryError);
               }
               
               // Get the summary data or default values
-              const summary = summaryData?.[0] || { kcal: 0, prot: 0, fat: 0, carb: 0 };
+              const summary = summaryData || { kcal: 0, prot: 0, fat: 0, carb: 0 };
               
               // Calculate daily goal based on goal type (this is just a simulation)
-              const dailyGoal = profile.goal_type === 'weight_loss' ? 1800 : 
-                              profile.goal_type === 'weight_gain' ? 2600 : 
-                              profile.goal_type === 'athlete' ? 2800 : 2000;
+              // Since goal_type is not in our DB schema, we'll simulate it
+              const goalTypes = ['weight_loss', 'weight_gain', 'maintenance', 'athlete'];
+              const simulatedGoalType = goalTypes[Math.floor(Math.random() * goalTypes.length)];
+              
+              const dailyGoal = simulatedGoalType === 'weight_loss' ? 1800 : 
+                              simulatedGoalType === 'weight_gain' ? 2600 : 
+                              simulatedGoalType === 'athlete' ? 2800 : 2000;
               
               // For demo purposes, generate realistic macro values 
               const currentKcal = Math.floor(dailyGoal * (0.6 + Math.random() * 0.3)); // 60%-90% of goal
@@ -88,10 +83,14 @@ export const useProfilesData = () => {
               const streak = Math.floor(Math.random() * 30); // Random streak between 0-30 days
               const lastActivity = new Date(new Date().getTime() - Math.random() * 7 * 24 * 60 * 60 * 1000);
               
+              // Simulate subscription status
+              const subscriptionTypes = ['active', 'trial', 'expired', 'basic'];
+              const simulatedSubscriptionStatus = subscriptionTypes[Math.floor(Math.random() * subscriptionTypes.length)];
+              
               return {
                 id: profile.id,
-                name: profile.name || 'Unnamed User',
-                avatar: profile.avatar_url,
+                name: profile.first_name || 'Unnamed User',
+                avatar: null, // No avatar_url in our schema
                 watch_connected: hasWatch,
                 kcalRatio: currentKcal / dailyGoal,
                 currentKcal,
@@ -99,18 +98,18 @@ export const useProfilesData = () => {
                 prot,
                 fat,
                 carb,
-                goal_type: profile.goal_type,
+                goal_type: simulatedGoalType,
                 created_at: profile.created_at,
                 last_activity: format(lastActivity, "yyyy-MM-dd HH:mm"),
                 streak_days: streak,
-                subscription_status: profile.subscription_status,
+                subscription_status: simulatedSubscriptionStatus,
               };
             } catch (err) {
               console.error("Error processing profile summary:", err);
               return {
                 id: profile.id,
-                name: profile.name || 'Unnamed User',
-                avatar: profile.avatar_url,
+                name: profile.first_name || 'Unnamed User',
+                avatar: null,
                 watch_connected: false,
                 kcalRatio: 0,
                 currentKcal: 0,
@@ -118,10 +117,10 @@ export const useProfilesData = () => {
                 prot: 0,
                 fat: 0,
                 carb: 0,
-                goal_type: profile.goal_type,
+                goal_type: 'maintenance',
                 created_at: profile.created_at,
                 streak_days: 0,
-                subscription_status: profile.subscription_status || 'basic',
+                subscription_status: 'basic',
               };
             }
           })

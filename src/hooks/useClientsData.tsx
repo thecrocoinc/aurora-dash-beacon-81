@@ -2,14 +2,9 @@
 import { useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/lib/supabase";
+import { Database } from '@/supabase/types/database.types';
 
-export interface ClientProfile {
-  id: string;
-  first_name: string | null;
-  username: string | null;
-  telegram_id: number;
-  created_at: string | null;
-}
+type Profile = Database['public']['Tables']['profiles']['Row'];
 
 export const useClientsData = () => {
   const [error, setError] = useState<string | null>(null);
@@ -30,7 +25,7 @@ export const useClientsData = () => {
           throw error;
         }
         
-        return profilesData as ClientProfile[];
+        return profilesData as Profile[];
       } catch (err) {
         console.error("Error in query function:", err);
         setError(err instanceof Error ? err.message : "Unknown error occurred");

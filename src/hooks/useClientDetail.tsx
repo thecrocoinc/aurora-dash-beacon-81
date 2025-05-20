@@ -1,41 +1,13 @@
 
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/lib/supabase";
-import { format, parse } from "date-fns";
+import { format } from "date-fns";
+import { Database } from '@/supabase/types/database.types';
 
-export interface ClientProfile {
-  id: string;
-  first_name: string | null;
-  username: string | null;
-  telegram_id: number;
-  created_at: string | null;
-}
-
-export interface Digest {
-  kcal: number | null;
-  prot: number | null;
-  fat: number | null;
-  carb: number | null;
-  for_date: string;
-}
-
-export interface Meal {
-  id: number;
-  dish: string;
-  grams: number;
-  eaten_at: string;
-  kcal: number | null;
-  prot: number | null;
-  fat: number | null;
-  carb: number | null;
-}
-
-export interface MealDraft {
-  id: number;
-  photo_file_id: string | null;
-  message_id: number;
-  created_at: string | null;
-}
+type Profile = Database['public']['Tables']['profiles']['Row'];
+type Digest = Database['public']['Tables']['digests']['Row'];
+type Meal = Database['public']['Tables']['meals']['Row'];
+type MealDraft = Database['public']['Tables']['meals_draft']['Row'];
 
 export const useClientDetail = (clientId: string | undefined, selectedDate: Date) => {
   const formattedDate = selectedDate ? format(selectedDate, 'yyyy-MM-dd') : format(new Date(), 'yyyy-MM-dd');
@@ -54,7 +26,7 @@ export const useClientDetail = (clientId: string | undefined, selectedDate: Date
         .single();
       
       if (error) throw error;
-      return data as ClientProfile;
+      return data as Profile;
     },
     enabled: !!clientId
   });
@@ -63,14 +35,9 @@ export const useClientDetail = (clientId: string | undefined, selectedDate: Date
   const { data: digest, isLoading: digestLoading, error: digestError } = useQuery({
     queryKey: ['digest', clientId, formattedDate],
     queryFn: async () => {
-      if (!clientId) return null;
+      if (!clientId || !profile?.telegram_id) return null;
       const { data, error } = await supabase
-        .from('digests')
-        .select('kcal, prot, fat, carb, for_date')
-        .eq('chat_id', profile?.telegram_id)
-        .eq('for_date', formattedDate)
-        .order('for_date', { ascending: false })
-        .limit(1)
+        .rpc('get_current_summary', { _chat_id: profile?.telegram_id })
         .single();
       
       if (error) {
