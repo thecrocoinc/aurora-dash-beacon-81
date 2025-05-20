@@ -24,6 +24,7 @@ interface ProfileExtended extends Profile {
   height?: number;
   target_weight?: number;
   avatar_url?: string | null;
+  locale?: string; // Added locale
 }
 
 interface SummaryType {
@@ -113,7 +114,7 @@ const ProfileDetail = () => {
         ...meal,
         photo_id: undefined,
         id: meal.id.toString() // Convert id to string to match expected type
-      })) as unknown as Meal[];
+      })) as Meal[];
     },
     enabled: !!profile?.telegram_id
   });
@@ -135,9 +136,17 @@ const ProfileDetail = () => {
     );
   }
 
+  // Create the profile object with expected properties for ProfileHeader
+  const headerProfile = {
+    id: profile.id,
+    first_name: profile.first_name,
+    goal_type: profile.goal_type,
+    subscription_status: profile.subscription_status
+  };
+
   return (
     <div className="space-y-6">
-      <ProfileHeader profile={profile} />
+      <ProfileHeader profile={headerProfile} />
 
       <Tabs defaultValue="overview">
         <TabsList>
@@ -151,7 +160,7 @@ const ProfileDetail = () => {
             profile={profile}
             summary={summary} 
             dailyGoal={dailyGoal} 
-            meals={meals} 
+            meals={meals as any} 
             mealsLoading={mealsLoading} 
           />
         </TabsContent>

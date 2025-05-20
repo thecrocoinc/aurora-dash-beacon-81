@@ -9,7 +9,7 @@ type Profile = Database['public']['Tables']['profiles']['Row'];
 
 export interface ProfileWithDetails {
   id: string;
-  name: string;
+  first_name?: string | null;
   avatar: string | null;
   watch_connected: boolean;
   kcalRatio: number;
@@ -89,7 +89,7 @@ export const useProfilesData = () => {
               
               return {
                 id: profile.id,
-                name: profile.first_name || 'Unnamed User',
+                first_name: profile.first_name || 'Unnamed User',
                 avatar: null, // No avatar_url in our schema
                 watch_connected: hasWatch,
                 kcalRatio: currentKcal / dailyGoal,
@@ -108,7 +108,7 @@ export const useProfilesData = () => {
               console.error("Error processing profile summary:", err);
               return {
                 id: profile.id,
-                name: profile.first_name || 'Unnamed User',
+                first_name: profile.first_name || 'Unnamed User',
                 avatar: null,
                 watch_connected: false,
                 kcalRatio: 0,

@@ -55,16 +55,16 @@ const ProfileCard = ({ profile }: ProfileCardProps) => {
       <CardContent>
         <div className="flex items-center justify-center py-1">
           <KcalRing 
-            progress={profile.kcalRatio} 
+            value={profile.kcalRatio} 
             currentKcal={profile.currentKcal}
             dailyGoal={profile.dailyGoal}
             size="md" 
           />
         </div>
         <MacroChips
-          prot={profile.prot}
+          protein={profile.prot}
           fat={profile.fat}
-          carb={profile.carb}
+          carbs={profile.carb}
           className="mt-2"
           size="sm"
         />
