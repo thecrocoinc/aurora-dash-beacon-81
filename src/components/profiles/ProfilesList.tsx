@@ -38,12 +38,9 @@ interface ProfilesListProps {
 }
 
 const ProfilesList = ({ profiles }: ProfilesListProps) => {
-  // Only show profiles with paid subscriptions
-  const paidProfiles = profiles?.filter(profile => 
-    profile.subscription_status === 'active' || profile.subscription_status === 'trial'
-  );
+  // Удаляем повторную фильтрацию по подпискам, так как это уже делается в родительском компоненте
   
-  if (!paidProfiles || paidProfiles.length === 0) {
+  if (!profiles || profiles.length === 0) {
     return (
       <EmptyBanner
         icon={UserPlus}
@@ -103,7 +100,7 @@ const ProfilesList = ({ profiles }: ProfilesListProps) => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {paidProfiles.map((profile) => {
+          {profiles.map((profile) => {
             const initials = profile.name
               .split(" ")
               .map((n) => n[0])

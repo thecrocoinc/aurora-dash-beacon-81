@@ -28,13 +28,11 @@ interface ProfilesGridProps {
 }
 
 const ProfilesGrid = ({ profiles }: ProfilesGridProps) => {
-  // Only show profiles with paid subscriptions
-  const paidProfiles = profiles?.filter(profile => 
-    profile.subscription_status === 'active' || profile.subscription_status === 'trial'
-  );
+  // Убираем повторную фильтрацию, так как она уже происходит в родительском компоненте
+  // и используем профили напрямую
   
-  if (!paidProfiles || paidProfiles.length === 0) {
-    // Generate 15 realistic placeholder profiles for demonstration - only with paid subscriptions
+  if (!profiles || profiles.length === 0) {
+    // Generate 15 realistic placeholder profiles for demonstration
     const russianNames = [
       "Анна Иванова", "Максим Петров", "Елена Сидорова", "Алексей Смирнов", 
       "Ольга Козлова", "Дмитрий Попов", "Наталья Волкова", "Сергей Соколов", 
@@ -200,7 +198,7 @@ const ProfilesGrid = ({ profiles }: ProfilesGridProps) => {
 
   return (
     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-      {paidProfiles.map((profile) => (
+      {profiles.map((profile) => (
         <Link 
           key={profile.id} 
           to={`/profiles/${profile.id}`} 
