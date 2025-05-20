@@ -122,10 +122,10 @@ const Dialogs = () => {
               return (
                 <div 
                   key={dialog.id} 
-                  className={`p-4 flex items-center gap-4 hover:bg-muted/30 cursor-pointer transition-colors ${dialog.id === selectedDialog ? 'bg-muted/50' : ''}`}
+                  className={`h-[72px] p-4 flex items-center gap-4 hover:bg-muted/30 cursor-pointer transition-colors ${dialog.id === selectedDialog ? 'bg-muted/50' : ''}`}
                   onClick={() => handleDialogClick(dialog.id)}
                 >
-                  <div className="relative">
+                  <div className="relative flex-shrink-0">
                     <Avatar>
                       <AvatarImage src={dialog.avatar} alt={dialog.name} />
                       <AvatarFallback>{initials}</AvatarFallback>
@@ -135,14 +135,14 @@ const Dialogs = () => {
                     )}
                   </div>
                   
-                  <div className="flex-1 min-w-0">
+                  <div className="flex-1 min-w-0 flex flex-col justify-center h-full">
                     <div className="flex justify-between items-center">
-                      <div className="font-medium">{dialog.name}</div>
+                      <div className="font-medium truncate max-w-[180px]">{dialog.name}</div>
                       <div className="text-xs text-muted-foreground">
                         {formatTime(dialog.timestamp)}
                       </div>
                     </div>
-                    <div className="text-sm text-muted-foreground truncate">
+                    <div className="text-sm text-muted-foreground truncate max-w-full">
                       {dialog.lastMessage}
                     </div>
                     {dialog.unread > 0 && (
