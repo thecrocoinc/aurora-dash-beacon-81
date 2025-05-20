@@ -1,8 +1,10 @@
+
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Progress } from "@/components/ui/progress";
 import { Target, Utensils, TrendingDown, TrendingUp } from "lucide-react";
 import { PlanBadge } from "@/components/home/subscription/PlanBadge";
+import { Link } from "react-router-dom";
 
 interface ProfileWithDetails {
   id: string;
@@ -111,7 +113,9 @@ const ProfileCard = ({ profile }: ProfileCardProps) => {
               value={progressPercentage} 
               className="h-2 bg-muted/50" 
               style={{ 
-                "--progress-background": isPremium ? "rgb(139, 92, 246)" : "rgb(59, 130, 246)",
+                "--progress-background": isPremium ? "rgb(139, 92, 246)" : 
+                                          isTrial ? "rgb(59, 130, 246)" : 
+                                          "rgb(16, 185, 129)",
               } as React.CSSProperties}
             />
           </div>

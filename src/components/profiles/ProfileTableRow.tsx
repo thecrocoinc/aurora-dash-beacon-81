@@ -4,6 +4,7 @@ import { TableRow, TableCell } from "@/components/ui/table";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Progress } from "@/components/ui/progress";
 import { getSubscriptionBadge, getGoalInfo } from "@/utils/profileUtils";
+import { useNavigate } from "react-router-dom";
 
 interface ProfileWithDetails {
   id: string;
@@ -31,6 +32,7 @@ interface ProfileTableRowProps {
  * ProfileTableRow renders a single profile row in the profiles list table
  */
 const ProfileTableRow = ({ profile }: ProfileTableRowProps) => {
+  const navigate = useNavigate();
   const initials = profile.name
     .split(" ")
     .map((n) => n[0])
@@ -42,11 +44,16 @@ const ProfileTableRow = ({ profile }: ProfileTableRowProps) => {
   const isPremium = profile.subscription_status === 'active';
   const isTrial = profile.subscription_status === 'trial';
   
+  // Navigate to profile detail page using React Router
+  const handleClick = () => {
+    navigate(`/profiles/${profile.id}`);
+  };
+  
   return (
     <TableRow 
       key={profile.id} 
       className="cursor-pointer hover:bg-muted/50"
-      onClick={() => window.location.href = `/profiles/${profile.id}`}
+      onClick={handleClick}
     >
       <TableCell className="flex items-center gap-2">
         <Avatar className={`h-8 w-8 ${isPremium ? 'ring-1 ring-purple-500/30' : isTrial ? 'ring-1 ring-blue-500/30' : 'ring-1 ring-white/10'}`}>

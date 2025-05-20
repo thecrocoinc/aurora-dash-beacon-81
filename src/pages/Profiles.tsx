@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { useProfilesData } from "@/hooks/useProfilesData";
 import ProfilesError from "@/components/profiles/ProfilesError";
@@ -8,8 +8,10 @@ import ProfilesLoading from "@/components/profiles/ProfilesLoading";
 import ProfilesGrid from "@/components/profiles/ProfilesGrid";
 import ProfilesList from "@/components/profiles/ProfilesList";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { LayoutGrid, LayoutList } from "lucide-react";
+import { LayoutGrid, LayoutList, RefreshCw } from "lucide-react";
 import { ProfilesStats } from "@/components/profiles/ProfilesStats";
+import { Button } from "@/components/ui/button";
+import { useToast } from "@/hooks/use-toast";
 
 // Using the updated interface with subscription_status as string
 interface ProfileWithDetails {
@@ -30,11 +32,37 @@ interface ProfileWithDetails {
   subscription_status?: string;
 }
 
+// Get saved view mode from localStorage or default to grid
+const getSavedViewMode = (): "grid" | "list" => {
+  const saved = localStorage.getItem("profilesViewMode");
+  return (saved === "list" ? "list" : "grid") as "grid" | "list";
+};
+
+// Get saved filter from localStorage
+const getSavedFilter = (): string | null => {
+  return localStorage.getItem("profilesActiveFilter");
+};
+
 const Profiles = () => {
+  const { toast } = useToast();
   const [searchQuery, setSearchQuery] = useState("");
-  const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
-  const [activeFilter, setActiveFilter] = useState<string | null>(null);
-  const { profiles, isLoading, isError, error } = useProfilesData();
+  const [viewMode, setViewMode] = useState<"grid" | "list">(getSavedViewMode());
+  const [activeFilter, setActiveFilter] = useState<string | null>(getSavedFilter());
+  const { profiles, isLoading, isError, error, refreshProfiles } = useProfilesData();
+  
+  // Save view mode to localStorage when it changes
+  useEffect(() => {
+    localStorage.setItem("profilesViewMode", viewMode);
+  }, [viewMode]);
+  
+  // Save active filter to localStorage when it changes
+  useEffect(() => {
+    if (activeFilter) {
+      localStorage.setItem("profilesActiveFilter", activeFilter);
+    } else {
+      localStorage.removeItem("profilesActiveFilter");
+    }
+  }, [activeFilter]);
   
   // Сразу фильтруем профили по поисковому запросу и активному фильтру
   const filteredProfiles = profiles?.filter(profile => {
@@ -62,17 +90,38 @@ const Profiles = () => {
     return matchesSearch;
   });
 
+  // Function to manually refresh data
+  const handleRefresh = () => {
+    refreshProfiles();
+    toast({
+      title: "Обновление данных",
+      description: "Данные профилей обновляются...",
+    });
+  };
+
   if (error) {
     return <ProfilesError error={error} />;
   }
 
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-3xl font-bold tracking-tight">Клиенты</h1>
-        <p className="text-muted-foreground mt-1">
-          Управление профилями пользователей и их питанием
-        </p>
+      <div className="flex justify-between items-start">
+        <div>
+          <h1 className="text-3xl font-bold tracking-tight">Клиенты</h1>
+          <p className="text-muted-foreground mt-1">
+            Управление профилями пользователей и их питанием
+          </p>
+        </div>
+        
+        <Button 
+          variant="outline" 
+          size="sm" 
+          onClick={handleRefresh}
+          className="flex items-center gap-1"
+        >
+          <RefreshCw className="h-3.5 w-3.5" />
+          Обновить
+        </Button>
       </div>
 
       {/* Statistics Panel */}
@@ -95,14 +144,30 @@ const Profiles = () => {
               <p>Не удалось загрузить данные профилей.</p>
               <button 
                 className="mt-4 px-4 py-2 bg-primary text-white rounded" 
-                onClick={() => window.location.reload()}
+                onClick={handleRefresh}
               >
                 Попробовать снова
               </button>
             </div>
           ) : (
             <div className="space-y-4">
-              <div className="flex justify-end">
+              <div className="flex justify-between items-center">
+                <div className="text-sm text-muted-foreground">
+                  {filteredProfiles && filteredProfiles.length > 0 
+                    ? `Найдено: ${filteredProfiles.length} ${activeFilter ? 'с фильтром' : ''}`
+                    : 'Нет результатов'
+                  }
+                  {activeFilter && (
+                    <span className="ml-1 px-1.5 py-0.5 bg-muted rounded-md text-xs">
+                      {activeFilter === "active" ? "Premium" :
+                       activeFilter === "trial" ? "Trial" :
+                       activeFilter === "weight_loss" ? "Снижение веса" :
+                       activeFilter === "weight_gain" ? "Набор веса" :
+                       activeFilter === "maintenance" ? "Поддержание" : activeFilter}
+                    </span>
+                  )}
+                </div>
+                
                 <Tabs value={viewMode} onValueChange={(v) => setViewMode(v as "grid" | "list")} className="w-auto">
                   <TabsList className="bg-muted/80">
                     <TabsTrigger value="grid" className="flex items-center gap-1">

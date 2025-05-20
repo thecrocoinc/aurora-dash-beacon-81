@@ -1,5 +1,6 @@
+
 import { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/lib/supabase";
 import { format } from "date-fns";
 
@@ -32,11 +33,12 @@ export interface ProfileWithDetails {
 
 export const useProfilesData = () => {
   const [error, setError] = useState<string | null>(null);
+  const queryClient = useQueryClient();
   
   // Get today's date in YYYY-MM-DD format for the day_summary RPC call
   const today = format(new Date(), "yyyy-MM-dd");
   
-  // Fetch profiles from Supabase
+  // Fetch profiles from Supabase with improved caching
   const { data: profiles, isLoading, isError } = useQuery({
     queryKey: ['profiles'],
     queryFn: async () => {
@@ -132,9 +134,15 @@ export const useProfilesData = () => {
         return [];
       }
     },
-    retry: 1,
-    refetchOnWindowFocus: false
+    staleTime: 1000 * 60 * 5, // 5 minutes before data is considered stale
+    refetchOnWindowFocus: false,
+    retry: 1
   });
 
-  return { profiles, isLoading, isError, error };
+  // Function to force refresh profiles data (manually invalidate cache)
+  const refreshProfiles = () => {
+    queryClient.invalidateQueries({ queryKey: ['profiles'] });
+  };
+
+  return { profiles, isLoading, isError, error, refreshProfiles };
 };
