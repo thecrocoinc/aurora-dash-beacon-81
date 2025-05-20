@@ -27,7 +27,8 @@ const DemoProfilesGrid = () => {
     dailyGoal: 2000,
     prot: Math.floor(Math.random() * 120) + 30,
     fat: Math.floor(Math.random() * 80) + 20,
-    carb: Math.floor(Math.random() * 200) + 100
+    carb: Math.floor(Math.random() * 200) + 100,
+    name: profile.first_name // For backward compatibility
   }));
 
   return (

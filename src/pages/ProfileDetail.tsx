@@ -103,7 +103,10 @@ const ProfileDetail = () => {
         return (data || []).map(meal => ({
           ...meal,
           id: meal.id.toString(),
-          photo_file_id: undefined // Add this to match expected Meal type
+          // Add required fields for compatibility with existing components
+          photo_id: undefined,
+          chat_id: profile.telegram_id,
+          deleted: false
         })) as unknown as Meal[];
       } catch (error) {
         console.error("Error fetching meals:", error);
@@ -159,7 +162,7 @@ const ProfileDetail = () => {
             profile={profile}
             summary={summary} 
             dailyGoal={dailyGoal} 
-            meals={meals || []} 
+            meals={meals} 
             mealsLoading={mealsLoading} 
           />
         </TabsContent>

@@ -7,6 +7,7 @@ import { DialogItem } from "./DialogListItem";
 import ChatBubble from "@/components/ChatBubble";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Loader2 } from "lucide-react";
+import { Message } from "@/types/chat";
 
 interface DialogDrawerProps {
   open: boolean;

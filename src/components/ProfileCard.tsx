@@ -50,7 +50,8 @@ const ProfileCard = ({ profile }: ProfileCardProps) => {
         <div className="flex items-center justify-center py-1">
           <KcalRing 
             value={profile.kcalRatio} 
-            size="md"
+            size={48}
+            showValue={true}
             label={`${profile.currentKcal}/${profile.dailyGoal}`}
           />
         </div>

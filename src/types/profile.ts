@@ -5,6 +5,7 @@ export type Profile = Database['public']['Tables']['profiles']['Row'];
 
 export type Meal = Database['public']['Tables']['meals']['Row'] & {
   photo_file_id?: string;
+  id: string;
 };
 
 export type Digest = {
@@ -32,6 +33,9 @@ export interface ProfileWithDetails {
   last_activity?: string | null;
   streak_days?: number;
   subscription_status?: string;
+  // Legacy fields for backward compatibility
+  name?: string;
+  avatar_url?: string;
 }
 
 export interface ProfileExtended extends Profile {
@@ -42,4 +46,7 @@ export interface ProfileExtended extends Profile {
   target_weight?: number;
   avatar?: string | null;
   locale?: string;
+  // Legacy fields for backward compatibility
+  name?: string;
+  avatar_url?: string;
 }

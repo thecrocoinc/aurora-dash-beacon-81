@@ -5,11 +5,13 @@ import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { getSubscriptionBadge } from "@/utils/profileUtils";
+import { ProfileExtended } from "@/types/profile";
 
 type ProfileHeaderProps = {
   profile: {
     id: string;
     first_name?: string | null;
+    username?: string | null;
     avatar?: string | null;
     goal_type?: string | null;
     subscription_status?: string;
