@@ -2,6 +2,7 @@
 import React from "react";
 import ProfileCard from "@/components/ProfileCard";
 import { faker } from "@faker-js/faker";
+import { ProfileWithDetails } from "@/types/profile";
 
 /**
  * Demo profiles grid for when no real profiles are available
@@ -16,9 +17,11 @@ const DemoProfilesGrid = () => {
   }));
 
   // Map demo data to the expected format
-  const profilesWithDetails = fakeDemoProfiles.map((profile) => ({
+  const profilesWithDetails: ProfileWithDetails[] = fakeDemoProfiles.map((profile) => ({
     ...profile,
     id: profile.id.toString(),
+    avatar: null,
+    watch_connected: false,
     kcalRatio: Math.random(),
     currentKcal: Math.floor(Math.random() * 1800) + 200,
     dailyGoal: 2000,

@@ -10,30 +10,7 @@ import ProfileLoading from "@/components/profile/ProfileLoading";
 import OverviewTab from "@/components/profile/OverviewTab";
 import InsightsTab from "@/components/profile/InsightsTab";
 import ChatTab from "@/components/profile/ChatTab";
-import { Database } from '@/supabase/types/database.types';
-
-type Profile = Database['public']['Tables']['profiles']['Row'];
-type Meal = Database['public']['Tables']['meals']['Row'] & {
-  photo_file_id?: string;  // Adding optional photo_file_id field
-};
-
-interface ProfileExtended extends Profile {
-  goal_type?: string;
-  subscription_status?: string;
-  weight?: number;
-  height?: number;
-  target_weight?: number;
-  avatar?: string | null;
-  locale?: string;
-}
-
-interface Digest {
-  kcal: number;
-  prot: number;
-  fat: number;
-  carb: number;
-  summary_md?: string;
-}
+import { Profile, ProfileExtended, Digest, Meal } from '@/types/profile';
 
 const ProfileDetail = () => {
   const { id } = useParams<{ id: string }>();
@@ -82,14 +59,14 @@ const ProfileDetail = () => {
       
       if (error) throw error;
       
-      // Cast to Digest type to ensure we have the expected structure
+      // Cast to Digest type with proper typing
       const digest: Digest = data ? {
-        kcal: data.kcal || 0,
-        prot: data.prot || 0,
-        fat: data.fat || 0,
-        carb: data.carb || 0,
-        summary_md: data.summary_md || ''
-      } : { kcal: 0, prot: 0, fat: 0, carb: 0, summary_md: '' };
+        kcal: typeof data.kcal === 'number' ? data.kcal : 0,
+        prot: typeof data.prot === 'number' ? data.prot : 0,
+        fat: typeof data.fat === 'number' ? data.fat : 0,
+        carb: typeof data.carb === 'number' ? data.carb : 0,
+        summary_md: typeof data.summary_md === 'string' ? data.summary_md : ''
+      } : { kcal: 0, prot: 0, fat: 0, carb: 0 };
       
       return digest;
     },
@@ -112,19 +89,25 @@ const ProfileDetail = () => {
     queryFn: async () => {
       if (!profile?.telegram_id) return [];
       
-      const { data, error } = await supabase
-        .from('meals')
-        .select('id, dish, grams, eaten_at, kcal, prot, fat, carb, photo_file_id')
-        .eq('chat_id', profile.telegram_id)
-        .order('eaten_at', { ascending: false })
-        .limit(20);
-      
-      if (error) throw error;
-      
-      return (data || []).map(meal => ({
-        ...meal,
-        id: meal.id.toString() // Convert id to string to match expected type
-      }));
+      try {
+        const { data, error } = await supabase
+          .from('meals')
+          .select('id, dish, grams, eaten_at, kcal, prot, fat, carb')
+          .eq('chat_id', profile.telegram_id)
+          .order('eaten_at', { ascending: false })
+          .limit(20);
+        
+        if (error) throw error;
+        
+        // Map meals to the correct type with string IDs
+        return (data || []).map(meal => ({
+          ...meal,
+          id: meal.id.toString() // Convert id to string to match expected type
+        })) as Meal[];
+      } catch (error) {
+        console.error("Error fetching meals:", error);
+        return [];
+      }
     },
     enabled: !!profile?.telegram_id
   });
@@ -171,7 +154,7 @@ const ProfileDetail = () => {
             profile={profile}
             summary={summary} 
             dailyGoal={dailyGoal} 
-            meals={meals} 
+            meals={meals || []} 
             mealsLoading={mealsLoading} 
           />
         </TabsContent>

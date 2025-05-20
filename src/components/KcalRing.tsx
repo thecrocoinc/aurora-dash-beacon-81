@@ -3,10 +3,12 @@ import React from "react";
 
 type KcalRingProps = {
   value: number;
-  target: number;
+  target?: number;
+  size?: "sm" | "md" | "lg";
+  label?: string;
 };
 
-const KcalRing = ({ value, target }: KcalRingProps) => {
+const KcalRing = ({ value, target = 2000, size = "md", label }: KcalRingProps) => {
   const percentage = Math.min((value / target) * 100, 100);
   const safeValue = isNaN(value) ? 0 : value;
   const safeTarget = isNaN(target) || target === 0 ? 2000 : target;
@@ -19,8 +21,23 @@ const KcalRing = ({ value, target }: KcalRingProps) => {
     return "#10b981"; // emerald-500
   };
 
+  // Size configurations
+  const getSizeConfig = () => {
+    switch (size) {
+      case "sm":
+        return { width: "w-24 h-24", textSize: "text-xl", subTextSize: "text-xs" };
+      case "lg":
+        return { width: "w-64 h-64", textSize: "text-4xl", subTextSize: "text-lg" };
+      case "md":
+      default:
+        return { width: "w-48 h-48", textSize: "text-3xl", subTextSize: "text-sm" };
+    }
+  };
+
+  const { width, textSize, subTextSize } = getSizeConfig();
+
   return (
-    <div className="relative flex items-center justify-center w-48 h-48">
+    <div className={`relative flex items-center justify-center ${width}`}>
       <svg className="w-full h-full" viewBox="0 0 100 100">
         {/* Background circle */}
         <circle
@@ -46,8 +63,14 @@ const KcalRing = ({ value, target }: KcalRingProps) => {
         />
       </svg>
       <div className="absolute flex flex-col items-center">
-        <span className="text-3xl font-bold">{safeValue}</span>
-        <span className="text-sm text-muted-foreground">/ {safeTarget} ккал</span>
+        {label ? (
+          <span className={`${textSize} font-bold`}>{label}</span>
+        ) : (
+          <>
+            <span className={`${textSize} font-bold`}>{safeValue}</span>
+            <span className={`${subTextSize} text-muted-foreground`}>/ {safeTarget} ккал</span>
+          </>
+        )}
       </div>
     </div>
   );

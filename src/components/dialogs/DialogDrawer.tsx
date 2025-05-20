@@ -94,7 +94,7 @@ const DialogDrawer = ({
   if (!selectedDialog) return null;
 
   return (
-    <Drawer open={open} onOpenChange={onOpenChange} direction="right" className="w-full md:w-[400px] lg:w-[500px]">
+    <Drawer open={open} onOpenChange={onOpenChange} direction="right">
       <DrawerHeader className="flex flex-col gap-1.5 p-4 border-b">
         <h3 className="text-lg font-semibold">{selectedDialog.name}</h3>
         <p className="text-sm text-muted-foreground">

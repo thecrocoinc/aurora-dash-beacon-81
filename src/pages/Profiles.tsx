@@ -8,26 +8,7 @@ import ProfilesLoading from "@/components/profiles/ProfilesLoading";
 import ProfilesList from "@/components/profiles/ProfilesList";
 import { ProfilesStats } from "@/components/profiles/ProfilesStats";
 import { useToast } from "@/hooks/use-toast";
-
-// Using the updated interface with first_name and username instead of name
-interface ProfileWithDetails {
-  id: string;
-  first_name?: string | null;
-  username?: string | null;
-  avatar: string | null;
-  watch_connected: boolean;
-  kcalRatio: number;
-  currentKcal: number;
-  dailyGoal: number;
-  prot: number;
-  fat: number;
-  carb: number;
-  goal_type?: string | null;
-  created_at?: string | null;
-  last_activity?: string | null;
-  streak_days?: number;
-  subscription_status?: string;
-}
+import { ProfileWithDetails } from "@/types/profile";
 
 // Get saved filter from localStorage
 const getSavedFilter = (): string | null => {
@@ -49,7 +30,7 @@ const Profiles = () => {
     }
   }, [activeFilter]);
   
-  // Сразу фильтруем профили по поисковому запросу и активному фильтру
+  // Filter profiles by search query and active filter
   const filteredProfiles = profiles?.filter(profile => {
     // Filter by search query
     const matchesSearch = profile.first_name?.toLowerCase().includes(searchQuery.toLowerCase()) || 
@@ -134,7 +115,7 @@ const Profiles = () => {
                 )}
               </div>
               
-              <ProfilesList profiles={filteredProfiles} />
+              <ProfilesList profiles={filteredProfiles as ProfileWithDetails[]} />
             </div>
           )}
         </CardContent>

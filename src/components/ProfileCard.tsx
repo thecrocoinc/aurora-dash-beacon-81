@@ -4,22 +4,10 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import KcalRing from "@/components/KcalRing";
 import MacroChips from "@/components/MacroChips";
 import { getGoalInfo, getSubscriptionBadge } from "@/utils/profileUtils";
+import { ProfileWithDetails } from "@/types/profile";
 
 interface ProfileCardProps {
-  profile: {
-    id: string;
-    first_name?: string | null;
-    username?: string | null;
-    avatar?: string | null;
-    kcalRatio: number;
-    currentKcal: number;
-    dailyGoal: number;
-    prot: number;
-    fat: number;
-    carb: number;
-    goal_type?: string | null;
-    subscription_status?: string;
-  };
+  profile: ProfileWithDetails;
 }
 
 const ProfileCard = ({ profile }: ProfileCardProps) => {
@@ -63,7 +51,6 @@ const ProfileCard = ({ profile }: ProfileCardProps) => {
           <KcalRing 
             value={profile.kcalRatio} 
             size="md"
-            // Make sure KcalRing receives properties it expects
             label={`${profile.currentKcal}/${profile.dailyGoal}`}
           />
         </div>
