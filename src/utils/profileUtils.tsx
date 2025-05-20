@@ -9,9 +9,11 @@ import * as React from "react";
 export const getSubscriptionBadge = (status?: string) => {
   switch(status) {
     case 'active':
-      return <Badge className="bg-gradient-to-r from-purple-600 to-purple-500 hover:from-purple-700 hover:to-purple-600 text-white border-0">Premium</Badge>;
+      return <Badge className="bg-gradient-to-r from-purple-600/10 to-purple-500/20 text-purple-400 border-0 font-medium">Premium</Badge>;
+    case 'trial':
+      return <Badge className="bg-gradient-to-r from-blue-600/10 to-blue-500/20 text-blue-400 border-0 font-medium">Trial</Badge>;
     default:
-      return <Badge className="bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white border-0">Basic</Badge>;
+      return <Badge className="bg-gradient-to-r from-blue-600/10 to-blue-500/20 text-blue-400 border-0 font-medium">Basic</Badge>;
   }
 };
 
