@@ -38,14 +38,16 @@ export function ProfilesStats({ profiles }: ProfilesStatsProps) {
   
   const stats = [
     {
-      label: "Клиенты",
-      value: totalUsers,
-      icon: <Users className="h-4 w-4" />
+      label: "Basic",
+      value: totalUsers - activeSubscriptions,
+      icon: <Users className="h-4 w-4" />,
+      color: "blue"
     },
     {
       label: "Premium",
       value: activeSubscriptions,
-      icon: <Crown className="h-4 w-4" />
+      icon: <Crown className="h-4 w-4" />,
+      color: "purple"
     },
     {
       label: "Часы",
@@ -64,11 +66,13 @@ export function ProfilesStats({ profiles }: ProfilesStatsProps) {
       {stats.map((stat) => (
         <Card key={stat.label} className="p-0 hover:shadow-md transition-all">
           <div className="flex items-center h-14 px-4">
-            <div className="rounded-full p-1.5 bg-primary/10 mr-3">
+            <div className={`rounded-full p-1.5 ${stat.color === 'purple' ? 'bg-purple-600/10' : stat.color === 'blue' ? 'bg-blue-600/10' : 'bg-primary/10'} mr-3`}>
               {stat.icon}
             </div>
             <div className="flex flex-col justify-center">
-              <p className="text-xs text-muted-foreground">{stat.label}</p>
+              <p className={`text-xs ${stat.color === 'purple' ? 'text-purple-400' : stat.color === 'blue' ? 'text-blue-400' : 'text-muted-foreground'}`}>
+                {stat.label}
+              </p>
               <p className="text-lg font-semibold">{stat.value}</p>
             </div>
           </div>
