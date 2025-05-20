@@ -1,6 +1,6 @@
 
 import { useLocation } from "react-router-dom";
-import { Home, Users, MessageSquare, BarChart2, Mail, Bug, Star, Settings } from "lucide-react";
+import { Home, Users, MessageSquare, Settings } from "lucide-react";
 import { LucideIcon } from "lucide-react";
 
 export type SidebarItem = {
@@ -35,31 +35,6 @@ export function useSidebarData() {
     path: "/dialogs",
     description: "Чаты между клиентами и ботом",
     badge: "5",
-    isPrimary: false
-  }, {
-    name: "Аналитика",
-    icon: BarChart2,
-    path: "/biz-agent",
-    description: "Статистика и отчеты бизнеса",
-    isPrimary: false
-  }, {
-    name: "Рассылки",
-    icon: Mail,
-    path: "/notifications",
-    description: "Управление рассылками",
-    badge: "New",
-    isPrimary: false
-  }, {
-    name: "Баги",
-    icon: Bug,
-    path: "/bugs",
-    description: "Отчеты об ошибках",
-    isPrimary: false
-  }, {
-    name: "Отзывы",
-    icon: Star,
-    path: "/reviews",
-    description: "Отзывы пользователей",
     isPrimary: false
   }];
 

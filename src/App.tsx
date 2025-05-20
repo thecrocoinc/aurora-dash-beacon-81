@@ -9,9 +9,7 @@ import Profiles from "./pages/Profiles";
 import ProfileDetail from "./pages/ProfileDetail";
 import Dialogs from "./pages/Dialogs";
 import Settings from "./pages/Settings";
-import BizAgent from "./pages/BizAgent";
 import NotFound from "./pages/NotFound";
-import Notifications from "./pages/Notifications";
 
 // Create a client with improved settings for admin panel
 const queryClient = new QueryClient({
@@ -37,13 +35,6 @@ const App = () => (
           <Route path="profiles" element={<Profiles />} />
           <Route path="profiles/:id" element={<ProfileDetail />} />
           <Route path="dialogs" element={<Dialogs />} />
-          <Route path="biz-agent" element={<BizAgent />} />
-          <Route path="notifications" element={<Notifications />} />
-          
-          {/* Новые маршруты для добавленных пунктов меню */}
-          <Route path="bugs" element={<NotFound />} />
-          <Route path="reviews" element={<NotFound />} />
-          
           <Route path="settings" element={<Settings />} />
         </Route>
         <Route path="*" element={<NotFound />} />
