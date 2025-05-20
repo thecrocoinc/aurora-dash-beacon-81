@@ -18,7 +18,6 @@ type Meal = Database['public']['Tables']['meals']['Row'] & {
 };
 
 interface ProfileExtended extends Profile {
-  locale?: string;
   goal_type?: string;
   subscription_status?: string;
   weight?: number;
@@ -87,7 +86,7 @@ const ProfileDetail = () => {
   });
 
   // Cast summary data to the correct type
-  const summary: SummaryType = summaryData as SummaryType;
+  const summary = summaryData as SummaryType;
 
   // Update kcalRatio when summary changes
   useEffect(() => {
@@ -112,8 +111,9 @@ const ProfileDetail = () => {
       if (error) throw error;
       return (data || []).map(meal => ({
         ...meal,
-        photo_id: undefined
-      })) as Meal[];
+        photo_id: undefined,
+        id: meal.id.toString() // Convert id to string to match expected type
+      })) as unknown as Meal[];
     },
     enabled: !!profile?.telegram_id
   });

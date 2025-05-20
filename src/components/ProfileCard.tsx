@@ -1,133 +1,73 @@
 
-import { Card, CardContent } from "@/components/ui/card";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Progress } from "@/components/ui/progress";
-import { Target, Utensils, TrendingDown, TrendingUp } from "lucide-react";
-import { PlanBadge } from "@/components/home/subscription/PlanBadge";
-import { Link } from "react-router-dom";
-
-interface ProfileWithDetails {
-  id: string;
-  first_name: string | null;
-  avatar?: string | null;
-  watch_connected?: boolean;
-  kcalRatio: number;
-  currentKcal: number;
-  dailyGoal: number;
-  prot: number;
-  fat: number;
-  carb: number;
-  goal_type?: string | null;
-  created_at?: string | null;
-  last_activity?: string | null;
-  streak_days?: number;
-  subscription_status?: string;
-}
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import KcalRing from "@/components/KcalRing";
+import MacroChips from "@/components/MacroChips";
+import { getGoalInfo, getSubscriptionBadge } from "@/utils/profileUtils";
 
 interface ProfileCardProps {
-  profile: ProfileWithDetails;
+  profile: {
+    id: string;
+    first_name?: string | null;
+    avatar?: string | null;
+    kcalRatio: number;
+    currentKcal: number;
+    dailyGoal: number;
+    prot: number;
+    fat: number;
+    carb: number;
+    goal_type?: string | null;
+    subscription_status?: string;
+  };
 }
 
 const ProfileCard = ({ profile }: ProfileCardProps) => {
-  const displayName = profile.first_name || "User";
-  
-  const initials = displayName
-    .split(" ")
-    .map((n) => n[0])
-    .join("");
-
-  // Calculate progress percentage
-  const progressPercentage = Math.round(profile.kcalRatio * 100);
-  
-  // Determine if premium or basic
-  const isPremium = profile.subscription_status === 'active';
-  const isTrial = profile.subscription_status === 'trial';
-  
-  // Get progress bar color based on subscription status
-  const getProgressColor = () => {
-    if (isPremium) return "rgb(139, 92, 246)"; // purple-500
-    if (isTrial) return "rgb(59, 130, 246)"; // blue-500
-    return "rgb(16, 185, 129)"; // green-500
-  };
-  
-  // Get goal icon
-  const getGoalIcon = () => {
-    switch(profile.goal_type) {
-      case 'weight_loss':
-        return <TrendingDown className={`h-3.5 w-3.5 ${isPremium ? 'text-purple-400' : isTrial ? 'text-blue-400' : 'text-green-400'}`} />;
-      case 'weight_gain':
-        return <TrendingUp className={`h-3.5 w-3.5 ${isPremium ? 'text-purple-400' : isTrial ? 'text-blue-400' : 'text-green-400'}`} />;
-      case 'maintenance':
-        return <Target className={`h-3.5 w-3.5 ${isPremium ? 'text-purple-400' : isTrial ? 'text-blue-400' : 'text-green-400'}`} />;
-      default:
-        return <Utensils className={`h-3.5 w-3.5 ${isPremium ? 'text-purple-400' : isTrial ? 'text-blue-400' : 'text-green-400'}`} />;
+  // Get first letter of first_name for avatar fallback
+  const getInitial = () => {
+    if (profile.first_name) {
+      return profile.first_name.charAt(0).toUpperCase();
     }
-  };
-  
-  // Get goal text
-  const getGoalText = () => {
-    switch(profile.goal_type) {
-      case 'weight_loss':
-        return "Снижение";
-      case 'weight_gain':
-        return "Набор";
-      case 'maintenance':
-        return "Поддержание";
-      default:
-        return "Не указана";
-    }
+    return "U";
   };
 
   return (
-    <Card className={`h-full transition-all duration-200 hover:shadow-md hover:-translate-y-0.5
-      ${isPremium ? 'border-purple-500/30 bg-gradient-to-tr from-purple-950/5 to-transparent' : 
-      isTrial ? 'border-blue-500/30 bg-gradient-to-tr from-blue-950/5 to-transparent' : 
-      'border-white/10'}`}
-    >
-      <CardContent className="p-3">
-        <div className="flex flex-col h-full">
-          {/* Profile header */}
-          <div className="flex justify-between items-start mb-2">
-            <div className="flex gap-2 max-w-full overflow-hidden">
-              <Avatar className={`h-9 w-9 flex-shrink-0 ${isPremium ? 'ring-1 ring-purple-500/30' : isTrial ? 'ring-1 ring-blue-500/30' : 'ring-1 ring-white/10'}`}>
-                <AvatarFallback className={`
-                  ${isPremium ? 'bg-purple-500/10 text-purple-400' : 
-                  isTrial ? 'bg-blue-500/10 text-blue-400' : 
-                  'bg-primary/20 text-primary'} text-xs`}
-                >
-                  {initials}
-                </AvatarFallback>
-              </Avatar>
-              
-              <div className="overflow-hidden">
-                <h3 className={`font-medium leading-none mb-1 text-sm truncate ${isPremium ? 'text-purple-50' : ''}`}>
-                  {displayName}
-                </h3>
-                <div className="flex items-center gap-1.5 max-w-full">
-                  <PlanBadge plan={isPremium ? 'Premium' : 'Basic'} />
-                  <span className="flex items-center gap-1 text-xs text-muted-foreground truncate max-w-[60px] sm:max-w-[100px] overflow-hidden">
-                    {getGoalIcon()} <span className="truncate">{getGoalText()}</span>
-                  </span>
-                </div>
-              </div>
+    <Card className="h-full hover:shadow-md transition-shadow">
+      <CardHeader className="pb-2">
+        <div className="flex justify-between items-start">
+          <div className="flex items-center space-x-2">
+            <Avatar>
+              {profile.avatar ? (
+                <img src={profile.avatar} alt={profile.first_name || "User"} />
+              ) : (
+                <AvatarFallback>{getInitial()}</AvatarFallback>
+              )}
+            </Avatar>
+            <div>
+              <h3 className="font-semibold line-clamp-1">
+                {profile.first_name || "Пользователь"}
+              </h3>
+              {getGoalInfo(profile.goal_type)}
             </div>
           </div>
-          
-          {/* Progress bar */}
-          <div className="mt-2">
-            <div className="flex justify-between items-center mb-1 text-xs">
-              <span className="text-muted-foreground">Прогресс:</span>
-              <span className="whitespace-nowrap">{profile.currentKcal}/{profile.dailyGoal} ккал</span>
-            </div>
-            <Progress 
-              value={progressPercentage} 
-              className="h-2 bg-muted/50" 
-              style={{ 
-                "--progress-background": getProgressColor(),
-              } as React.CSSProperties}
-            />
-          </div>
+          {getSubscriptionBadge(profile.subscription_status)}
         </div>
+      </CardHeader>
+      <CardContent>
+        <div className="flex items-center justify-center py-1">
+          <KcalRing 
+            progress={profile.kcalRatio} 
+            currentKcal={profile.currentKcal}
+            dailyGoal={profile.dailyGoal}
+            size="md" 
+          />
+        </div>
+        <MacroChips
+          prot={profile.prot}
+          fat={profile.fat}
+          carb={profile.carb}
+          className="mt-2"
+          size="sm"
+        />
       </CardContent>
     </Card>
   );
