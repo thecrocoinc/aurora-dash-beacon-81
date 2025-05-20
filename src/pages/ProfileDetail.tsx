@@ -50,7 +50,9 @@ const ProfileDetail = () => {
         subscription_status: ['active', 'trial'][Math.floor(Math.random() * 2)],
         height: 175 + Math.floor(Math.random() * 20),
         weight: 70 + Math.floor(Math.random() * 30),
-        target_weight: 65 + Math.floor(Math.random() * 20)
+        target_weight: 65 + Math.floor(Math.random() * 20),
+        name: data.first_name, // For backward compatibility
+        avatar_url: null
       };
       
       return enhanced;
@@ -119,7 +121,7 @@ const ProfileDetail = () => {
           photo_id: undefined,
           chat_id: profile.telegram_id,
           deleted: false
-        })) as unknown as ExtendedMeal[];
+        })) as ExtendedMeal[];
         
         return mappedMeals;
       } catch (error) {
@@ -157,7 +159,9 @@ const ProfileDetail = () => {
     username: profile.username,
     goal_type: profile.goal_type,
     subscription_status: profile.subscription_status,
-    avatar: null
+    avatar: null,
+    name: profile.first_name, // Backward compatibility
+    avatar_url: null // Backward compatibility
   };
 
   return (
@@ -176,7 +180,7 @@ const ProfileDetail = () => {
             profile={profile}
             summary={summary} 
             dailyGoal={dailyGoal} 
-            meals={meals as any} 
+            meals={meals} 
             mealsLoading={mealsLoading} 
           />
         </TabsContent>

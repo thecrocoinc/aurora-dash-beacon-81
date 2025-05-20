@@ -8,32 +8,23 @@ import MacroChips from "@/components/MacroChips";
 import MasonryGrid from "@/components/MasonryGrid";
 import MealGridSkeleton from "@/components/MealGridSkeleton";
 import MealTilePlaceholder from "@/components/MealTilePlaceholder";
-
-type ProfileType = {
-  id: string;
-  name: string | null;
-  avatar_url: string | null;
-  goal_type?: string | null;
-  subscription_status?: string;
-  height?: number | null;
-  weight?: number | null;
-  target_weight?: number | null;
-};
+import { ProfileExtended } from "@/types/profile";
 
 type OverviewTabProps = {
-  profile: ProfileType;
+  profile: ProfileExtended;
   summary: {
     kcal: number;
     prot: number;
     fat: number;
     carb: number;
+    summary_md?: string;
   } | null;
   dailyGoal: number;
   meals: Array<{
     id: string;
     dish: string | null;
     grams: number | null;
-    photo_id: string | null;
+    photo_id?: string | null;
     eaten_at: string | null;
     kcal?: number | null;
     prot?: number | null;
@@ -67,7 +58,10 @@ const OverviewTab = ({ profile, summary, dailyGoal, meals, mealsLoading }: Overv
           <CardDescription>Калории и нутриенты</CardDescription>
         </CardHeader>
         <CardContent className="flex flex-col items-center">
-          <KcalRing value={summary?.kcal || 0} target={dailyGoal} />
+          <KcalRing 
+            value={(summary?.kcal || 0) / dailyGoal} 
+            label={`${summary?.kcal || 0}/${dailyGoal}`} 
+          />
           <div className="flex gap-8 mt-6">
             <div className="flex flex-col items-center">
               <div className="text-sm text-muted-foreground mb-1">Белки</div>

@@ -6,9 +6,10 @@ type KcalRingProps = {
   size?: number | "sm" | "md" | "lg";
   showValue?: boolean;
   label?: string;
+  target?: number;
 };
 
-const KcalRing = ({ value, size = "md", showValue, label }: KcalRingProps) => {
+const KcalRing = ({ value, size = "md", showValue, label, target }: KcalRingProps) => {
   const percentage = Math.min((value) * 100, 100);
   const safeValue = isNaN(value) ? 0 : value;
   const safePercentage = isNaN(percentage) ? 0 : percentage;
@@ -75,7 +76,7 @@ const KcalRing = ({ value, size = "md", showValue, label }: KcalRingProps) => {
         ) : (
           <>
             <span className={`${textSize} font-bold`}>{Math.round(safeValue * 100)}%</span>
-            {!showValue && <span className={`${subTextSize} text-muted-foreground`}>/ 100%</span>}
+            {!showValue && target && <span className={`${subTextSize} text-muted-foreground`}>/ {target}</span>}
           </>
         )}
       </div>

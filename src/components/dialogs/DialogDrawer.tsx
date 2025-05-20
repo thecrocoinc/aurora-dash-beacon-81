@@ -113,7 +113,7 @@ const DialogDrawer = ({
             messages.map((msg) => (
               <ChatBubble
                 key={msg.id}
-                message={msg.content}
+                message={msg.content as Message}
                 isUser={msg.role === "user"}
                 timestamp={new Date(msg.created_at)}
               />
