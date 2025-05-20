@@ -6,7 +6,7 @@ import ProfilesTable from "./ProfilesTable";
 
 interface ProfileWithDetails {
   id: string;
-  name: string;
+  first_name?: string | null;
   avatar: string | null;
   watch_connected: boolean;
   kcalRatio: number;

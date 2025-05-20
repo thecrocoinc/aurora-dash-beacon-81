@@ -9,8 +9,8 @@ import { getSubscriptionBadge } from "@/utils/profileUtils";
 type ProfileHeaderProps = {
   profile: {
     id: string;
-    name: string | null;
-    avatar_url: string | null;
+    first_name?: string | null;
+    avatar?: string | null;
     goal_type?: string | null;
     subscription_status?: string;
   };
@@ -18,10 +18,9 @@ type ProfileHeaderProps = {
 
 const ProfileHeader = ({ profile }: ProfileHeaderProps) => {
   const navigate = useNavigate();
-  const initials = profile.name
-    ?.split(" ")
-    .map((n) => n[0])
-    .join("") || "";
+  const initials = profile.first_name
+    ? profile.first_name.charAt(0).toUpperCase()
+    : "?";
     
   return (
     <div className="space-y-4">
@@ -39,15 +38,15 @@ const ProfileHeader = ({ profile }: ProfileHeaderProps) => {
         <div className="flex items-center gap-4">
           <Avatar className="h-20 w-20 border-2 border-white/10">
             <AvatarImage 
-              src={profile?.avatar_url} 
-              alt={profile?.name} 
+              src={profile?.avatar} 
+              alt={profile?.first_name || ""} 
               className="object-cover"
             />
             <AvatarFallback className="text-2xl bg-purple-800/30 text-purple-200">{initials}</AvatarFallback>
           </Avatar>
           <div>
             <div className="flex items-center gap-2">
-              <h1 className="text-3xl font-bold tracking-tight">{profile?.name}</h1>
+              <h1 className="text-3xl font-bold tracking-tight">{profile?.first_name || "Пользователь"}</h1>
               {profile.subscription_status ? 
                 getSubscriptionBadge(profile.subscription_status) : 
                 getSubscriptionBadge('basic')}

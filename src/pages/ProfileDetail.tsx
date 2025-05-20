@@ -23,8 +23,7 @@ interface ProfileExtended extends Profile {
   weight?: number;
   height?: number;
   target_weight?: number;
-  avatar_url?: string | null;
-  locale?: string; // Added locale
+  avatar?: string | null;
 }
 
 interface SummaryType {
@@ -81,7 +80,7 @@ const ProfileDetail = () => {
         });
       
       if (error) throw error;
-      return data || { kcal: 0, prot: 0, fat: 0, carb: 0 };
+      return data as SummaryType || { kcal: 0, prot: 0, fat: 0, carb: 0, summary_md: '' };
     },
     enabled: !!profile?.telegram_id
   });
@@ -114,7 +113,7 @@ const ProfileDetail = () => {
         ...meal,
         photo_id: undefined,
         id: meal.id.toString() // Convert id to string to match expected type
-      })) as Meal[];
+      }));
     },
     enabled: !!profile?.telegram_id
   });
@@ -160,7 +159,7 @@ const ProfileDetail = () => {
             profile={profile}
             summary={summary} 
             dailyGoal={dailyGoal} 
-            meals={meals as any} 
+            meals={meals} 
             mealsLoading={mealsLoading} 
           />
         </TabsContent>

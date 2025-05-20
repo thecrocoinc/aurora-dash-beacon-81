@@ -12,7 +12,7 @@ import { useToast } from "@/hooks/use-toast";
 // Using the updated interface with subscription_status as string
 interface ProfileWithDetails {
   id: string;
-  name: string;
+  first_name?: string | null;
   avatar: string | null;
   watch_connected: boolean;
   kcalRatio: number;
@@ -51,7 +51,7 @@ const Profiles = () => {
   // Сразу фильтруем профили по поисковому запросу и активному фильтру
   const filteredProfiles = profiles?.filter(profile => {
     // Filter by search query
-    const matchesSearch = profile.name.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesSearch = profile.first_name?.toLowerCase().includes(searchQuery.toLowerCase()) || false;
     
     // Filter by selected filter if any
     if (activeFilter) {

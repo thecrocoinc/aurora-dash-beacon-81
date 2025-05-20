@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 
 interface ProfileWithDetails {
   id: string;
-  name: string;
+  first_name?: string | null;
   avatar: string | null;
   watch_connected: boolean;
   kcalRatio: number;
@@ -33,10 +33,9 @@ interface ProfileTableRowProps {
  */
 const ProfileTableRow = ({ profile }: ProfileTableRowProps) => {
   const navigate = useNavigate();
-  const initials = profile.name
-    .split(" ")
-    .map((n) => n[0])
-    .join("");
+  const initials = profile.first_name
+    ? profile.first_name.charAt(0).toUpperCase()
+    : "?";
   
   const progressPercentage = Math.round(profile.kcalRatio * 100);
   
@@ -63,7 +62,7 @@ const ProfileTableRow = ({ profile }: ProfileTableRowProps) => {
     >
       <TableCell className="flex items-center gap-2">
         <Avatar className={`h-8 w-8 flex-shrink-0 ${isPremium ? 'ring-1 ring-purple-500/30' : 'ring-1 ring-blue-500/30'}`}>
-          <AvatarImage src={profile.avatar || undefined} alt={profile.name} />
+          <AvatarImage src={profile.avatar || undefined} alt={profile.first_name || ""} />
           <AvatarFallback className={`
             ${isPremium ? 'bg-purple-500/10 text-purple-400' : 
             'bg-blue-500/10 text-blue-400'} text-xs`}
@@ -71,7 +70,7 @@ const ProfileTableRow = ({ profile }: ProfileTableRowProps) => {
             {initials}
           </AvatarFallback>
         </Avatar>
-        <span className="font-medium text-sm truncate max-w-[140px]">{profile.name}</span>
+        <span className="font-medium text-sm truncate max-w-[140px]">{profile.first_name || "Пользователь"}</span>
       </TableCell>
       
       <TableCell>
