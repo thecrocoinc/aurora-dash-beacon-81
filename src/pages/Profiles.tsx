@@ -5,10 +5,8 @@ import { useProfilesData } from "@/hooks/useProfilesData";
 import ProfilesError from "@/components/profiles/ProfilesError";
 import SearchAndFilters from "@/components/profiles/SearchAndFilters";
 import ProfilesLoading from "@/components/profiles/ProfilesLoading";
-import ProfilesGrid from "@/components/profiles/ProfilesGrid";
 import ProfilesList from "@/components/profiles/ProfilesList";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { LayoutGrid, LayoutList, RefreshCw } from "lucide-react";
+import { RefreshCw } from "lucide-react";
 import { ProfilesStats } from "@/components/profiles/ProfilesStats";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
@@ -32,12 +30,6 @@ interface ProfileWithDetails {
   subscription_status?: string;
 }
 
-// Get saved view mode from localStorage or default to grid
-const getSavedViewMode = (): "grid" | "list" => {
-  const saved = localStorage.getItem("profilesViewMode");
-  return (saved === "list" ? "list" : "grid") as "grid" | "list";
-};
-
 // Get saved filter from localStorage
 const getSavedFilter = (): string | null => {
   return localStorage.getItem("profilesActiveFilter");
@@ -46,14 +38,8 @@ const getSavedFilter = (): string | null => {
 const Profiles = () => {
   const { toast } = useToast();
   const [searchQuery, setSearchQuery] = useState("");
-  const [viewMode, setViewMode] = useState<"grid" | "list">(getSavedViewMode());
   const [activeFilter, setActiveFilter] = useState<string | null>(getSavedFilter());
   const { profiles, isLoading, isError, error, refreshProfiles } = useProfilesData();
-  
-  // Save view mode to localStorage when it changes
-  useEffect(() => {
-    localStorage.setItem("profilesViewMode", viewMode);
-  }, [viewMode]);
   
   // Save active filter to localStorage when it changes
   useEffect(() => {
@@ -138,7 +124,7 @@ const Profiles = () => {
       <Card>
         <CardContent className="pt-6">
           {isLoading ? (
-            <ProfilesLoading viewMode={viewMode} />
+            <ProfilesLoading viewMode="list" />
           ) : isError ? (
             <div className="text-center text-red-500 py-8">
               <p>Не удалось загрузить данные профилей.</p>
@@ -151,43 +137,24 @@ const Profiles = () => {
             </div>
           ) : (
             <div className="space-y-4">
-              {/* Results counter and view mode selector */}
-              <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
-                <div className="text-sm text-muted-foreground mb-2 sm:mb-0">
-                  {filteredProfiles && filteredProfiles.length > 0 
-                    ? `Найдено: ${filteredProfiles.length} ${activeFilter ? 'с фильтром' : ''}`
-                    : 'Нет результатов'
-                  }
-                  {activeFilter && (
-                    <span className="ml-1 px-1.5 py-0.5 bg-muted rounded-md text-xs">
-                      {activeFilter === "active" ? "Premium" :
-                       activeFilter === "trial" ? "Trial" :
-                       activeFilter === "weight_loss" ? "Снижение веса" :
-                       activeFilter === "weight_gain" ? "Набор веса" :
-                       activeFilter === "maintenance" ? "Поддержание" : activeFilter}
-                    </span>
-                  )}
-                </div>
-                
-                <Tabs value={viewMode} onValueChange={(v) => setViewMode(v as "grid" | "list")} className="w-auto">
-                  <TabsList className="bg-muted/80">
-                    <TabsTrigger value="grid" className="flex items-center gap-1">
-                      <LayoutGrid className="h-4 w-4" /> Сетка
-                    </TabsTrigger>
-                    <TabsTrigger value="list" className="flex items-center gap-1">
-                      <LayoutList className="h-4 w-4" /> Список
-                    </TabsTrigger>
-                  </TabsList>
-                  
-                  <TabsContent value="grid" className="mt-4">
-                    <ProfilesGrid profiles={filteredProfiles} />
-                  </TabsContent>
-                  
-                  <TabsContent value="list" className="mt-4">
-                    <ProfilesList profiles={filteredProfiles} />
-                  </TabsContent>
-                </Tabs>
+              {/* Results counter */}
+              <div className="text-sm text-muted-foreground mb-2">
+                {filteredProfiles && filteredProfiles.length > 0 
+                  ? `Найдено: ${filteredProfiles.length} ${activeFilter ? 'с фильтром' : ''}`
+                  : 'Нет результатов'
+                }
+                {activeFilter && (
+                  <span className="ml-1 px-1.5 py-0.5 bg-muted rounded-md text-xs">
+                    {activeFilter === "active" ? "Premium" :
+                     activeFilter === "trial" ? "Trial" :
+                     activeFilter === "weight_loss" ? "Снижение веса" :
+                     activeFilter === "weight_gain" ? "Набор веса" :
+                     activeFilter === "maintenance" ? "Поддержание" : activeFilter}
+                  </span>
+                )}
               </div>
+              
+              <ProfilesList profiles={filteredProfiles} />
             </div>
           )}
         </CardContent>

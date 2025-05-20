@@ -47,8 +47,7 @@ const ProfileTableRow = ({ profile }: ProfileTableRowProps) => {
   // Get progress bar color based on subscription status
   const getProgressColor = () => {
     if (isPremium) return "rgb(139, 92, 246)"; // purple-500
-    if (isTrial) return "rgb(59, 130, 246)"; // blue-500
-    return "rgb(16, 185, 129)"; // green-500
+    return "rgb(59, 130, 246)"; // blue-500
   };
   
   // Navigate to profile detail page using React Router
@@ -63,12 +62,11 @@ const ProfileTableRow = ({ profile }: ProfileTableRowProps) => {
       onClick={handleClick}
     >
       <TableCell className="flex items-center gap-2">
-        <Avatar className={`h-8 w-8 flex-shrink-0 ${isPremium ? 'ring-1 ring-purple-500/30' : isTrial ? 'ring-1 ring-blue-500/30' : 'ring-1 ring-white/10'}`}>
+        <Avatar className={`h-8 w-8 flex-shrink-0 ${isPremium ? 'ring-1 ring-purple-500/30' : 'ring-1 ring-blue-500/30'}`}>
           <AvatarImage src={profile.avatar || undefined} alt={profile.name} />
           <AvatarFallback className={`
             ${isPremium ? 'bg-purple-500/10 text-purple-400' : 
-            isTrial ? 'bg-blue-500/10 text-blue-400' : 
-            'bg-primary/20 text-primary'} text-xs`}
+            'bg-blue-500/10 text-blue-400'} text-xs`}
           >
             {initials}
           </AvatarFallback>

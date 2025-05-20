@@ -9,9 +9,9 @@ import * as React from "react";
 export const getSubscriptionBadge = (status?: string) => {
   switch(status) {
     case 'active':
-      return <Badge className="bg-purple-600 hover:bg-purple-700 text-white">Premium</Badge>;
+      return <Badge className="bg-gradient-to-r from-purple-600 to-purple-500 hover:from-purple-700 hover:to-purple-600 text-white border-0">Premium</Badge>;
     default:
-      return <Badge className="bg-blue-600 hover:bg-blue-700 text-white">Basic</Badge>;
+      return <Badge className="bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white border-0">Basic</Badge>;
   }
 };
 
@@ -40,7 +40,7 @@ export const getGoalInfo = (goalType?: string | null) => {
   return (
     <div className="flex items-center gap-1.5">
       <Icon className="h-3.5 w-3.5 text-muted-foreground" />
-      <span className="text-sm text-muted-foreground">{text}</span>
+      <span className="text-sm text-muted-foreground truncate">{text}</span>
     </div>
   );
 };
