@@ -10,6 +10,8 @@ import ProfileDetail from "./pages/ProfileDetail";
 import Dialogs from "./pages/Dialogs";
 import Settings from "./pages/Settings";
 import NotFound from "./pages/NotFound";
+import Clients from "./pages/Clients";
+import ClientDetail from "./pages/ClientDetail";
 
 // Create a client with improved settings for admin panel
 const queryClient = new QueryClient({
@@ -34,6 +36,8 @@ const App = () => (
           <Route index element={<Home />} />
           <Route path="profiles" element={<Profiles />} />
           <Route path="profiles/:id" element={<ProfileDetail />} />
+          <Route path="clients" element={<Clients />} />
+          <Route path="clients/:id" element={<ClientDetail />} />
           <Route path="dialogs" element={<Dialogs />} />
           <Route path="settings" element={<Settings />} />
         </Route>

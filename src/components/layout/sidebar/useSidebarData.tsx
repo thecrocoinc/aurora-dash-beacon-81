@@ -25,6 +25,12 @@ export function useSidebarData() {
   }, {
     name: "Клиенты",
     icon: Users,
+    path: "/clients",
+    description: "Управление профилями клиентов",
+    isPrimary: false
+  }, {
+    name: "Профили",
+    icon: Users,
     path: "/profiles",
     description: "Управление пользователями бота",
     badge: "32",
