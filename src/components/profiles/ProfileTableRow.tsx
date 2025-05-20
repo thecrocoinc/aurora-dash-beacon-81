@@ -38,6 +38,10 @@ const ProfileTableRow = ({ profile }: ProfileTableRowProps) => {
   
   const progressPercentage = Math.round(profile.kcalRatio * 100);
   
+  // Determine subscription status for styling
+  const isPremium = profile.subscription_status === 'active';
+  const isTrial = profile.subscription_status === 'trial';
+  
   return (
     <TableRow 
       key={profile.id} 
@@ -45,9 +49,15 @@ const ProfileTableRow = ({ profile }: ProfileTableRowProps) => {
       onClick={() => window.location.href = `/profiles/${profile.id}`}
     >
       <TableCell className="flex items-center gap-2">
-        <Avatar className="h-8 w-8 ring-1 ring-white/10">
+        <Avatar className={`h-8 w-8 ${isPremium ? 'ring-1 ring-purple-500/30' : isTrial ? 'ring-1 ring-blue-500/30' : 'ring-1 ring-white/10'}`}>
           <AvatarImage src={profile.avatar || undefined} alt={profile.name} />
-          <AvatarFallback className="bg-primary/20 text-primary text-xs">{initials}</AvatarFallback>
+          <AvatarFallback className={`
+            ${isPremium ? 'bg-purple-500/10 text-purple-400' : 
+            isTrial ? 'bg-blue-500/10 text-blue-400' : 
+            'bg-primary/20 text-primary'} text-xs`}
+          >
+            {initials}
+          </AvatarFallback>
         </Avatar>
         <span className="font-medium text-sm">{profile.name}</span>
       </TableCell>
@@ -70,7 +80,9 @@ const ProfileTableRow = ({ profile }: ProfileTableRowProps) => {
               value={progressPercentage} 
               className="h-2 flex-1 bg-muted/50" 
               style={{ 
-                "--progress-background": "rgb(16, 185, 129)",
+                "--progress-background": isPremium ? "rgb(139, 92, 246)" : 
+                                         isTrial ? "rgb(59, 130, 246)" : 
+                                         "rgb(16, 185, 129)",
               } as React.CSSProperties}
             />
             <span className="text-xs text-muted-foreground w-8 text-right">
