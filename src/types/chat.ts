@@ -1,6 +1,4 @@
 
-import { Database } from '@/supabase/types/database.types';
-
 export interface Message {
   id: string;
   role: 'user' | 'assistant';

@@ -1,6 +1,5 @@
 
 import { LucideIcon, MessageCircle, Users, Bot } from "lucide-react";
-import { Message } from "@/types/chat";
 
 export interface Profile {
   id: string;
@@ -30,6 +29,14 @@ export interface Meal {
   time: string;
 }
 
+// Custom message type just for the dummy data
+export interface Message {
+  id: string;
+  text: string;
+  timestamp: Date;
+  isUser: boolean;
+}
+
 export const fakeProfiles: Profile[] = [
   { id: "1", name: "Alice Johnson", avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330", kcalRatio: 0.75, goalType: "Lose", dailyGoal: 2000, currentKcal: 1500 },
   { id: "2", name: "Bob Smith", avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d", kcalRatio: 0.6, goalType: "Maintain", dailyGoal: 2500, currentKcal: 1500 },
@@ -39,11 +46,11 @@ export const fakeProfiles: Profile[] = [
 ];
 
 export const fakeMessages: Message[] = [
-  { id: "1", senderId: "1", text: "How's my nutrition plan going?", timestamp: new Date(2023, 4, 18, 9, 30), isUser: true },
-  { id: "2", senderId: "system", text: "You're doing great! You've met 75% of your daily goal.", timestamp: new Date(2023, 4, 18, 9, 32), isUser: false },
-  { id: "3", senderId: "1", text: "What should I eat for lunch?", timestamp: new Date(2023, 4, 18, 12, 15), isUser: true },
-  { id: "4", senderId: "system", text: "I recommend a grilled chicken salad with olive oil dressing. It's high in protein and has healthy fats.", timestamp: new Date(2023, 4, 18, 12, 17), isUser: false },
-  { id: "5", senderId: "1", text: "Thanks! I'll try that.", timestamp: new Date(2023, 4, 18, 12, 20), isUser: true },
+  { id: "1", text: "How's my nutrition plan going?", timestamp: new Date(2023, 4, 18, 9, 30), isUser: true },
+  { id: "2", text: "You're doing great! You've met 75% of your daily goal.", timestamp: new Date(2023, 4, 18, 9, 32), isUser: false },
+  { id: "3", text: "What should I eat for lunch?", timestamp: new Date(2023, 4, 18, 12, 15), isUser: true },
+  { id: "4", text: "I recommend a grilled chicken salad with olive oil dressing. It's high in protein and has healthy fats.", timestamp: new Date(2023, 4, 18, 12, 17), isUser: false },
+  { id: "5", text: "Thanks! I'll try that.", timestamp: new Date(2023, 4, 18, 12, 20), isUser: true },
 ];
 
 export const fakeDialogs: Dialog[] = [
