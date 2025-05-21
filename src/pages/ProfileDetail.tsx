@@ -10,19 +10,9 @@ import ProfileLoading from "@/components/profile/ProfileLoading";
 import OverviewTab from "@/components/profile/OverviewTab";
 import InsightsTab from "@/components/profile/InsightsTab";
 import ChatTab from "@/components/profile/ChatTab";
-import { ProfileExtended, Digest, Meal } from '@/types/profile';
-
-type ExtendedMeal = {
-  id: string;
-  dish: string;
-  grams: number;
-  photo_id?: string;
-  eaten_at: string;
-  kcal?: number;
-  prot?: number;
-  fat?: number;
-  carb?: number;
-};
+import { ProfileExtended, Digest } from '@/types/profile';
+import { SummaryType } from '@/types/digest';
+import { Meal } from '@/types/meal';
 
 const ProfileDetail = () => {
   const { id } = useParams<{ id: string }>();
@@ -74,7 +64,7 @@ const ProfileDetail = () => {
       if (error) throw error;
       
       // Cast to Digest type with proper typing
-      const digest: Digest = {
+      const digest: SummaryType = {
         kcal: typeof data?.kcal === 'number' ? data.kcal : 0,
         prot: typeof data?.prot === 'number' ? data.prot : 0,
         fat: typeof data?.fat === 'number' ? data.fat : 0,
@@ -121,7 +111,7 @@ const ProfileDetail = () => {
           photo_id: undefined,
           chat_id: profile.telegram_id,
           deleted: false
-        })) as ExtendedMeal[];
+        })) as Meal[];
         
         return mappedMeals;
       } catch (error) {

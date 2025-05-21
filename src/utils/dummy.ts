@@ -1,5 +1,6 @@
 
 import { LucideIcon, MessageCircle, Users, Bot } from "lucide-react";
+import { Message } from "@/types/chat";
 
 export interface Profile {
   id: string;
@@ -9,14 +10,6 @@ export interface Profile {
   goalType: "Lose" | "Gain" | "Maintain";
   dailyGoal: number;
   currentKcal: number;
-}
-
-export interface Message {
-  id: string;
-  senderId: string;
-  text: string;
-  timestamp: Date;
-  isUser: boolean;
 }
 
 export interface Dialog {

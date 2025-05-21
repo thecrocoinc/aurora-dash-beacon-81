@@ -1,5 +1,11 @@
 
 import { Database } from '@/supabase/types/database.types';
 
+export interface Message {
+  id: string;
+  role: 'user' | 'assistant';
+  content: string;
+  created_at: string;
+}
+
 export type ChatLog = Database['public']['Tables']['chat_logs']['Row'];
-export type Message = string | ChatLog;

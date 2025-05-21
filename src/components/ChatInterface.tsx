@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useChat } from "@/hooks/useChat";
+import { Message } from "@/types/chat";
 
 type ChatInterfaceProps = {
   loading?: boolean;
@@ -45,8 +46,13 @@ const ChatInterface = ({ loading: externalLoading = false, profileId }: ChatInte
     <div className="flex flex-col h-full">
       <div className="flex-1 overflow-y-auto p-4 space-y-4">
         {messages.length > 0 ? (
-          messages.map((msg) => (
-            <ChatBubble key={msg.id} message={msg} />
+          messages.map((msg: Message) => (
+            <ChatBubble 
+              key={msg.id} 
+              message={msg.content} 
+              isUser={msg.role === "user"}
+              timestamp={new Date(msg.created_at)}
+            />
           ))
         ) : (
           <p className="text-center text-muted-foreground py-12">

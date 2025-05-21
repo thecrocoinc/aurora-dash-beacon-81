@@ -9,6 +9,7 @@ import MasonryGrid from "@/components/MasonryGrid";
 import MealGridSkeleton from "@/components/MealGridSkeleton";
 import MealTilePlaceholder from "@/components/MealTilePlaceholder";
 import { ProfileExtended } from "@/types/profile";
+import { Meal } from "@/types/meal";
 
 type OverviewTabProps = {
   profile: ProfileExtended;
@@ -20,17 +21,7 @@ type OverviewTabProps = {
     summary_md?: string;
   } | null;
   dailyGoal: number;
-  meals: Array<{
-    id: string;
-    dish: string | null;
-    grams: number | null;
-    photo_id?: string | null;
-    eaten_at: string | null;
-    kcal?: number | null;
-    prot?: number | null;
-    fat?: number | null;
-    carb?: number | null;
-  }> | null;
+  meals: Meal[] | null;
   mealsLoading: boolean;
 };
 

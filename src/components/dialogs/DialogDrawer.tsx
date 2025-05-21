@@ -7,20 +7,13 @@ import { DialogItem } from "./DialogListItem";
 import ChatBubble from "@/components/ChatBubble";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Loader2 } from "lucide-react";
-import { ChatLog, Message } from "@/types/chat";
+import { Message } from "@/types/chat";
 
 interface DialogDrawerProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   selectedDialog: DialogItem | undefined;
   selectedDialogId: string | null;
-}
-
-interface ChatMessage {
-  id: string;
-  role: string;
-  content: string;
-  created_at: string;
 }
 
 const DialogDrawer = ({ 
@@ -30,7 +23,7 @@ const DialogDrawer = ({
   selectedDialogId
 }: DialogDrawerProps) => {
   const [message, setMessage] = useState("");
-  const [messages, setMessages] = useState<ChatMessage[]>([]);
+  const [messages, setMessages] = useState<Message[]>([]);
   const [loading, setLoading] = useState(false);
 
   // Fetch messages when dialog changes - mock implementation
@@ -39,7 +32,7 @@ const DialogDrawer = ({
       setLoading(true);
       // Simulate loading messages from chat_logs
       setTimeout(() => {
-        const mockMessages: ChatMessage[] = [
+        const mockMessages: Message[] = [
           {
             id: "1",
             role: "user",
@@ -74,7 +67,7 @@ const DialogDrawer = ({
   const handleSend = () => {
     if (message.trim() === "") return;
     
-    const newMessage: ChatMessage = {
+    const newMessage: Message = {
       id: Date.now().toString(),
       role: "assistant",
       content: message.trim(),
@@ -113,7 +106,7 @@ const DialogDrawer = ({
             messages.map((msg) => (
               <ChatBubble
                 key={msg.id}
-                message={msg.content as Message}
+                message={msg.content}
                 isUser={msg.role === "user"}
                 timestamp={new Date(msg.created_at)}
               />

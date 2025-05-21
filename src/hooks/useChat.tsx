@@ -1,7 +1,7 @@
 
 import { useState, useEffect } from "react";
 import { supabase } from "@/lib/supabase";
-import type { Message } from "@/utils/dummy";
+import { Message } from "@/types/chat";
 import { Database } from '@/supabase/types/database.types';
 
 type ChatLog = Database['public']['Tables']['chat_logs']['Row'];
@@ -42,10 +42,9 @@ export const useChat = (profileId: string | undefined) => {
         const formattedMessages = (data || []).map(
           (msg: ChatLog): Message => ({
             id: msg.id.toString(),
-            text: msg.content,
-            timestamp: new Date(msg.created_at),
-            isUser: msg.role === "user",
-            senderId: profileId
+            content: msg.content,
+            created_at: msg.created_at,
+            role: msg.role as 'user' | 'assistant'
           })
         );
 
@@ -80,10 +79,9 @@ export const useChat = (profileId: string | undefined) => {
             ...prevMessages,
             {
               id: newMessage.id.toString(),
-              text: newMessage.content,
-              timestamp: new Date(newMessage.created_at),
-              isUser: newMessage.role === "user",
-              senderId: profileId
+              content: newMessage.content,
+              created_at: newMessage.created_at,
+              role: newMessage.role as 'user' | 'assistant'
             }
           ]);
         }

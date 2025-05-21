@@ -20,8 +20,8 @@ export type Digest = {
 
 export interface ProfileWithDetails {
   id: string;
-  first_name?: string | null;
-  username?: string | null;
+  first_name: string;
+  username?: string;
   avatar?: string | null;
   watch_connected?: boolean;
   kcalRatio: number;
